@@ -9,9 +9,6 @@ import {
   Card,
   Stack,
   Grid,
-  createTheme,
-  ThemeProvider,
-  CssBaseline,
   IconButton
 } from '@mui/material'
 import { links, contactInfo } from './links';
@@ -221,7 +218,27 @@ export default function LinkTree() {
           <Grid container spacing={4}>
             <Grid size={12} sx={{ order: { xs: 2, md: 1 } }}>
                 {/* Bio */}
-                <Box sx={{ width: '100%', p: 2, mb: { xs: 4.5, md: 0 }, borderRadius: 3, bgcolor: (theme) => theme.palette.background.default }}>
+                <Box 
+                    sx={{ 
+                        width: '100%', 
+                        p: 2, 
+                        mb: { xs: 4.5, md: 0 }, 
+                        borderRadius: 3, 
+                        bgcolor: (theme) => theme.palette.background.default,
+                        position: 'relative',
+                        '&::before': {
+                            content: '""',
+                            position: 'absolute',
+                            top: -2,
+                            left: -2,
+                            right: -2,
+                            bottom: -2,
+                            background: 'linear-gradient(45deg, #FF00FF, #00FFFF)',
+                            borderRadius: 'inherit',
+                            zIndex: -1,
+                        },
+                    }}
+                >
                     <Typography 
                         variant="subtitle1" 
                         color="text.secondary" 
@@ -240,7 +257,7 @@ export default function LinkTree() {
                         from cyber security defense contractors and multi-billion dollar commercial real estate brokers to federal
                         government agencies. I have led efforts including significant refactors of mission-critical logic,
                         rearchitecting a core automated testing system, and implementing brand new features in both a design and
-                        development role. I'm now most interested in building agentic systems with LLMs to develop autonomous tools
+                        development capacity. I'm now most interested in building agentic systems with LLMs to develop autonomous tools
                         and workflows that could never have been previously imagined, specifically in education.
                     </Typography>
                 </Box>
