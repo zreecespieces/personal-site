@@ -4,8 +4,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import NextLink from 'next/link';
-import ProTip from '@/components/ProTip';
-import Copyright from '@/components/Copyright';
+import { Alert } from '@mui/material';
 
 export default function Home() {
   return (
@@ -19,14 +18,8 @@ export default function Home() {
           alignItems: 'center',
         }}
       >
-        <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
-          Material UI - Next.js App Router example in TypeScript
-        </Typography>
-        <Link href="/about" color="secondary" component={NextLink}>
-          Go to the about page
-        </Link>
-        <ProTip />
-        <Copyright />
+        <Alert severity="warning">This is my personal website! It's under construction right now. Check out{" "} 
+          <Link component={NextLink} href="/linktree">my linktree</Link> for more information.</Alert>
       </Box>
     </Container>
   );
