@@ -28,6 +28,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function LinktreeLayout({ children }: { children: React.ReactNode }) {
+export default function LinkTreeLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>
 }

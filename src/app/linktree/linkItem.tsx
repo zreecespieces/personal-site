@@ -1,4 +1,4 @@
-import { Box, Card, Stack, Typography } from "@mui/material";
+import { Box, Card, Stack, Typography, useMediaQuery } from "@mui/material";
   
 export interface LinkItemProps {
     icon: React.ReactNode;
@@ -9,6 +9,7 @@ export interface LinkItemProps {
   
 export const LinkItem: React.FC<LinkItemProps & { gradientColors: string[] }> = ({ icon, title, url, gradientColors, subtitle }) => {
     const isExternal = url.startsWith('http') || url.startsWith('https');
+    const matchesSM = useMediaQuery(theme => theme.breakpoints.down('sm'));
     return (
       <Box
         sx={{
@@ -18,10 +19,12 @@ export const LinkItem: React.FC<LinkItemProps & { gradientColors: string[] }> = 
           padding: '2px', // Border thickness
           background: `linear-gradient(45deg, ${gradientColors[0]}, ${gradientColors[1]})`,
           transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-          '&:hover': {
-            transform: 'translateY(-5px)',
-            boxShadow: '0 15px 30px rgba(0, 0, 0, 0.4)',
-          },
+          ...(matchesSM ? {} : {
+            '&:hover': {
+              transform: 'translateY(-5px)',
+              boxShadow: '0 15px 30px rgba(0, 0, 0, 0.4)',
+            },
+          }),
         }}
       >
         <Card

@@ -1,6 +1,6 @@
 import React from 'react';
-import Linktree from './linktree/page';
+import LinkTree from './linktree/page';
 
 export default function Home() {
-  return <Linktree />
+  return <LinkTree />
 }
