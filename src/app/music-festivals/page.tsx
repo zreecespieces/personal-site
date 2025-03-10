@@ -10,7 +10,7 @@ export default function MusicFestivals() {
             <Stack spacing={4} alignItems="center" p={2}>
                 <Box textAlign="center" p={2} sx={{ bgcolor: (theme) => theme.palette.background.default, borderRadius: 3}}>
                     <Typography variant="h3" component="h1" fontWeight="700" gutterBottom textAlign="center">
-                        Music Festival History
+                        Music Festivals
                     </Typography>
                     <Typography variant="subtitle1" textAlign="center">{festivals.length} total</Typography>
                 </Box>
