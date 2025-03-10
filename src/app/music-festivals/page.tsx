@@ -2,6 +2,7 @@
 
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { festivals } from "./festivals";
+import NextLink from "next/link";
 
 export default function MusicFestivals() {
     return (
@@ -29,6 +30,9 @@ export default function MusicFestivals() {
                     </Stack>
                 ))}
             </Stack>
+            <Typography component={NextLink} href="/linktree" variant="body1" textAlign="center" sx={{ textDecoration: "none", color: "inherit" }}>
+                Back to LinkTree
+            </Typography>
         </Container>
     );
 }

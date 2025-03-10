@@ -2,6 +2,7 @@
 
 import { ImageList, ImageListItem, Typography, Container, CardMedia, Stack, useMediaQuery } from "@mui/material";
 import { pics } from "./pics";
+import NextLink from "next/link"
 
 export default function Art() {
     const matchesSM = useMediaQuery(theme => theme.breakpoints.down('sm'));
@@ -30,6 +31,9 @@ export default function Art() {
                     </Stack>
                 )}
             </Stack>
+            <Typography component={NextLink} href="/linktree" variant="body1" textAlign="center" sx={{ textDecoration: "none", color: "inherit" }}>
+                Back to LinkTree
+            </Typography>
         </Container>
     );
 }
