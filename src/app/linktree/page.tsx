@@ -17,43 +17,6 @@ import {
 import { links, contactInfo } from './links';
 import NextLink from 'next/link';
 
-// Create a custom dark theme with luxurious tech aesthetics
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: {
-      main: '#BB86FC',
-    },
-    secondary: {
-      main: '#03DAC6',
-    },
-    background: {
-      default: '#121212',
-      paper: '#1E1E1E',
-    },
-    text: {
-      primary: '#E1E1E1',
-      secondary: '#A0A0A0',
-    },
-  },
-  typography: {
-    fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
-  },
-  shape: {
-    borderRadius: 16,
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        body: {
-          background: 'linear-gradient(135deg, #121212 0%, #1E1E2E 100%)',
-          backgroundAttachment: 'fixed',
-        },
-      },
-    },
-  },
-});
-
 // Define gradient patterns
 const GRADIENT_PATTERNS = [
   ['#92EFFD', '#0072FF'], // Blue gradient
@@ -157,8 +120,6 @@ const LinkItem: React.FC<LinkItemProps & { gradientColors: string[] }> = ({ icon
 
 export default function LinkTree() {
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
       <Container maxWidth={false} sx={{ py: 8, overflow: 'hidden' }}>
         <Box
           sx={{
@@ -260,7 +221,7 @@ export default function LinkTree() {
           <Grid container spacing={4}>
             <Grid size={12} sx={{ order: { xs: 2, md: 1 } }}>
                 {/* Bio */}
-                <Box bgcolor={darkTheme.palette.background.default} sx={{ width: '100%', p: 2, mb: { xs: 4.5, md: 0 }, borderRadius: 3 }}>
+                <Box sx={{ width: '100%', p: 2, mb: { xs: 4.5, md: 0 }, borderRadius: 3, bgcolor: (theme) => theme.palette.background.default }}>
                     <Typography 
                         variant="subtitle1" 
                         color="text.secondary" 
@@ -321,6 +282,5 @@ export default function LinkTree() {
           </Typography>
         </Box>
       </Container>
-    </ThemeProvider>
   );
 }
