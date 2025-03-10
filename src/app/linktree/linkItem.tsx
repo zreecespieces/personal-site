@@ -8,6 +8,7 @@ export interface LinkItemProps {
 }
   
 export const LinkItem: React.FC<LinkItemProps & { gradientColors: string[] }> = ({ icon, title, url, gradientColors, subtitle }) => {
+    const isExternal = url.startsWith('http') || url.startsWith('https');
     return (
       <Box
         sx={{
@@ -26,8 +27,8 @@ export const LinkItem: React.FC<LinkItemProps & { gradientColors: string[] }> = 
         <Card
           component="a"
           href={url === '' ? undefined : url}
-          target="_blank"
-          rel="noopener noreferrer"
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noopener noreferrer" : undefined}
           sx={{
             display: 'flex',
             alignItems: 'center', 
