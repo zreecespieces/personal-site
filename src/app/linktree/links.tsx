@@ -8,7 +8,8 @@ import PaletteIcon from '@mui/icons-material/Palette';
 import DescriptionIcon from '@mui/icons-material/Description';
 import SportsKabaddiIcon from '@mui/icons-material/SportsKabaddi';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
-import { LinkItemProps } from './page';
+import NightlifeIcon from '@mui/icons-material/Nightlife';
+import { LinkItemProps } from './linkItem';
 
 export const links: LinkItemProps[] = [
     {
@@ -31,6 +32,11 @@ export const links: LinkItemProps[] = [
       icon: <SportsKabaddiIcon />,
       title: 'BJJ & Judo',
       url: 'https://smoothcomp.com/en/profile/979762',
+    },
+    {
+      icon: <NightlifeIcon />,
+      title: 'Music Festivals',
+      url: '/music-festivals',
     },
     {
       icon: <HistoryEduIcon />,
