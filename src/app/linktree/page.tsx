@@ -257,8 +257,9 @@ export default function LinkTree() {
                         from cyber security defense contractors and multi-billion dollar commercial real estate brokers to federal
                         government agencies. I have led efforts including significant refactors of mission-critical logic,
                         rearchitecting a core automated testing system, and implementing brand new features in both a design and
-                        development capacity. I'm now most interested in building agentic systems with LLMs to develop autonomous tools
-                        and workflows that could never have been previously imagined, specifically in education.
+                        development capacity. Before that, I created a bestselling Udemy course on React and MUI development which has
+                        taught over 20,000 students in 145 countries. I'm now most interested in building agentic systems with LLMs to
+                        develop autonomous tools and workflows that could never have been previously imagined, specifically in education.
                     </Typography>
                 </Box>
             </Grid>
