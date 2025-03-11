@@ -59,7 +59,7 @@ export const festivals: Festival[] = [
     {
         name: "Fake Bonnaroo",
         year: "2021",
-        location: "Short Mountain Distillery - Woodbury, Tennessee",
+        location: "Short Mountain Distillery",
         image: "/fake-bonnaroo.png",
         description: "When Bonnaroo was cancelled in 2021 due to Hurricane Ida, some locals threw a popup festival about two hours away from where it would have been and a bunch of us went to make the best out of what would have been a sad weekend."
     },

@@ -5,6 +5,7 @@ import { Box, Container, Typography, Avatar, Stack, Grid, IconButton } from "@mu
 import { links, contactInfo } from "./links"
 import NextLink from "next/link"
 import { LinkItem } from "./linkItem"
+import GradientBorder from "@/components/GradientBorder"
 
 const GRADIENT_PATTERNS = [
   ["#92EFFD", "#0072FF"], // Blue gradient
@@ -111,26 +112,11 @@ export default function LinkTree() {
         <Grid container spacing={4}>
           <Grid size={12} sx={{ order: { xs: 2, md: 1 } }}>
             {/* Bio */}
-            <Box
-              sx={{
-                width: "100%",
-                p: 2,
-                mb: { xs: 4.5, md: 0 },
-                borderRadius: 3,
-                bgcolor: (theme) => theme.palette.background.default,
-                position: "relative",
-                "&::before": {
-                  content: '""',
-                  position: "absolute",
-                  top: -2,
-                  left: -2,
-                  right: -2,
-                  bottom: -2,
-                  background: "linear-gradient(45deg, #FF00FF, #00FFFF)",
-                  borderRadius: "inherit",
-                  zIndex: -1,
-                },
-              }}>
+            <GradientBorder 
+              gradientColors={["#FF00FF", "#00FFFF"]} 
+              sx={{ width: "100%", mb: { xs: 4.5, md: 0 } }}
+              contentSx={{ p: 2 }}
+            >
               <Typography
                 variant="subtitle1"
                 color="text.secondary"
@@ -145,14 +131,14 @@ export default function LinkTree() {
                 entire life since early childhood. For the last 3 years I have been working as a Senior React Developer for
                 Cloudwell, a software consultancy specializing in enterprise cloud solutions within the Microsoft ecosystem. There
                 I have gained exceptional professional software experience while working for clients ranging from cyber security
-                defense contractors and multi-billion dollar commercial real estate brokers to federal government agencies. I have
+                defense contractors and multi-billion dollar commercial real estate brokers to federal government agencies and our own internal products. I have
                 led efforts including significant refactors of mission-critical logic, rearchitecting a core automated testing
                 system, and implementing brand new features in both a design and development capacity. Before that, I created a
                 bestselling Udemy course on React and MUI development which has taught over 20,000 students in 145 countries. I'm
                 now most interested in building agentic systems with LLMs to develop autonomous tools and workflows that could
                 never have been previously imagined, specifically in education.
               </Typography>
-            </Box>
+            </GradientBorder>
           </Grid>
           <Grid size={12} sx={{ order: { xs: 1, md: 2 } }}>
             {/* Links Section with enhanced spacing and alternating gradient colors */}

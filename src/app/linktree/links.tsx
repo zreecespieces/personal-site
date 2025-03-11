@@ -9,6 +9,9 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import SportsKabaddiIcon from '@mui/icons-material/SportsKabaddi';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import NightlifeIcon from '@mui/icons-material/Nightlife';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import PublicIcon from '@mui/icons-material/Public';
+import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
 import { LinkItemProps } from './linkItem';
 
 export const links: LinkItemProps[] = [
@@ -48,6 +51,21 @@ export const links: LinkItemProps[] = [
       icon: <PaletteIcon />,
       title: 'AI Art',
       url: '/art',
+    },
+    {
+      icon: <MenuBookIcon />,
+      title: 'Reading List',
+      url: '/reading',
+    },
+    {
+      icon: <PublicIcon />,
+      title: 'Travel',
+      url: '/travel',
+    },
+    {
+      icon: <TheaterComedyIcon />,
+      title: 'Comedy',
+      url: '/comedy',
     },
     {
       icon: <DescriptionIcon />,
