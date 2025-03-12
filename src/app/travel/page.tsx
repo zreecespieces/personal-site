@@ -306,7 +306,7 @@ export default function Travel() {
                   }}
                 >
                   <FavoriteIcon sx={{ color: '#e91e63' }} />
-                  Favorite Places
+                  Visited Places
                 </Typography>
                 
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', mx: -2 }}>

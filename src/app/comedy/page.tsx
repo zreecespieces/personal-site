@@ -197,7 +197,7 @@ export default function Comedy() {
                 </Box>
                 
                 {/* Comedian Bio */}
-                <Box sx={{ flex: 1 }}>
+                <Box sx={{ flex: 1, flexGrow: 1, width: '100%' }}>
                   <Typography variant="h4" gutterBottom fontWeight="700">
                     {comedian.name}
                   </Typography>
