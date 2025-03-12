@@ -17,7 +17,7 @@ interface GradientBorderProps {
 export default function GradientBorder({
   children,
   gradientColors = ['#FF00FF', '#00FFFF'],
-  borderWidth = 0.5,
+  borderWidth = 0.25,
   borderRadius = 3,
   sx = {},
   contentSx = {},
