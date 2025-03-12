@@ -61,7 +61,7 @@ export const countries: Country[] = [
   {
     name: "United States",
     flag: "🇺🇸",
-    coverImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Flag_of_the_United_States_%28Pantone%29.svg/1200px-Flag_of_the_United_States_%28Pantone%29.svg.png",
+    coverImage: "https://upload.wikimedia.org/wikipedia/commons/1/1f/Wichita%2C_Kansas_skyline_aerial_view.jpg",
     visits: [],
     favoriteSpots: [],
     description: "My home country",
@@ -71,7 +71,7 @@ export const countries: Country[] = [
   {
     name: "Mexico",
     flag: "🇲🇽",
-    coverImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Chichen-Itza-Castillo-Seen-From-East.JPG/1280px-Chichen-Itza-Castillo-Seen-From-East.JPG",
+    coverImage: "https://cdn.britannica.com/60/92960-050-327CF926/pyramid-Mayan-Chichen-Itza-Mex.jpg",
     visits: [
       {
         startDate: "2010-07-19",
@@ -99,7 +99,7 @@ export const countries: Country[] = [
   {
     name: "Greece",
     flag: "🇬🇷",
-    coverImage: "https://upload.wikimedia.org/wikipedia/commons/6/6a/Santorini%2C_Greece.jpg",
+    coverImage: "https://cdn.britannica.com/22/99622-159-68A77F6C/Parthenon-Athens.jpg",
     visits: [
       {
         startDate: "2019-07-14",
@@ -146,7 +146,7 @@ export const countries: Country[] = [
   {
     name: "Canada",
     flag: "🇨🇦",
-    coverImage: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Toronto_Skyline_Summer_2020.jpg",
+    coverImage: "https://cdn.britannica.com/35/100235-050-CE3936EE/view-CN-Tower-Toronto-skyline-observation-deck.jpg",
     visits: [
       {
         startDate: "2023-02-08",
@@ -181,7 +181,7 @@ export const countries: Country[] = [
   {
     name: "Portugal",
     flag: "🇵🇹",
-    coverImage: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Porto_June_2014-1a.jpg",
+    coverImage: "https://www.nationalgeographic.com/content/dam/expeditions/destinations/europe/journeys/Discover-Portugal/hero-portugal.jpg",
     visits: [
       {
         startDate: "2023-09-01",
@@ -228,7 +228,7 @@ export const countries: Country[] = [
   {
     name: "Spain",
     flag: "🇪🇸",
-    coverImage: "https://upload.wikimedia.org/wikipedia/commons/8/84/Barcelona_skyline_and_sagrada_familia.jpg",
+    coverImage: "https://www.spain.info/export/sites/segtur/.content/imagenes/cabeceras-grandes/cataluna/park-guell-barcelona-s-305364611.jpg",
     visits: [
       {
         startDate: "2023-10-01",
@@ -240,10 +240,6 @@ export const countries: Country[] = [
       {
         name: "Barcelona",
         description: "Coastal city known for stunning architecture and vibrant culture",
-      },
-      {
-        name: "Seville",
-        description: "City known for flamenco dancing and Moorish architecture",
       },
       {
         name: "Parque de la Ciutadella",
@@ -352,7 +348,7 @@ export const countries: Country[] = [
   {
     name: "Bulgaria",
     flag: "🇧🇬",
-    coverImage: "https://upload.wikimedia.org/wikipedia/commons/c/cf/Alexander_Nevsky_Cathedral%2C_Sofia_%2840124497392%29.jpg",
+    coverImage: "https://assets.vogue.com/photos/66cf9fcf8e300baeca058f80/4:3/w_2560%2Cc_limit/1303587513",
     visits: [
       {
         startDate: "2024-01-01",
@@ -383,7 +379,7 @@ export const countries: Country[] = [
   {
     name: "Romania",
     flag: "🇷🇴",
-    coverImage: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Bran_Castle_-_view_from_west.jpg",
+    coverImage: "https://images.musement.com/cover/0001/69/bucharest-jpg_header-68486.jpeg",
     visits: [
       {
         startDate: "2024-02-01",
@@ -418,7 +414,7 @@ export const countries: Country[] = [
   {
     name: "Hungary",
     flag: "🇭🇺",
-    coverImage: "https://upload.wikimedia.org/wikipedia/commons/6/60/Budapest_Hungarian_Parliament_%2831363963556%29.jpg",
+    coverImage: "https://upload.wikimedia.org/wikipedia/commons/7/79/Budapest_Orsz%C3%A1gh%C3%A1z_%2831355012995%29.jpg",
     visits: [
       {
         startDate: "2024-03-01",
@@ -449,7 +445,7 @@ export const countries: Country[] = [
   {
     name: "Czechia",
     flag: "🇨🇿",
-    coverImage: "https://upload.wikimedia.org/wikipedia/commons/0/09/Prague%2C_Czech_Republic_skyline.jpg",
+    coverImage: "https://statemag.state.gov/wp-content/uploads/2023/10/1123pom-2-1.jpg",
     visits: [
       {
         startDate: "2024-03-08",

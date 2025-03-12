@@ -10,7 +10,7 @@ export const pics: ArtPiece[] = [
     { 
         src: '/gucci-monk.png', 
         title: 'Gucci Monk',
-        description: 'A monk in meditation wearing Gucci-inspired attire, balancing spirituality with luxury.',
+        description: "A cybernetic Gucci dripped monk. The epitome of juxtaposition between detachment from wordly desires and hyper luxury materialism.",
         dateCreated: '2025-01-27',
         model: 'Fooocus'
     }

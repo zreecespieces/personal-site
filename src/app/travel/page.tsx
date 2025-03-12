@@ -397,14 +397,14 @@ export default function Travel() {
         </Box>
         
         {/* Back to LinkTree Button */}
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'left', mt: 2 }}>
           <Typography 
             component={NextLink} 
             href="/linktree" 
             variant="body1" 
             sx={{ 
               textDecoration: "none", 
-              color: "inherit",
+              color: "#0072FF",
               py: 1,
               px: 3,
               borderRadius: 2,

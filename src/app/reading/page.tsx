@@ -27,7 +27,7 @@ export default function Reading() {
       <Stack spacing={6}>
         {/* Title */}
         <GradientBorder 
-          gradientColors={["#0072FF", "#92EFFD"]} 
+          gradientColors={["#8B4513", "#F5DEB3"]} 
           sx={{ width: '100%' }}
           contentSx={{ p: 4, textAlign: 'center' }}
         >
@@ -37,7 +37,7 @@ export default function Reading() {
             fontWeight="700" 
             gutterBottom
             sx={{
-              background: 'linear-gradient(to right, #0072FF, #92EFFD)',
+              background: 'linear-gradient(to right, #8B4513, #F5DEB3)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               letterSpacing: '0.02em',
@@ -153,7 +153,7 @@ export default function Reading() {
                             height: 8, 
                             borderRadius: 4,
                             '& .MuiLinearProgress-bar': {
-                              background: `linear-gradient(to right, ${index % 2 === 0 ? '#0072FF, #92EFFD' : '#FFD700, #FFA500'})`
+                              background: `linear-gradient(to right, ${index % 2 === 0 ? '#8B4513, #F5DEB3' : '#A0522D, #DEB887'})`
                             }
                           }} 
                         />
@@ -206,7 +206,7 @@ export default function Reading() {
                     left: 0,
                     right: 0,
                     height: '4px',
-                    background: `linear-gradient(90deg, ${index % 2 === 0 ? '#0072FF, #92EFFD' : '#FFD700, #FFA500'})`,
+                    background: `linear-gradient(90deg, ${index % 2 === 0 ? '#8B4513, #F5DEB3' : '#A0522D, #DEB887'})`,
                   },
                 }}>
                   {/* Book Cover */}
@@ -214,7 +214,7 @@ export default function Reading() {
                     <Box 
                       sx={{ 
                         width: '100%',
-                        height: 200,
+                        height: 550,
                         flexShrink: 0,
                         display: 'flex',
                         justifyContent: 'center',
@@ -229,7 +229,7 @@ export default function Reading() {
                         style={{ 
                           height: '100%', 
                           width: '100%', 
-                          objectFit: 'cover'
+                          objectFit: 'contain'
                         }} 
                       />
                     </Box>
@@ -273,9 +273,11 @@ export default function Reading() {
                         />
                       )}
                       
-                      <Typography variant="caption" color="text.secondary">
-                        Completed: {formatDate(book.completedDate)}
-                      </Typography>
+                      {book.completedDate && (
+                        <Typography variant="caption" color="text.secondary">
+                          Completed: {formatDate(book.completedDate)}
+                        </Typography>
+                      )}
                       
                       {book.review && (
                         <Typography variant="body2" sx={{ mt: 1, fontStyle: 'italic' }}>
@@ -291,20 +293,20 @@ export default function Reading() {
         </Box>
         
         {/* Back to LinkTree Button */}
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'left', mt: 2 }}>
           <Typography 
             component={NextLink} 
             href="/linktree" 
             variant="body1" 
             sx={{ 
               textDecoration: "none", 
-              color: "inherit",
+              color: "#8B4513",
               py: 1,
               px: 3,
               borderRadius: 2,
               transition: 'all 0.3s ease',
               '&:hover': {
-                bgcolor: 'rgba(187, 134, 252, 0.1)',
+                bgcolor: 'rgba(139, 69, 19, 0.1)',
               }
             }}
           >

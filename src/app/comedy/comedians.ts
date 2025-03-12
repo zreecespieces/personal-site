@@ -2,9 +2,7 @@
 export interface Comedian {
   name: string;
   image: string; // URL to comedian's image
-  bio?: string;
   shows: Show[];
-  favorite?: boolean;
 }
 
 export interface Show {
@@ -36,187 +34,162 @@ export interface Show {
 export const comedians: Comedian[] = [
   {
     name: "Tom Segura",
-    image: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Tom_Segura_Happy_Birthday.jpg",
-    bio: "Stand-up comedian and podcaster known for his deadpan delivery and often dark, observational humor.",
+    image: "https://i.scdn.co/image/ab6761610000e5eb83df373a06fab7659dfd9d1c",
     shows: [
       {
         date: "2024-06-07",
         venue: "T-Mobile Center",
-        city: "Kansas City, MO",
-        notes: "His new material was even better than his specials. Great crowd work too."
+        city: "Kansas City, MO"
       }
-    ],
-    favorite: true
+    ]
   },
   {
     name: "Bo Burnham",
-    image: "https://upload.wikimedia.org/wikipedia/commons/6/62/Bo_Burnham_Interview_%28cropped%29.jpg",
-    bio: "Musical comedian, filmmaker, actor, and poet known for his innovative comedy specials and introspective humor.",
+    image: "https://media.newyorker.com/photos/60c11e82c8eec4d1031d5fe1/4:3/w_1440,h_1080,c_limit/Brody-BoBurnham.jpg",
     shows: [
       {
         date: "2012-11-19",
         venue: "Orpheum Theatre",
         city: "Wichita, KS",
-        notes: "Incredible musical comedy performance"
+        notes: "I feel super lucky to have gotten to see Bo when I was just 14. This was my first real exposure to stand up comedy."
       }
-    ],
-    favorite: true
+    ]
   },
   {
     name: "Joe Rogan",
-    image: "https://upload.wikimedia.org/wikipedia/commons/7/7d/Joe_Rogan_-_2019_%28cropped%29.jpg",
-    bio: "Stand-up comedian, UFC commentator, and host of one of the world's most popular podcasts, 'The Joe Rogan Experience'.",
+    image: "https://images.squarespace-cdn.com/content/v1/587aec812994ca23948fd074/b9f7c96f-39b0-46d6-90f1-4fb38212fd83/L1020217.jpg",
     shows: [
       {
         date: "2020-11-14",
         venue: "Intrust Bank Arena",
-        city: "Wichita, KS",
-        notes: "Controversial but entertaining"
+        city: "Wichita, KS"
       }
     ]
   },
   {
     name: "Mark Normand",
-    image: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Mark_Normand_2019_%28cropped%29.jpg",
-    bio: "Stand-up comedian known for his quick wit, clever wordplay, and traditional joke-telling style.",
+    image: "https://i.ytimg.com/vi/SVC03r3ZqIE/maxresdefault.jpg",
     shows: [
       {
         date: "2024-09-06",
         venue: "Pikes Peak Center",
-        city: "Colorado Springs, CO",
-        notes: "Rapid-fire jokes and great crowd work"
+        city: "Colorado Springs, CO"
       }
     ]
   },
   {
     name: "Ari Matti",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Wikipedia-logo-v2-en.svg/500px-Wikipedia-logo-v2-en.svg.png", // Placeholder as no Wikipedia image found
-    bio: "Stand-up comedian known for his unique perspective and hilarious takes on everyday life.",
+    image: "https://s1.ticketm.net/dam/a/315/8188260f-7e0c-4194-bf6e-2a99dbc9d315_RETINA_PORTRAIT_3_2.jpg",
     shows: [
       {
         date: "2025-02-07",
         venue: "Comedy Works",
         city: "Denver, CO",
-        notes: "Fresh perspective and high energy"
       }
     ]
   },
   {
     name: "Ari Shaffir",
-    image: "https://upload.wikimedia.org/wikipedia/commons/8/8d/Ari_Shaffir_Comedy_Store_2018.jpg",
-    bio: "Stand-up comedian, podcaster, and writer known for his storytelling comedy and controversial humor.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Ari_Shaffir_2016.jpg/1200px-Ari_Shaffir_2016.jpg",
     shows: [
       {
         date: "2025-02-28",
         venue: "Comedy Works",
-        city: "Denver, CO",
-        notes: "Raw and unfiltered comedy"
+        city: "Denver, CO"
       }
     ]
   },
   {
     name: "TJ Miller",
-    image: "https://upload.wikimedia.org/wikipedia/commons/6/69/T._J._Miller_by_Gage_Skidmore.jpg",
-    bio: "Actor, stand-up comedian, and voice actor known for his absurdist humor and roles in Silicon Valley and Deadpool.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/T._J._Miller_by_Gage_Skidmore_2.jpg/1200px-T._J._Miller_by_Gage_Skidmore_2.jpg",
     shows: [
       {
         date: "2025-02-12",
         venue: "Loonees Comedy Corner",
-        city: "Colorado Springs, CO",
-        notes: "Energetic and eccentric performance"
+        city: "Colorado Springs, CO"
       }
     ]
   },
   {
     name: "Adam Ray",
-    image: "https://upload.wikimedia.org/wikipedia/commons/b/be/Adam_Ray_by_Gage_Skidmore.jpg",
-    bio: "Actor, comedian, and podcaster known for his impressions and character work.",
+    image: "https://seated.imgix.net/82178804-4012-459d-9ad8-eee9b643160a/e35e28ba-2918-4fde-bbaa-037c57d9545b.jpg",
     shows: [
       {
         date: "2024-04-19",
         venue: "Comedy Works",
         city: "Denver, CO",
-        notes: "Great impressions and character work"
       },
       {
         date: "2025-02-13",
         venue: "Paramount Theatre",
         city: "Denver, CO",
         tourName: "Adam Ray is Dr. Phil LIVE",
-        notes: "Amazing Dr. Phil impression show"
       },
       {
         date: "2025-02-14",
         venue: "Paramount Theatre",
         city: "Denver, CO",
         tourName: "Adam Ray is Dr. Phil LIVE",
-        notes: "Amazing Dr. Phil impression show"
       }
     ]
   },
   {
     name: "Shane Gillis",
-    image: "https://upload.wikimedia.org/wikipedia/commons/7/75/Shane_Gillis_in_2019.jpg",
-    bio: "Stand-up comedian, podcast host, and sketch comedy writer known for his observational humor.",
+    image: "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/1174614_v9_aa.jpg",
     shows: [
       {
         date: "2025-03-14",
         venue: "Pikes Peak Center",
-        city: "Colorado Springs, CO",
-        notes: "Brutally funny and honest comedy"
+        city: "Colorado Springs, CO"
       }
-    ],
-    favorite: true
+    ]
   },
   {
     name: "Duncan Trussell",
-    image: "https://upload.wikimedia.org/wikipedia/commons/5/55/Duncan_Trussell_2012_Cropped.jpg",
-    bio: "Comedian, podcaster, and actor known for his psychedelic comedy and philosophical discussions.",
+    image: "https://www.news-herald.com/wp-content/uploads/2023/04/TNH-L-DuncanTrussell-WBOX-040723-01.jpg?w=1800&resize=1800,1800",
     shows: [
       {
         date: "2025-03-21",
-        venue: "Oriental Theater",
-        city: "Denver, CO",
-        notes: "Mind-expanding comedy and spiritual insights"
+        venue: "Comedy Works",
+        city: "Denver, CO"
+      },
+      {
+        date: "2025-03-22",
+        venue: "Comedy Works",
+        city: "Denver, CO"
       }
     ]
   },
   {
     name: "Louis C.K.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/d/d7/Louis_CK_2012_Shankbone.JPG",
-    bio: "Stand-up comedian, writer, actor, and filmmaker known for his observational and self-deprecating humor.",
+    image: "https://static01.nyt.com/images/2019/11/05/arts/04louis-ck/04louis-ck-superJumbo.jpg",
     shows: [
       {
         date: "2025-06-02",
-        venue: "Bellco Theatre",
-        city: "Denver, CO",
-        notes: "Controversial but masterful storytelling"
+        venue: "Red Rocks Amphitheatre",
+        city: "Morrison, CO"
       }
     ]
   },
   {
     name: "Ian Fidance",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Wikipedia-logo-v2-en.svg/500px-Wikipedia-logo-v2-en.svg.png", // Placeholder as no Wikipedia image found
-    bio: "Up-and-coming comedian known for his energetic performances and appearances on Comedy Central.",
+    image: "https://i.ticketweb.com/i/00/08/85/50/11/Original.jpg?v=2?v=2",
     shows: [
       {
         date: "2024-12-07",
         venue: "Comedy Works",
-        city: "Denver, CO",
-        notes: "Fresh perspective and high energy"
+        city: "Denver, CO"
       }
     ]
   },
   {
     name: "Kill Tony",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Wikipedia-logo-v2-en.svg/500px-Wikipedia-logo-v2-en.svg.png", // Placeholder as no Wikipedia image found
-    bio: "Popular comedy podcast hosted by Tony Hinchcliffe where amateur comedians perform and receive feedback.",
+    image: "https://komi-production-assets.s3-accelerate.amazonaws.com/photos/DFA9Vz8YgL5IVmT2aNH38.png?tr=w-564%2Ch-709%2Ccm-extract%2Cx-0%2Cy-1&crp=%7B%22x%22%3A0%2C%22y%22%3A0%2C%22zoomVal%22%3A1%7D",
     shows: [
       {
         date: "2024-05-10",
-        venue: "The Comedy Store",
-        city: "Los Angeles, CA",
-        notes: "Hilarious roasting of open mic comedians"
+        venue: "The Kia Forum",
+        city: "Los Angeles, CA"
       }
     ]
   }
@@ -232,11 +205,6 @@ export function getTotalShows(): number {
 // Get total number of comedians seen
 export function getTotalComediansSeen(): number {
   return comedians.length;
-}
-
-// Get favorite comedians
-export function getFavoriteComedians(): Comedian[] {
-  return comedians.filter(comedian => comedian.favorite);
 }
 
 // Get comedians sorted by earliest seen

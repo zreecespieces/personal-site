@@ -15,7 +15,8 @@ import {
   DialogContent,
   IconButton,
   Avatar,
-  Link
+  Link,
+  Button
 } from "@mui/material";
 import { comedians, getTotalShows, getTotalComediansSeen, formatDate, getComediansByEarliestSeen } from "./comedians";
 import NextLink from "next/link";
@@ -48,7 +49,7 @@ export default function Comedy() {
       <Stack spacing={6}>
         {/* Title */}
         <GradientBorder 
-          gradientColors={["#0072FF", "#92EFFD"]} 
+          gradientColors={["#FF0055", "gold"]} 
           sx={{ width: '100%' }}
           contentSx={{ p: 4, textAlign: 'center' }}
         >
@@ -58,7 +59,7 @@ export default function Comedy() {
             fontWeight="700" 
             gutterBottom
             sx={{
-              background: 'linear-gradient(to right, #0072FF, #92EFFD)',
+              background: 'linear-gradient(to right, #FF0055, gold)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               letterSpacing: '0.02em',
@@ -72,8 +73,8 @@ export default function Comedy() {
               icon={<TheaterComedyIcon />} 
               label={`${getTotalComediansSeen()} Comedians Seen`} 
               sx={{ 
-                bgcolor: 'rgba(0, 114, 255, 0.1)', 
-                color: '#0072FF',
+                bgcolor: 'rgba(255, 0, 85, 0.1)', 
+                color: '#FF0055',
                 fontWeight: 500,
                 px: 1
               }} 
@@ -82,8 +83,8 @@ export default function Comedy() {
               icon={<EventIcon />} 
               label={`${getTotalShows()} Live Shows`} 
               sx={{ 
-                bgcolor: 'rgba(146, 239, 253, 0.1)', 
-                color: '#92EFFD',
+                bgcolor: 'rgba(255, 215, 0, 0.1)',
+                color: 'gold',
                 fontWeight: 500,
                 px: 1
               }} 
@@ -108,10 +109,10 @@ export default function Comedy() {
                 mr: 2,
               },
               '& .Mui-selected': {
-                color: '#0072FF !important',
+                color: '#FF0055 !important',
               },
               '& .MuiTabs-indicator': {
-                backgroundColor: '#0072FF',
+                backgroundColor: '#FF0055',
                 height: 3,
               },
             }}
@@ -127,8 +128,7 @@ export default function Comedy() {
                     sx={{ 
                       width: 32, 
                       height: 32,
-                      mb: 0.5,
-                      border: comedian.favorite ? '2px solid gold' : 'none',
+                      mb: 0.5
                     }}
                   />
                 )}
@@ -194,24 +194,6 @@ export default function Comedy() {
                       }} 
                     />
                   </ButtonBase>
-                  
-                  {comedian.favorite && (
-                    <Chip 
-                      icon={<StarIcon sx={{ color: 'gold !important' }} />}
-                      label="Favorite"
-                      sx={{ 
-                        position: 'absolute',
-                        bottom: 10,
-                        right: 10,
-                        bgcolor: 'rgba(0, 0, 0, 0.7)',
-                        color: 'white',
-                        fontWeight: 'bold',
-                        '& .MuiChip-icon': {
-                          color: 'gold'
-                        }
-                      }}
-                    />
-                  )}
                 </Box>
                 
                 {/* Comedian Bio */}
@@ -219,12 +201,6 @@ export default function Comedy() {
                   <Typography variant="h4" gutterBottom fontWeight="700">
                     {comedian.name}
                   </Typography>
-                  
-                  {comedian.bio && (
-                    <Typography variant="body1" color="text.secondary" paragraph>
-                      {comedian.bio}
-                    </Typography>
-                  )}
 
                   {/* Show statistics */}
                   <Box 
@@ -238,23 +214,11 @@ export default function Comedy() {
                     <Chip 
                       label={`${comedian.shows.length} ${comedian.shows.length === 1 ? 'Show' : 'Shows'} Attended`}
                       sx={{ 
-                        bgcolor: 'rgba(0, 114, 255, 0.1)', 
-                        color: '#0072FF',
+                        bgcolor: 'rgba(255, 0, 85, 0.1)', 
+                        color: '#FF0055',
                         fontWeight: 500  
                       }} 
                     />
-                    
-                    {comedian.shows.length > 0 && (
-                      <Chip 
-                        label={`First Seen: ${formatDate(comedian.shows.reduce((earliest, show) => 
-                          !earliest || show.date < earliest ? show.date : earliest, ""))}`}
-                        sx={{ 
-                          bgcolor: 'rgba(146, 239, 253, 0.1)', 
-                          color: '#92EFFD',
-                          fontWeight: 500  
-                        }} 
-                      />
-                    )}
 
                     {comedian.shows.length > 0 && (
                       <Chip 
@@ -279,7 +243,7 @@ export default function Comedy() {
                   fontWeight="700"
                   sx={{ 
                     pb: 1, 
-                    borderBottom: '2px solid rgba(146, 239, 253, 0.3)' 
+                    borderBottom: '2px solid rgba(255, 0, 85, 0.3)' 
                   }}
                 >
                   Show History
@@ -320,16 +284,16 @@ export default function Comedy() {
                           label={formatDate(show.date)}
                           size="small"
                           sx={{ 
-                            bgcolor: 'rgba(0, 114, 255, 0.1)', 
-                            color: '#0072FF', 
+                            bgcolor: 'rgba(255, 0, 85, 0.1)', 
+                            color: '#FF0055', 
                           }} 
                         />
                         <Chip 
                           label={`${show.venue}, ${show.city}`}
                           size="small"
                           sx={{ 
-                            bgcolor: 'rgba(146, 239, 253, 0.1)', 
-                            color: '#92EFFD', 
+                            bgcolor: 'rgba(255, 215, 0, 0.1)', 
+                            color: 'gold', 
                           }} 
                         />
                       </Box>
@@ -367,6 +331,11 @@ export default function Comedy() {
                     </Card>
                   ))}
                 </Stack>
+
+                {/* Back to Linktree */}
+                <NextLink href="/" passHref>
+                  <Button sx={{ mt: 2, color: "#FF0055" }}>Back to Linktree</Button>
+                </NextLink>
               </Box>
             </Box>
           ))}
