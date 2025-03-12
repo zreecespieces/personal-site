@@ -68,18 +68,31 @@ export default function LinkTree() {
         />
 
         {/* Enhanced Profile Section */}
-        <Avatar
-          alt="Zachary Reece"
-          src="/profile-picture.png"
+        <Box
           sx={{
-            width: 200,
-            height: 200,
+            position: 'relative',
+            padding: '4px',
+            borderRadius: '50%',
+            background: 'linear-gradient(45deg, #00FFFF, #FF00FF)',
             mb: 3,
-            border: "4px solid rgba(255, 255, 255, 0.1)",
-            background: "rgba(30, 30, 30, 0.8)",
-            boxShadow: `0 0 0 2px rgba(187, 134, 252, 0.3), 0 8px 20px rgba(0, 0, 0, 0.4)`,
+            width: 208,
+            height: 208,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 8px 20px rgba(0, 0, 0, 0.4)',
           }}
-        />
+        >
+          <Avatar
+            alt="Zachary Reece"
+            src="/profile-picture.png"
+            sx={{
+              width: 200,
+              height: 200,
+              background: "rgba(30, 30, 30, 0.8)",
+            }}
+          />
+        </Box>
         <Typography
           variant="h4"
           component="h1"
