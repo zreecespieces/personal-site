@@ -20,8 +20,6 @@ export interface FavoriteSpot {
   name: string;
   description: string;
   image?: string;
-  location?: string; // City or region
-  rating?: number; // 1-5
 }
 
 // Helper function to calculate total days spent
@@ -70,6 +68,34 @@ export const countries: Country[] = [
     states: ["Kansas", "Colorado", "Ohio", "Missouri", "Oklahoma", "Arkansas", "Louisiana", "Florida", "Texas", "New York", "Illinois", "California", "Washington", "Washington DC", "Virginia", "Maryland", "Pennsylvania", "Nevada", "Utah", "Michigan", "Indiana", "Tennessee", "Georgia", "Kentucky"],
     isHomeCountry: true
   },
+  {
+    name: "Mexico",
+    flag: "🇲🇽",
+    coverImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Chichen-Itza-Castillo-Seen-From-East.JPG/1280px-Chichen-Itza-Castillo-Seen-From-East.JPG",
+    visits: [
+      {
+        startDate: "2010-07-19",
+        endDate: "2010-07-24",
+        purpose: "Tourism"
+      }
+    ],
+    favoriteSpots: [
+      {
+        name: "Chichen Itza",
+        description: "Ancient Mayan ruins and archaeological site",
+      },
+      {
+        name: "Cozumel",
+        description: "Beautiful island with clear waters and coral reefs",
+      },
+      {
+        name: "Progreso",
+        description: "Port city with access to Mayan historical sites",
+      }
+    ],
+    description: "Cruise vacation with grandparents and family to visit Cozumel and Progreso, including the ancient ruins of Chichen Itza"
+  },
+  
   {
     name: "Greece",
     flag: "🇬🇷",
@@ -421,7 +447,7 @@ export const countries: Country[] = [
     description: "Known for its rich history, thermal spas, impressive architecture, and unique cuisine."
   },
   {
-    name: "Czech Republic",
+    name: "Czechia",
     flag: "🇨🇿",
     coverImage: "https://upload.wikimedia.org/wikipedia/commons/0/09/Prague%2C_Czech_Republic_skyline.jpg",
     visits: [
@@ -475,7 +501,7 @@ export const getTotalCountriesVisited = (): number => {
 
 // Get total days spent traveling
 export const getTotalDaysSpent = (): number => {
-  return countries.reduce((total, country) => {
+  return countries.filter(c => !c.isHomeCountry).reduce((total, country) => {
     return total + calculateDaysSpent(country.visits);
   }, 0);
 };

@@ -127,14 +127,14 @@ export default function LinkTree() {
                   opacity: 0.9,
                   px: 2,
                 }}>
-                I have been working professionally as a React developer for 5+ years but I have been creating technology for my
-                entire life since early childhood. For the last 3 years I have been working as a Senior React Developer for
-                Cloudwell, a software consultancy specializing in enterprise cloud solutions within the Microsoft ecosystem. There
+                I have been working professionally as a React developer since 2020, but I have been creating technology for my
+                entire life since early childhood. In 2022, I started working as a Senior React Developer for
+                Cloudwell - a software consultancy specializing in enterprise cloud solutions within the Microsoft ecosystem. There
                 I have gained exceptional professional software experience while working for clients ranging from cyber security
                 defense contractors and multi-billion dollar commercial real estate brokers to federal government agencies and our own internal products. I have
                 led efforts including significant refactors of mission-critical logic, rearchitecting a core automated testing
                 system, and implementing brand new features in both a design and development capacity. Before that, I created a
-                bestselling Udemy course on React and MUI development which has taught over 20,000 students in 145 countries. I'm
+                best-selling Udemy course on React and MUI development which has taught over 20,000 students in 145 countries. I'm
                 now most interested in building agentic systems with LLMs to develop autonomous tools and workflows that could
                 never have been previously imagined, specifically in education.
               </Typography>

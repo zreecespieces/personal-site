@@ -35,7 +35,7 @@ export const LinkItem: React.FC<LinkItemProps & { gradientColors: string[] }> = 
           sx={{
             display: 'flex',
             alignItems: 'center', 
-            p: 2.5,
+            p: 0.5,
             width: '100%',
             height: '100%',
             bgcolor: 'rgba(30, 30, 30, 0.95)',

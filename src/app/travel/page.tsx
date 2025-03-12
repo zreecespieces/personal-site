@@ -39,6 +39,7 @@ const calculateDuration = (startDate: string, endDate: string) => {
   const end = new Date(endDate);
   const diffTime = Math.abs(end.getTime() - start.getTime());
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  if (isNaN(diffDays)) return '';
   return diffDays === 1 ? '1 day' : `${diffDays} days`;
 };
 
@@ -213,7 +214,7 @@ export default function Travel() {
                       {country.name} {country.flag}
                     </Typography>
                     <Typography variant="body1" color="rgba(255, 255, 255, 0.8)">
-                      {country.visits.length} {country.visits.length === 1 ? 'visit' : 'visits'} · {calculateDaysSpent(country.visits)} total days
+                      {country.isHomeCountry ? "I live here! Born and raised in Kansas." : `${country.visits.length} ${country.visits.length === 1 ? 'visit' : 'visits'} · ${calculateDaysSpent(country.visits)} total days`}
                     </Typography>
                   </Box>
                 </Box>
@@ -378,23 +379,6 @@ export default function Travel() {
                           <Typography variant="h6" fontWeight="600" gutterBottom>
                             {spot.name}
                           </Typography>
-                          
-                          {spot.location && (
-                            <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                              {spot.location}
-                            </Typography>
-                          )}
-                          
-                          {spot.rating && (
-                            <Rating 
-                              value={spot.rating} 
-                              readOnly 
-                              precision={0.5}
-                              size="small"
-                              sx={{ mt: 0.5, mb: 1 }}
-                            />
-                          )}
-                          
                           <Typography variant="body2" sx={{ mt: 1 }}>
                             {spot.description}
                           </Typography>

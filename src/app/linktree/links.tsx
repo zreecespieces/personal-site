@@ -54,7 +54,7 @@ export const links: LinkItemProps[] = [
     },
     {
       icon: <MenuBookIcon />,
-      title: 'Reading List',
+      title: 'Reading',
       url: '/reading',
     },
     {
