@@ -17,7 +17,7 @@ import {
   DialogContent,
   IconButton
 } from "@mui/material";
-import { countries, calculateDaysSpent, getTotalCountriesVisited, getTotalDaysSpent } from "./countries";
+import { countries, calculateDaysSpent, getTotalCountriesVisited, getTotalDaysSpent, getTotalStatesVisited } from "./countries";
 import NextLink from "next/link";
 import CloseIcon from '@mui/icons-material/Close';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -25,6 +25,7 @@ import PublicIcon from '@mui/icons-material/Public';
 import FlightIcon from '@mui/icons-material/Flight';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import GradientBorder from "@/components/GradientBorder";
+import USAMapComponent from "./USAMapComponent";
 
 // Format date from YYYY-MM-DD to Month Day, Year
 const formatDate = (dateString: string) => {
@@ -85,13 +86,25 @@ export default function Travel() {
           
           <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 2, my: 2 }}>
             <Chip 
+              icon={<FlightIcon />} 
+              label={`${getTotalStatesVisited()} States Visited`} 
+              sx={{ 
+                bgcolor: 'rgba(146, 239, 253, 0.1)', 
+                color: '#92EFFD',
+                fontWeight: 500,
+                px: 1,
+                width: "12rem"
+              }} 
+            />
+            <Chip 
               icon={<PublicIcon />} 
               label={`${getTotalCountriesVisited()} Countries Visited`} 
               sx={{ 
                 bgcolor: 'rgba(0, 114, 255, 0.1)', 
                 color: '#0072FF',
                 fontWeight: 500,
-                px: 1
+                px: 1,
+                width: "12rem"
               }} 
             />
             <Chip 
@@ -101,7 +114,8 @@ export default function Travel() {
                 bgcolor: 'rgba(146, 239, 253, 0.1)', 
                 color: '#92EFFD',
                 fontWeight: 500,
-                px: 1
+                px: 1,
+                width: "12rem"
               }} 
             />
           </Box>
@@ -390,6 +404,10 @@ export default function Travel() {
                   ))}
                 </Box>
               </Box>
+
+              {country.name === "United States" && country.states && (
+                <USAMapComponent visitedStates={country.states} />
+              )}
             </Box>
           ))}
         </Box>

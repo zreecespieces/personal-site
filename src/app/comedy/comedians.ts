@@ -4,9 +4,7 @@ export interface Comedian {
   image: string; // URL to comedian's image
   bio?: string;
   shows: Show[];
-  specialsToWatch?: string[];
   favorite?: boolean;
-  socialMedia?: SocialMedia;
 }
 
 export interface Show {
@@ -14,220 +12,248 @@ export interface Show {
   venue: string;
   city: string;
   tourName?: string;
-  rating?: number; // 1-5
   notes?: string;
   ticketImage?: string; // Optional image of ticket stub
 }
 
-export interface SocialMedia {
-  instagram?: string;
-  twitter?: string;
-  website?: string;
-}
+// simple list:
+// Bo Burnham - Nov 19 2012 - Wichita KS
+// Joe Rogan - Nov 14 2020 - Wichita KS
+// Tom Segura - June 7 2024 Kansas City
+// Mark Normand - Sept 6 2024 - Colorado Springs CO
+// Ari Matti - February 7 2025 - Denver CO
+// Ari Shaffir - February 28 2025 - Denver CO
+// TJ Miller - February 12 2025 -Colorado Springs
+// Adam Ray - April 19 2024 - Denver CO
+// Adam Ray is Dr. Phil LIVE - February 13 & 14 2025 - Denver CO
+// Shane Gillis - March 14 2025 - Colorado Springs
+// Duncan Trussell - March 21 2025 - Denver CO
+// Louis C.K. - June 2 2025 - Denver CO
+// Ian Fidance - December 7 2024 - Denver CO
+// Kill Tony - May 10 2024 - Los Angeles
 
 // Sample data
 export const comedians: Comedian[] = [
   {
-    name: "Dave Chappelle",
-    image: "https://images.unsplash.com/photo-1608734265656-f035d3e7bcbf", // Placeholder image
-    bio: "Iconic stand-up comedian, actor, writer, and producer known for his sharp social commentary and sketch comedy.",
-    shows: [
-      {
-        date: "2024-01-15",
-        venue: "Comedy Cellar",
-        city: "New York, NY",
-        tourName: "Surprise Appearance",
-        rating: 5,
-        notes: "Incredible surprise drop-in that lasted over an hour. Tested new material that had the room in stitches."
-      },
-      {
-        date: "2022-09-20",
-        venue: "Madison Square Garden",
-        city: "New York, NY",
-        tourName: "Untitled Tour 2022",
-        rating: 5,
-        notes: "Sold-out arena show that touched on everything from cancel culture to personal growth."
-      }
-    ],
-    specialsToWatch: [
-      "The Closer",
-      "Sticks & Stones",
-      "Equanimity & The Bird Revelation"
-    ],
-    favorite: true,
-    socialMedia: {
-      instagram: "davechappelle",
-      twitter: "DaveChappelle",
-      website: "davechappelle.com"
-    }
-  },
-  {
-    name: "John Mulaney",
-    image: "https://images.unsplash.com/photo-1600176842408-51efe98c9ee0", // Placeholder image
-    bio: "Former Saturday Night Live writer turned stand-up comedian known for his self-deprecating, observational comedy and sharp suits.",
-    shows: [
-      {
-        date: "2023-11-10",
-        venue: "Radio City Music Hall",
-        city: "New York, NY",
-        tourName: "From Scratch",
-        rating: 4.5,
-        notes: "Hilarious and surprisingly vulnerable show about his recent life changes."
-      }
-    ],
-    specialsToWatch: [
-      "Baby J",
-      "Kid Gorgeous",
-      "The Comeback Kid",
-      "New in Town"
-    ],
-    favorite: true,
-    socialMedia: {
-      instagram: "johnmulaney",
-      twitter: "mulaney",
-      website: "johnmulaney.com"
-    }
-  },
-  {
-    name: "Ali Wong",
-    image: "https://images.unsplash.com/photo-1610319370416-c76568d73dc7", // Placeholder image
-    bio: "Stand-up comedian, actress, and writer known for her Netflix specials and raw, hilarious takes on pregnancy, marriage, and motherhood.",
-    shows: [
-      {
-        date: "2024-02-14",
-        venue: "The Wiltern",
-        city: "Los Angeles, CA",
-        tourName: "Valentine's Day Special",
-        rating: 4,
-        notes: "Special Valentine's Day show with all new material about dating after divorce."
-      }
-    ],
-    specialsToWatch: [
-      "Don Wong",
-      "Hard Knock Wife",
-      "Baby Cobra"
-    ],
-    socialMedia: {
-      instagram: "aliwong",
-      twitter: "aliwong",
-      website: "aliwong.com"
-    }
-  },
-  {
     name: "Tom Segura",
-    image: "https://images.unsplash.com/photo-1598135753163-6167c1a1ad65", // Placeholder image
+    image: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Tom_Segura_Happy_Birthday.jpg",
     bio: "Stand-up comedian and podcaster known for his deadpan delivery and often dark, observational humor.",
     shows: [
       {
-        date: "2023-07-22",
-        venue: "The Chicago Theatre",
-        city: "Chicago, IL",
-        tourName: "I'm Coming Everywhere Tour",
-        rating: 4.5,
-        notes: "Absolutely killed with his new hour. His crowd work was especially impressive."
+        date: "2024-06-07",
+        venue: "T-Mobile Center",
+        city: "Kansas City, MO",
+        notes: "His new material was even better than his specials. Great crowd work too."
+      }
+    ],
+    favorite: true
+  },
+  {
+    name: "Bo Burnham",
+    image: "https://upload.wikimedia.org/wikipedia/commons/6/62/Bo_Burnham_Interview_%28cropped%29.jpg",
+    bio: "Musical comedian, filmmaker, actor, and poet known for his innovative comedy specials and introspective humor.",
+    shows: [
+      {
+        date: "2012-11-19",
+        venue: "Orpheum Theatre",
+        city: "Wichita, KS",
+        notes: "Incredible musical comedy performance"
+      }
+    ],
+    favorite: true
+  },
+  {
+    name: "Joe Rogan",
+    image: "https://upload.wikimedia.org/wikipedia/commons/7/7d/Joe_Rogan_-_2019_%28cropped%29.jpg",
+    bio: "Stand-up comedian, UFC commentator, and host of one of the world's most popular podcasts, 'The Joe Rogan Experience'.",
+    shows: [
+      {
+        date: "2020-11-14",
+        venue: "Intrust Bank Arena",
+        city: "Wichita, KS",
+        notes: "Controversial but entertaining"
+      }
+    ]
+  },
+  {
+    name: "Mark Normand",
+    image: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Mark_Normand_2019_%28cropped%29.jpg",
+    bio: "Stand-up comedian known for his quick wit, clever wordplay, and traditional joke-telling style.",
+    shows: [
+      {
+        date: "2024-09-06",
+        venue: "Pikes Peak Center",
+        city: "Colorado Springs, CO",
+        notes: "Rapid-fire jokes and great crowd work"
+      }
+    ]
+  },
+  {
+    name: "Ari Matti",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Wikipedia-logo-v2-en.svg/500px-Wikipedia-logo-v2-en.svg.png", // Placeholder as no Wikipedia image found
+    bio: "Stand-up comedian known for his unique perspective and hilarious takes on everyday life.",
+    shows: [
+      {
+        date: "2025-02-07",
+        venue: "Comedy Works",
+        city: "Denver, CO",
+        notes: "Fresh perspective and high energy"
+      }
+    ]
+  },
+  {
+    name: "Ari Shaffir",
+    image: "https://upload.wikimedia.org/wikipedia/commons/8/8d/Ari_Shaffir_Comedy_Store_2018.jpg",
+    bio: "Stand-up comedian, podcaster, and writer known for his storytelling comedy and controversial humor.",
+    shows: [
+      {
+        date: "2025-02-28",
+        venue: "Comedy Works",
+        city: "Denver, CO",
+        notes: "Raw and unfiltered comedy"
+      }
+    ]
+  },
+  {
+    name: "TJ Miller",
+    image: "https://upload.wikimedia.org/wikipedia/commons/6/69/T._J._Miller_by_Gage_Skidmore.jpg",
+    bio: "Actor, stand-up comedian, and voice actor known for his absurdist humor and roles in Silicon Valley and Deadpool.",
+    shows: [
+      {
+        date: "2025-02-12",
+        venue: "Loonees Comedy Corner",
+        city: "Colorado Springs, CO",
+        notes: "Energetic and eccentric performance"
+      }
+    ]
+  },
+  {
+    name: "Adam Ray",
+    image: "https://upload.wikimedia.org/wikipedia/commons/b/be/Adam_Ray_by_Gage_Skidmore.jpg",
+    bio: "Actor, comedian, and podcaster known for his impressions and character work.",
+    shows: [
+      {
+        date: "2024-04-19",
+        venue: "Comedy Works",
+        city: "Denver, CO",
+        notes: "Great impressions and character work"
       },
       {
-        date: "2021-09-15",
-        venue: "Comedy Store",
+        date: "2025-02-13",
+        venue: "Paramount Theatre",
+        city: "Denver, CO",
+        tourName: "Adam Ray is Dr. Phil LIVE",
+        notes: "Amazing Dr. Phil impression show"
+      },
+      {
+        date: "2025-02-14",
+        venue: "Paramount Theatre",
+        city: "Denver, CO",
+        tourName: "Adam Ray is Dr. Phil LIVE",
+        notes: "Amazing Dr. Phil impression show"
+      }
+    ]
+  },
+  {
+    name: "Shane Gillis",
+    image: "https://upload.wikimedia.org/wikipedia/commons/7/75/Shane_Gillis_in_2019.jpg",
+    bio: "Stand-up comedian, podcast host, and sketch comedy writer known for his observational humor.",
+    shows: [
+      {
+        date: "2025-03-14",
+        venue: "Pikes Peak Center",
+        city: "Colorado Springs, CO",
+        notes: "Brutally funny and honest comedy"
+      }
+    ],
+    favorite: true
+  },
+  {
+    name: "Duncan Trussell",
+    image: "https://upload.wikimedia.org/wikipedia/commons/5/55/Duncan_Trussell_2012_Cropped.jpg",
+    bio: "Comedian, podcaster, and actor known for his psychedelic comedy and philosophical discussions.",
+    shows: [
+      {
+        date: "2025-03-21",
+        venue: "Oriental Theater",
+        city: "Denver, CO",
+        notes: "Mind-expanding comedy and spiritual insights"
+      }
+    ]
+  },
+  {
+    name: "Louis C.K.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/d/d7/Louis_CK_2012_Shankbone.JPG",
+    bio: "Stand-up comedian, writer, actor, and filmmaker known for his observational and self-deprecating humor.",
+    shows: [
+      {
+        date: "2025-06-02",
+        venue: "Bellco Theatre",
+        city: "Denver, CO",
+        notes: "Controversial but masterful storytelling"
+      }
+    ]
+  },
+  {
+    name: "Ian Fidance",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Wikipedia-logo-v2-en.svg/500px-Wikipedia-logo-v2-en.svg.png", // Placeholder as no Wikipedia image found
+    bio: "Up-and-coming comedian known for his energetic performances and appearances on Comedy Central.",
+    shows: [
+      {
+        date: "2024-12-07",
+        venue: "Comedy Works",
+        city: "Denver, CO",
+        notes: "Fresh perspective and high energy"
+      }
+    ]
+  },
+  {
+    name: "Kill Tony",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Wikipedia-logo-v2-en.svg/500px-Wikipedia-logo-v2-en.svg.png", // Placeholder as no Wikipedia image found
+    bio: "Popular comedy podcast hosted by Tony Hinchcliffe where amateur comedians perform and receive feedback.",
+    shows: [
+      {
+        date: "2024-05-10",
+        venue: "The Comedy Store",
         city: "Los Angeles, CA",
-        rating: 4,
-        notes: "Intimate venue where he worked on new material. Great to see his process."
+        notes: "Hilarious roasting of open mic comedians"
       }
-    ],
-    specialsToWatch: [
-      "Sledgehammer",
-      "Ball Hog",
-      "Disgraceful",
-      "Mostly Stories"
-    ],
-    socialMedia: {
-      instagram: "seguratom",
-      twitter: "tomsegura",
-      website: "tomsegura.com"
-    }
-  },
-  {
-    name: "Nikki Glaser",
-    image: "https://images.unsplash.com/photo-1557577262-1b431d0c9d1b", // Placeholder image
-    bio: "Stand-up comedian, actress, and podcast host known for her no-holds-barred comedy tackling sex, relationships, and pop culture.",
-    shows: [
-      {
-        date: "2023-10-05",
-        venue: "The Paramount",
-        city: "Austin, TX",
-        tourName: "The Good Girl Tour",
-        rating: 4,
-        notes: "Fearless comedy that had the audience both shocked and in tears from laughing."
-      }
-    ],
-    specialsToWatch: [
-      "Good Clean Filth",
-      "Bangin'",
-      "Perfect"
-    ],
-    socialMedia: {
-      instagram: "nikkiglaser",
-      twitter: "NikkiGlaser",
-      website: "nikkiglaser.com"
-    }
-  },
-  {
-    name: "Taylor Tomlinson",
-    image: "https://images.unsplash.com/photo-1542751110-97427bbecf7a", // Placeholder image
-    bio: "Rising star in comedy known for her self-deprecating humor and insights on young adulthood and mental health.",
-    shows: [
-      {
-        date: "2024-03-01",
-        venue: "Beacon Theatre",
-        city: "New York, NY",
-        tourName: "Have It All Tour",
-        rating: 4.5,
-        notes: "Impressively polished new hour with great insights on therapy and relationships."
-      }
-    ],
-    specialsToWatch: [
-      "Look At You",
-      "Quarter-Life Crisis"
-    ],
-    favorite: true,
-    socialMedia: {
-      instagram: "taylortomlinson",
-      twitter: "taylortomlinson",
-      website: "ttomcomedy.com"
-    }
+    ]
   }
 ];
 
 // Helper functions
 
 // Get total number of comedy shows attended
-export const getTotalShows = (): number => {
+export function getTotalShows(): number {
   return comedians.reduce((total, comedian) => total + comedian.shows.length, 0);
-};
+}
 
 // Get total number of comedians seen
-export const getTotalComediansSeen = (): number => {
+export function getTotalComediansSeen(): number {
   return comedians.length;
-};
+}
 
 // Get favorite comedians
-export const getFavoriteComedians = (): Comedian[] => {
+export function getFavoriteComedians(): Comedian[] {
   return comedians.filter(comedian => comedian.favorite);
-};
+}
 
-// Get comedians sorted by most recently seen
-export const getComediansByRecent = (): Comedian[] => {
+// Get comedians sorted by earliest seen
+export function getComediansByEarliestSeen(): Comedian[] {
   return [...comedians].sort((a, b) => {
-    const aLatestShow = new Date(a.shows.sort((s1, s2) => 
-      new Date(s2.date).getTime() - new Date(s1.date).getTime())[0].date);
-    const bLatestShow = new Date(b.shows.sort((s1, s2) => 
-      new Date(s2.date).getTime() - new Date(s1.date).getTime())[0].date);
-    return bLatestShow.getTime() - aLatestShow.getTime();
+    const aEarliestShow = a.shows.reduce((earliest, show) => 
+      !earliest || show.date < earliest ? show.date : earliest, "");
+    const bEarliestShow = b.shows.reduce((earliest, show) => 
+      !earliest || show.date < earliest ? show.date : earliest, "");
+    return aEarliestShow.localeCompare(bEarliestShow);
   });
-};
+}
 
 // Format date
-export const formatDate = (dateString: string): string => {
-  const date = new Date(dateString);
+export function formatDate(dateString: string): string {
+  // Add a time component to ensure correct date in all timezones
+  const dateTimeString = `${dateString}T12:00:00`;
+  const date = new Date(dateTimeString);
   return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-};
+}
