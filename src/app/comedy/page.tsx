@@ -168,7 +168,7 @@ export default function Comedy() {
                 <Box 
                   sx={{ 
                     width: { xs: '100%', sm: 300 },
-                    height: { xs: 300, sm: 400 },
+                    height: { xs: 400, sm: 400 },
                     flexShrink: 0,
                     position: 'relative',
                     borderRadius: 3,
