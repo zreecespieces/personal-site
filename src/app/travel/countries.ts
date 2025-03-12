@@ -511,7 +511,7 @@ export const countries: Country[] = [
   {
     name: "Ireland",
     flag: "🇮🇪",
-    coverImage: "https://image.jimcdn.com/app/cms/image/transf/none/path/sa6549607c78f5c11/image/i6a408352eb340fb5/version/1611152511/best-castles-in-ireland-dunluce-castle-copyright-nahlik-european-best-destinations.jpg",
+    coverImage: "https://images.alphacoders.com/885/thumb-1920-885418.jpg",
     visits: [
       {
         startDate: "2024-09-25",
