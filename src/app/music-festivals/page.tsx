@@ -121,24 +121,6 @@ export default function MusicFestivals() {
                     </Box>
                 </GradientBorder>
 
-                {/* Description */}
-                <Typography 
-                    variant="body1" 
-                    component="p" 
-                    align="center" 
-                    sx={{ 
-                        maxWidth: '800px', 
-                        mx: 'auto',
-                        fontSize: '1.1rem',
-                        lineHeight: 1.6,
-                        color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.7)',
-                    }}
-                >
-                    A collection of music festivals I've attended over the years, from epic weekends at Bonnaroo 
-                    to spectacular nights at Lights All Night. Each festival represents a unique experience filled 
-                    with amazing performances, new friends, and unforgettable memories.
-                </Typography>
-
                 {/* Year Tabs */}
                 <Box sx={{ width: '100%', bgcolor: 'background.paper', borderRadius: 2, overflow: 'hidden' }}>
                     <Tabs 
