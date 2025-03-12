@@ -476,6 +476,84 @@ export const countries: Country[] = [
       }
     ],
     description: "Home to hundreds of museums, countless churches, and beautiful architecture, with Prague's historic center a UNESCO World Heritage site."
+  },
+  {
+    name: "Scotland",
+    flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+    coverImage: "https://www.ihcottages.com/wp-content/uploads/landscape-540115_1920.jpg",
+    visits: [
+      {
+        startDate: "2024-09-21",
+        endDate: "2024-09-24",
+        purpose: "Tourism"
+      }
+    ],
+    favoriteSpots: [
+      {
+        name: "Edinburgh",
+        description: "Historic capital city with stunning castle and old town",
+      },
+      {
+        name: "Isle of Skye",
+        description: "Beautiful island known for its rugged landscapes and scenic views",
+      },
+      {
+        name: "Portree",
+        description: "Charming port town and capital of the Isle of Skye",
+      },
+      {
+        name: "Loch Ness",
+        description: "Famous lake known for the legendary Loch Ness Monster",
+      }
+    ],
+    description: "Land of highlands, historic castles, and rich cultural heritage with breathtaking natural landscapes."
+  },
+  {
+    name: "Ireland",
+    flag: "🇮🇪",
+    coverImage: "https://image.jimcdn.com/app/cms/image/transf/none/path/sa6549607c78f5c11/image/i6a408352eb340fb5/version/1611152511/best-castles-in-ireland-dunluce-castle-copyright-nahlik-european-best-destinations.jpg",
+    visits: [
+      {
+        startDate: "2024-09-25",
+        endDate: "2024-09-30",
+        purpose: "Tourism"
+      }
+    ],
+    favoriteSpots: [
+      {
+        name: "Dublin",
+        description: "Vibrant capital city with rich history and culture",
+      },
+      {
+        name: "Galway",
+        description: "Charming coastal city known for its vibrant culture and music scene",
+      },
+      {
+        name: "Killarney",
+        description: "Picturesque town surrounded by beautiful national park",
+      },
+      {
+        name: "Blarney Castle",
+        description: "Medieval stronghold known for the legendary Blarney Stone",
+      },
+      {
+        name: "Cliffs of Moher",
+        description: "Dramatic sea cliffs rising above the Atlantic Ocean",
+      },
+      {
+        name: "Kerry Cliffs",
+        description: "Stunning coastal cliffs with views of the Skellig Islands",
+      },
+      {
+        name: "Poulnabrone Dolmen",
+        description: "Ancient portal tomb dating back to the Neolithic period",
+      },
+      {
+        name: "The River Shannon",
+        description: "Ireland's longest river flowing through beautiful countryside, and my mother's namesake",
+      }
+    ],
+    description: "Emerald Isle known for its lush landscapes, friendly people, rich folklore, and vibrant pub culture."
   }
 ];
 
