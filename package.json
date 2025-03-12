@@ -18,7 +18,8 @@
     "@mui/material-nextjs": "next",
     "next": "^15.0.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-usa-map": "^1.5.0"
   },
   "devDependencies": {
     "@types/node": "latest",
