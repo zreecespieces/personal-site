@@ -29,7 +29,9 @@ import USAMapComponent from "./USAMapComponent";
 
 // Format date from YYYY-MM-DD to Month Day, Year
 const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
+  // Add a time component to ensure correct date in all timezones
+  const dateTimeString = `${dateString}T12:00:00`;
+  const date = new Date(dateTimeString);
   return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 };
 
@@ -306,7 +308,7 @@ export default function Travel() {
                   }}
                 >
                   <FavoriteIcon sx={{ color: '#e91e63' }} />
-                  Visited Places
+                  Favorite Places
                 </Typography>
                 
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', mx: -2 }}>

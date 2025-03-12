@@ -62,7 +62,23 @@ export const countries: Country[] = [
     name: "United States",
     flag: "🇺🇸",
     coverImage: "https://upload.wikimedia.org/wikipedia/commons/1/1f/Wichita%2C_Kansas_skyline_aerial_view.jpg",
-    visits: [],
+    visits: [
+      {
+        startDate: "1998-09-02",
+        endDate: "2022-08-21",
+        purpose: "Born in Wichita, Kansas"
+      },
+      {
+        startDate: "2022-08-21",
+        endDate: "2023-07-31",
+        purpose: "Moved to Akron, Ohio"
+      },
+      {
+        startDate: "2024-08-20",
+        endDate: new Date().toISOString().split('T')[0],
+        purpose: "Moved to Denver, Colorado"
+      }
+    ],
     favoriteSpots: [],
     description: "My home country",
     states: ["Kansas", "Colorado", "Ohio", "Missouri", "Oklahoma", "Arkansas", "Louisiana", "Florida", "Texas", "New York", "Illinois", "California", "Washington", "Washington DC", "Virginia", "Maryland", "Pennsylvania", "Nevada", "Utah", "Michigan", "Indiana", "Tennessee", "Georgia", "Kentucky"],
