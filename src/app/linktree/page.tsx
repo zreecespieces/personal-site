@@ -91,7 +91,7 @@ export default function LinkTree() {
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             letterSpacing: "0.02em",
-            mb: 1,
+            mb: 0,
           }}>
           Zachary Reece
         </Typography>
@@ -106,7 +106,7 @@ export default function LinkTree() {
             opacity: 0.9,
             px: 2,
           }}>
-          software engineer by trade | martial artist by choice | philosopher by nature
+          software engineer by trade --- martial artist by choice --- philosopher by nature
         </Typography>
 
         <Grid container spacing={4}>

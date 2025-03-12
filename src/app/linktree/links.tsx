@@ -32,30 +32,10 @@ export const links: LinkItemProps[] = [
       url: '',
     },
     {
-      icon: <SportsKabaddiIcon />,
-      title: 'BJJ & Judo',
-      url: 'https://smoothcomp.com/en/profile/979762',
-    },
-    {
-      icon: <NightlifeIcon />,
-      title: 'Music Festivals',
-      url: '/music-festivals',
-    },
-    {
       icon: <HistoryEduIcon />,
       title: 'Blog',
       subtitle: "Coming soon",
       url: '',
-    },
-    {
-      icon: <PaletteIcon />,
-      title: 'AI Art',
-      url: '/art',
-    },
-    {
-      icon: <MenuBookIcon />,
-      title: 'Reading',
-      url: '/reading',
     },
     {
       icon: <PublicIcon />,
@@ -63,9 +43,29 @@ export const links: LinkItemProps[] = [
       url: '/travel',
     },
     {
+      icon: <SportsKabaddiIcon />,
+      title: 'BJJ & Judo',
+      url: 'https://smoothcomp.com/en/profile/979762',
+    },
+    {
+      icon: <PaletteIcon />,
+      title: 'AI Art',
+      url: '/art',
+    },
+    {
+      icon: <NightlifeIcon />,
+      title: 'Music Festivals',
+      url: '/music-festivals',
+    },
+    {
       icon: <TheaterComedyIcon />,
       title: 'Comedy',
       url: '/comedy',
+    },
+    {
+      icon: <MenuBookIcon />,
+      title: 'Reading',
+      url: '/reading',
     },
     {
       icon: <DescriptionIcon />,
