@@ -12,6 +12,7 @@ import NightlifeIcon from '@mui/icons-material/Nightlife';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import PublicIcon from '@mui/icons-material/Public';
 import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
+import LandscapeIcon from '@mui/icons-material/Landscape';
 import { LinkItemProps } from './linkItem';
 
 export const links: LinkItemProps[] = [
@@ -61,6 +62,11 @@ export const links: LinkItemProps[] = [
       icon: <TheaterComedyIcon />,
       title: 'Comedy',
       url: '/comedy',
+    },
+    {
+      icon: <LandscapeIcon />,
+      title: 'Hikes',
+      url: '/hikes',
     },
     {
       icon: <MenuBookIcon />,
