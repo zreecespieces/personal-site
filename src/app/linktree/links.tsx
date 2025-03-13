@@ -13,6 +13,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import PublicIcon from '@mui/icons-material/Public';
 import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
 import LandscapeIcon from '@mui/icons-material/Landscape';
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import { LinkItemProps } from './linkItem';
 
 export const links: LinkItemProps[] = [
@@ -67,6 +68,11 @@ export const links: LinkItemProps[] = [
       icon: <LandscapeIcon />,
       title: 'Hikes',
       url: '/hikes',
+    },
+    {
+      icon: <LocalLibraryIcon />,
+      title: 'Study',
+      url: '/study',
     },
     {
       icon: <MenuBookIcon />,

@@ -53,7 +53,7 @@ export async function subscribeToNewsletter(subscriber: Subscriber): Promise<{ s
   try {
     // In a browser environment, we need to use a proxy API route
     // to avoid exposing API keys and to handle CORS issues
-    const response = await fetch('/api/subscribe', {
+    const response = await fetch('/subscribe', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
