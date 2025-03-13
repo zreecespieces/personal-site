@@ -5,6 +5,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
+import { NewsletterDialog } from './NewsletterDialog';
 
 const theme = createTheme({
   palette: {
@@ -51,6 +52,9 @@ export function ClientRootLayout({ children }: { children: React.ReactNode }) {
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           {children}
+          
+          {/* Newsletter Signup Dialog */}
+          <NewsletterDialog />
         </ThemeProvider>
       </AppRouterCacheProvider>
     </>
