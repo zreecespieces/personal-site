@@ -82,6 +82,7 @@ export default function LinkTree() {
           }}
         />
 
+        <Container maxWidth="md" sx={{ alignItems: "center", display: "flex", flexDirection: "column" }}>
         {/* Enhanced Profile Section */}
         <Box
           sx={{
@@ -250,6 +251,8 @@ export default function LinkTree() {
             </IconButton>
           ))}
         </Stack>
+
+        </Container>
       </Box>
     </Container>
   )
