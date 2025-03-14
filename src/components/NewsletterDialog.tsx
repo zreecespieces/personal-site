@@ -22,7 +22,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import EmailIcon from '@mui/icons-material/Email';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import { subscribeToNewsletter, storeNewsletterResponse, shouldShowNewsletterPrompt } from '@/utils/mailchimp';
+import { storeNewsletterResponse, shouldShowNewsletterPrompt } from '@/utils/firebase';
 
 export function NewsletterDialog() {
   const [open, setOpen] = useState(false);
@@ -75,29 +75,24 @@ export function NewsletterDialog() {
     setLoading(true);
     
     try {
-      const result = await subscribeToNewsletter({ email, firstName, lastName });
+      // Use the Firebase API route instead of direct function call for better separation
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, firstName, lastName }),
+      });
+      
+      const result = await response.json();
       
       if (result.success) {
-        setSnackbar({
-          open: true,
-          message: result.message,
-          severity: 'success'
-        });
+        setSnackbar({ open: true, message: result.message, severity: 'success' });
         storeNewsletterResponse('subscribed');
         setOpen(false);
       } else {
-        setSnackbar({
-          open: true,
-          message: result.message,
-          severity: 'error'
-        });
+        setSnackbar({ open: true, message: result.message, severity: 'error' });
       }
     } catch (error) {
-      setSnackbar({
-        open: true,
-        message: 'An error occurred. Please try again later.',
-        severity: 'error'
-      });
+      setSnackbar({ open: true, message: 'An error occurred. Please try again later.', severity: 'error' });
     } finally {
       setLoading(false);
     }
@@ -111,15 +106,17 @@ export function NewsletterDialog() {
         aria-labelledby="newsletter-dialog-title"
         maxWidth="sm"
         fullWidth
-        PaperProps={{
-          sx: {
-            bgcolor: 'rgba(30, 30, 30, 0.95)',
-            backdropFilter: 'blur(10px)',
-            borderRadius: 3,
-            border: '1px solid rgba(81, 81, 81, 0.3)',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
-            position: 'relative',
-            overflow: 'hidden',
+        slotProps={{
+          paper: {
+            sx: {
+              bgcolor: 'rgba(30, 30, 30, 0.95)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: 3,
+              border: '1px solid rgba(81, 81, 81, 0.3)',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+              position: 'relative',
+              overflow: 'hidden',
+            }
           }
         }}
       >
@@ -272,6 +269,7 @@ export function NewsletterDialog() {
           onClose={() => setSnackbar(prev => ({ ...prev, open: false }))} 
           severity={snackbar.severity} 
           variant="filled"
+          slotProps={{ message: { sx: { color: '#FFF' } } }}
           sx={{ width: '100%' }}
         >
           {snackbar.message}

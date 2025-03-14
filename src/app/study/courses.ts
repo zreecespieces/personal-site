@@ -74,7 +74,7 @@ export const courses: Course[] = [
     title: "Multivariable Calculus",
     provider: "Khan Academy",
     category: "mathematics",
-    startDate: "2025-02-20",
+    startDate: "2025-01-13",
     progress: 48,
     mastery: 48,
     description: "Advanced calculus course covering functions of multiple variables, partial derivatives, multiple integrals, and vector calculus.",

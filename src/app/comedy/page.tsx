@@ -334,7 +334,7 @@ export default function Comedy() {
 
                 {/* Back to Linktree */}
                 <NextLink href="/" passHref>
-                  <Button sx={{ mt: 2, color: "#FF0055" }}>Back to Linktree</Button>
+                  <Button sx={{ mt: 2, color: "#FF0055", textTransform: "none" }}>Back to Linktree</Button>
                 </NextLink>
               </Box>
             </Box>

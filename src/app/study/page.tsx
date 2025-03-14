@@ -48,7 +48,7 @@ export default function Study() {
               letterSpacing: '0.02em',
             }}
           >
-            Study Progress
+            Study Subjects
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 3, mt: 2 }}>
             <Chip 
@@ -201,7 +201,7 @@ export default function Study() {
             </GradientBorder>
           ))}
         </Box>
-        <Button component={NextLink} href="/linktree" sx={{ mt: 4, color: "#6200EA", alignSelf: "flex-start" }}>
+        <Button component={NextLink} href="/linktree" sx={{ mt: 4, color: "#03DAC6", alignSelf: "flex-start", textTransform: "none" }}>
           Back to Linktree
         </Button>
       </Stack>

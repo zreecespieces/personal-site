@@ -318,7 +318,7 @@ export default function Hikes() {
               </Grid>
             </Box>
           ))}
-          <Button component={NextLink} href="/linktree" sx={{ mt: 4, color: "#66ff00" }}>
+          <Button component={NextLink} href="/linktree" sx={{ mt: 4, color: "#66ff00", textTransform: "none" }}>
             Back to Linktree
           </Button>
         </Box>
