@@ -35,8 +35,7 @@ const professionalLinks: LinkItemProps[] = [
   {
     icon: <LanguageIcon />,
     title: 'Projects',
-    subtitle: "Coming soon",
-    url: '',
+    url: '/projects',
   },
   {
     icon: <HistoryEduIcon />,
