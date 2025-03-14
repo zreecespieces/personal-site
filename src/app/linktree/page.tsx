@@ -11,7 +11,7 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess"
 
 const GRADIENT_PATTERNS = [
   ["#92EFFD", "#0072FF"], // Blue gradient
-  ["#FF057C", "#8D0B93"], // Pink to soft purple gradient
+  ["#DAB1DA", "#8D0B93"], // Light purple to dark purple gradient
 ]
 
 export default function LinkTree() {
