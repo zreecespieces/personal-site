@@ -159,8 +159,7 @@ export default function LinkTree() {
                 sx={{
                   fontWeight: 400,
                   letterSpacing: "0.01em",
-                  opacity: 0.9,
-                  px: 2,
+                  px: 1,
                 }}>
                 I have been working professionally as a React developer since 2020, but I have been creating technology since early childhood.
                 In 2022, I started working as a Senior React Developer for Cloudwell - a software consultancy specializing in enterprise cloud
