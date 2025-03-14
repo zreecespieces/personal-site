@@ -170,7 +170,7 @@ export default function Projects() {
 
               {/* Project Description */}
               <GradientBorder gradientColors={["#00FFFF", "#FF00FF"]} sx={{ width: "100%" }} contentSx={{ p: 3 }}>
-                <Typography variant="body1" sx={{ lineHeight: 1.6 }}>
+                <Typography variant="body1" sx={{ lineHeight: 1.6, textAlign: "justify" }}>
                   {project.description}
                 </Typography>
               </GradientBorder>
