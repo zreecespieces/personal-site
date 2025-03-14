@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: '/instant-perler-pattern/:path*',
-        destination: 'https://my-vite-project.vercel.app/:path*',
+        destination: 'https://perler-pattern-generator.vercel.app/:path*',
       },
     ];
   },
