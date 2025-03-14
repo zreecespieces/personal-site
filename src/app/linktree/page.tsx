@@ -183,7 +183,7 @@ export default function LinkTree() {
                     px: 1,
                   }}>
                   I have been working professionally as a React developer since 2020, but I have been creating technology since
-                  early childhood. In 2022, I started working as a Senior React Developer for Cloudwell - a software consultancy
+                  early childhood. Since 2022 I have worked as a Senior React Developer for Cloudwell, a software consultancy
                   specializing in enterprise cloud solutions within the Microsoft ecosystem. There I have gained exceptional
                   professional software experience while working for clients ranging from cyber security defense contractors and
                   multi-billion dollar commercial real estate brokers to federal government agencies and our own internal
