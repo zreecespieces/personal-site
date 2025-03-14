@@ -250,19 +250,6 @@ export default function LinkTree() {
             </IconButton>
           ))}
         </Stack>
-
-        {/* Footer */}
-        <Typography
-          variant="caption"
-          color="text.secondary"
-          align="center"
-          sx={{
-            opacity: 0.6,
-            mt: 1,
-          }}
-        >
-          &copy; {new Date().getFullYear()} Zachary Reece. All rights reserved.
-        </Typography>
       </Box>
     </Container>
   )
