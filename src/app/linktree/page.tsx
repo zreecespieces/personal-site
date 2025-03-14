@@ -1,18 +1,33 @@
 "use client"
 
-import React from "react"
-import { Box, Container, Typography, Avatar, Stack, Grid, IconButton, Chip, Divider } from "@mui/material"
-import { links, contactInfo } from "./links"
+import React, { useState } from "react"
+import { Box, Container, Typography, Avatar, Stack, Grid, IconButton, Collapse } from "@mui/material"
+import { contactInfo, linkCategories } from "./links"
 import NextLink from "next/link"
 import { LinkItem } from "./linkItem"
 import GradientBorder from "@/components/GradientBorder"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import ExpandLessIcon from "@mui/icons-material/ExpandLess"
 
 const GRADIENT_PATTERNS = [
   ["#92EFFD", "#0072FF"], // Blue gradient
-  ["#FFD700", "#C0C0C0"], // Gold to soft purple gradient
+  ["#FF057C", "#8D0B93"], // Pink to soft purple gradient
 ]
 
 export default function LinkTree() {
+  // State to track which categories are expanded
+  const [expandedCategories, setExpandedCategories] = useState<Record<number, boolean>>(
+    linkCategories.reduce((acc, _, index) => ({ ...acc, [index]: true }), {})
+  )
+
+  // Toggle expanded state for a category
+  const toggleCategory = (index: number) => {
+    setExpandedCategories(prev => ({
+      ...prev,
+      [index]: !prev[index],
+    }))
+  }
+
   return (
     <Container maxWidth={false} sx={{ py: 8, overflow: "hidden" }}>
       <Box
@@ -174,10 +189,54 @@ export default function LinkTree() {
             </GradientBorder>
           </Grid>
           <Grid size={12} sx={{ order: { xs: 1, md: 2 } }}>
-            {/* Links Section with enhanced spacing and alternating gradient colors */}
-            <Stack spacing={2.5} sx={{ width: "100%" }}>
-              {links.map((link, index) => (
-                <LinkItem key={index} {...link} gradientColors={GRADIENT_PATTERNS[index % GRADIENT_PATTERNS.length]} />
+            {/* Links Section with collapsible categories */}
+            <Stack spacing={3.5} sx={{ width: "100%" }}>
+              {linkCategories.map((category, categoryIndex) => (
+                <Box key={categoryIndex}>
+                  {/* Clickable category header */}
+                  <Box 
+                    sx={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      mb: expandedCategories[categoryIndex] ? 2 : 0,
+                      cursor: 'pointer',
+                      '&:hover': {
+                        opacity: 0.9,
+                      }
+                    }}
+                    onClick={() => toggleCategory(categoryIndex)}
+                  >
+                    <Box sx={{ mr: 1, color: 'primary.main' }}>{category.icon}</Box>
+                    <Typography 
+                      variant="h6" 
+                      sx={{
+                        background: "linear-gradient(to right, #00FFFF, #FF00FF)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        fontWeight: 600,
+                        flex: 1,
+                      }}
+                    >
+                      {category.title}
+                    </Typography>
+                    {expandedCategories[categoryIndex] ? 
+                      <ExpandLessIcon sx={{ color: '#00FFFF' }} /> : 
+                      <ExpandMoreIcon sx={{ color: '#FF00FF' }} />
+                    }
+                  </Box>
+                  {/* Collapsible links */}
+                  <Collapse in={expandedCategories[categoryIndex]}>
+                    <Stack spacing={2} sx={{ mb: 2 }}>
+                      {category.links.sort((a, b) => a.title.localeCompare(b.title)).map((link, linkIndex) => (
+                        <LinkItem 
+                          key={linkIndex} 
+                          {...link} 
+                          gradientColors={GRADIENT_PATTERNS[(categoryIndex + linkIndex) % GRADIENT_PATTERNS.length]} 
+                        />
+                      ))}
+                    </Stack>
+                  </Collapse>
+                </Box>
               ))}
             </Stack>
           </Grid>
@@ -199,9 +258,10 @@ export default function LinkTree() {
           align="center"
           sx={{
             opacity: 0.6,
-            letterSpacing: "0.03em",
-          }}>
-          &copy; {new Date().getFullYear()} • Built while listening to ALLEYCVT 🎶
+            mt: 1,
+          }}
+        >
+          &copy; {new Date().getFullYear()} Zachary Reece. All rights reserved.
         </Typography>
       </Box>
     </Container>
