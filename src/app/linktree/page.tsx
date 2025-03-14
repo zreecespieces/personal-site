@@ -138,29 +138,37 @@ export default function LinkTree() {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                bgcolor: (theme) => theme.palette.background.default,
+                background: `linear-gradient(90deg, rgba(0,0,0,0.7), rgba(0,0,0,0.7))`,
+                backgroundOrigin: "border-box",
+                backgroundClip: "padding-box",
                 borderRadius: "inherit",
                 px: 2,
                 position: "relative",
+                boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+                transition: "all 0.2s ease-in-out",
+                "&:hover": {
+                  boxShadow: "0 4px 8px rgba(0,0,0,0.3)",
+                  transform: "translateY(-1px)",
+                },
               }}>
               <Typography
                 textAlign="center"
                 variant="body2"
-                sx={{ color: "#E1E1E1", letterSpacing: "0.01em", lineHeight: 1, py: 0.5 }}>
+                sx={{ color: "#FFFFFF", letterSpacing: "0.01em", lineHeight: 1, py: 0.5 }}>
                 software engineer by trade
               </Typography>
               <Box sx={{ mx: 1.5, height: "100%", width: "2px", background: "linear-gradient(to bottom, #00FFFF, #FF00FF)" }} />
               <Typography
                 textAlign="center"
                 variant="body2"
-                sx={{ color: "#E1E1E1", letterSpacing: "0.01em", lineHeight: 1, py: 0.5 }}>
+                sx={{ color: "#FFFFFF", letterSpacing: "0.01em", lineHeight: 1, py: 0.5 }}>
                 martial artist by choice
               </Typography>
               <Box sx={{ mx: 1.5, height: "100%", width: "2px", background: "linear-gradient(to bottom, #00FFFF, #FF00FF)" }} />
               <Typography
                 textAlign="center"
                 variant="body2"
-                sx={{ color: "#E1E1E1", letterSpacing: "0.01em", lineHeight: 1, py: 0.5 }}>
+                sx={{ color: "#FFFFFF", letterSpacing: "0.01em", lineHeight: 1, py: 0.5 }}>
                 philosopher by nature
               </Typography>
             </Box>
