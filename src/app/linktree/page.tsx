@@ -29,7 +29,7 @@ export default function LinkTree() {
   }
 
   return (
-    <Container maxWidth={false} sx={{ py: 8, px: 0, overflow: "hidden" }}>
+    <Container maxWidth={false} sx={{ py: 6, px: 0, overflow: "hidden" }}>
       <Box
         sx={{
           display: "flex",
