@@ -66,12 +66,12 @@ export const links: LinkItemProps[] = [
     },
     {
       icon: <LandscapeIcon />,
-      title: 'Hikes',
+      title: 'Hiking',
       url: '/hikes',
     },
     {
       icon: <LocalLibraryIcon />,
-      title: 'Study',
+      title: 'Studying',
       url: '/study',
     },
     {

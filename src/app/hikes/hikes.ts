@@ -3,14 +3,11 @@ export interface Hike {
   location: string;
   date: string; // Format: 'YYYY-MM-DD'
   distance: number; // In miles
-  elevation: number; // In feet
-  duration: string; // e.g., '3h 45m'
+  elevation?: number; // In feet
   difficulty: 'Easy' | 'Moderate' | 'Hard' | 'Very Hard';
-  rating: number; // 1-5
   description?: string;
   images: string[]; // URLs to images
   trailMapUrl?: string; // Optional link to AllTrails or other trail maps
-  favoriteSpots?: FavoriteSpot[];
 }
 
 export interface FavoriteSpot {
@@ -23,163 +20,212 @@ export interface FavoriteSpot {
   };
 }
 
-export interface HikeStats {
+// Create location-based interfaces for grouping
+export interface LocationGroup {
+  id: string; // Unique identifier
+  name: string; // Display name (e.g., "California", "Portugal")
+  type: 'domestic' | 'international'; // Type of location
   totalHikes: number;
-  totalDistance: number; // miles
-  totalElevation: number; // feet
+  totalDistance: number;
+  totalElevation: number;
+  hikes: Hike[];
+}
+
+export interface HikingStats {
+  totalHikes: number;
+  totalDistance: number; // In miles
+  totalElevation: number; // In feet
+  locations: number; // Number of unique locations
+  countries: number; // Number of unique countries
+  states: number; // Number of unique states (US)
   hardestHike?: string; // Name of hardest hike
-  highestRated?: string; // Name of highest rated hike
   longestHike?: string; // Name of longest hike
 }
 
 export const hikes: Hike[] = [
   {
-    name: "Angel's Landing",
-    location: "Zion National Park, Utah",
-    date: "2024-05-15",
-    distance: 5.4,
-    elevation: 1488,
-    duration: "4h 30m",
+    name: "Cloud's Rest",
+    location: "Yosemite, California",
+    date: "2020-08-07",
+    distance: 12.4,
+    elevation: 3116,
     difficulty: "Hard",
-    rating: 5,
-    description: "One of the most thrilling hikes in the US, featuring chain-assisted sections along steep drop-offs and breathtaking views of Zion Canyon.",
-    images: [
-      "https://www.nps.gov/zion/planyourvisit/images/Angels-Landing-from-across-the-canyon_1.jpg",
-      "https://www.nps.gov/zion/planyourvisit/images/Angels-Landing_1.jpg",
-      "https://www.nps.gov/zion/planyourvisit/images/Angels-Landing-Photo-by-CJYoung_1.jpg"
-    ],
-    trailMapUrl: "https://www.alltrails.com/trail/us/utah/angels-landing-trail",
-    favoriteSpots: [
-      {
-        name: "Scout Lookout",
-        description: "The stopping point before the chains section begins, offering panoramic views and a great place to rest.",
-        imageUrl: "https://www.nps.gov/zion/planyourvisit/images/Angels-Landing_1.jpg"
-      },
-      {
-        name: "The Spine",
-        description: "The final ridge to the summit with chains and stunning 360-degree views.",
-        imageUrl: "https://www.nps.gov/zion/planyourvisit/images/Angels-Landing-from-across-the-canyon_1.jpg"
-      }
-    ]
+    images: ["https://www.citrusmilo.com/yosemite2017/joebraun_cloudsrest14.jpg"],
   },
   {
-    name: "Half Dome",
-    location: "Yosemite National Park, California",
-    date: "2024-07-22",
-    distance: 16.0,
-    elevation: 4800,
-    duration: "12h 00m",
+    name: "Vernal and Nevada Falls via Misty Trail",
+    location: "Yosemite, California",
+    date: "2020-08-04",
+    distance: 6.4,
+    elevation: 2208,
+    difficulty: "Moderate",
+    images: ["https://hikingguy.com/wp-content/uploads/mist-trail-hike-featured.jpg"],
+  },
+  {
+    name: "Upper Yosemite Falls trail",
+    location: "Yosemite, California",
+    date: "2020-08-05",
+    distance: 6.6,
+    elevation: 3254,
+    difficulty: "Hard",
+    images: ["https://www.yosemite.com/wp-content/uploads/2016/05/Yosemite-Falls-in-Fall-Autumn-topaz-enhance-4x-scaled.jpeg"],
+  },
+  {
+    name: "Mariposa Grove of Giant Sequoias",
+    location: "Yosemite, California",
+    date: "2020-08-06",
+    distance: 6.7,
+    elevation: 1217,
+    difficulty: "Moderate",
+    images: ["https://www.yosemite.com/wp-content/uploads/2023/04/bachelor-3-graces-1024x600-AdobeStock_383292495.jpg"],
+  },
+  {
+    name: "The Ozarks",
+    location: "Missouri",
+    date: "2011-07-01",
+    distance: 50,
     difficulty: "Very Hard",
-    rating: 5,
-    description: "An iconic hike featuring cable-assisted climbing to the summit of the famous Half Dome. The panoramic views of Yosemite Valley are unparalleled.",
-    images: [
-      "https://www.yosemite.com/wp-content/uploads/2016/04/half-dome-permits.jpg",
-      "https://www.nps.gov/yose/planyourvisit/images/hd-cables.jpg",
-      "https://www.nps.gov/yose/planyourvisit/images/half-dome-view-from-glacier.jpg"
-    ],
-    trailMapUrl: "https://www.alltrails.com/trail/us/california/half-dome-trail",
-    favoriteSpots: [
-      {
-        name: "Nevada Fall",
-        description: "A stunning 594-foot waterfall along the trail with beautiful views of Liberty Cap.",
-        imageUrl: "https://www.nps.gov/common/uploads/grid_builder/yose/crop1_1/F8EF46BA-A854-9BCD-7044D5C1B6F1E74E.jpg"
-      },
-      {
-        name: "The Cables",
-        description: "The famous steel cables that allow hikers to climb the final 400 vertical feet to the summit without rock climbing equipment.",
-        imageUrl: "https://www.nps.gov/yose/planyourvisit/images/hd-cables.jpg"
-      }
-    ]
+    images: ["https://i0.wp.com/www.travelworldmagazine.com/wp-content/uploads/2024/06/LOTO_hahatonka-boat-and-cliff.jpg?fit=1200%2C900&ssl=1"],
   },
   {
-    name: "Delicate Arch",
-    location: "Arches National Park, Utah",
-    date: "2023-10-05",
-    distance: 3.0,
-    elevation: 480,
-    duration: "2h 00m",
+    name: "Mt. Yale",
+    location: "Colorado",
+    date: "2012-07-03",
+    distance: 10.3,
+    elevation: 4980,
+    difficulty: "Very Hard",
+    images: ["https://www.14ers.com/images/peaks/p10021.jpg"],
+  },
+  {
+    name: "Trilho da Geira Romana",
+    location: "Peneda-Gerês National Park, Portugal",
+    date: "2023-09-16",
+    distance: 4.4,
+    elevation: 780,
     difficulty: "Moderate",
-    rating: 4.5,
-    description: "A beautiful hike to Utah's most famous natural arch. The arch is particularly stunning at sunset when the red rock glows.",
-    images: [
-      "https://www.nps.gov/arch/learn/nature/images/delicate-arch-1200px.jpg",
-      "https://www.nps.gov/arch/planyourvisit/images/tugy0619.jpg",
-      "https://www.nps.gov/arch/planyourvisit/images/delicate-arch-stars.jpg"
-    ],
-    trailMapUrl: "https://www.alltrails.com/trail/us/utah/delicate-arch-trail",
-    favoriteSpots: [
-      {
-        name: "Viewpoint Bowl",
-        description: "The natural amphitheater surrounding Delicate Arch, perfect for sitting and admiring the arch.",
-        imageUrl: "https://www.nps.gov/arch/learn/nature/images/delicate-arch-1200px.jpg"
-      }
-    ]
+    images: ["https://www.alltrails.com/_next/image?url=https%3A%2F%2Fimages.alltrails.com%2FeyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvNDg1OTQ2NDcvNzliYmVlODViNmU3Zjg0ZTE4OGRmMDY0NTU2NTc4MDQuanBnIiwiZWRpdHMiOnsidG9Gb3JtYXQiOiJ3ZWJwIiwicmVzaXplIjp7IndpZHRoIjoxMDgwLCJoZWlnaHQiOjcwMCwiZml0IjoiY292ZXIifSwicm90YXRlIjpudWxsLCJqcGVnIjp7InRyZWxsaXNRdWFudGlzYXRpb24iOnRydWUsIm92ZXJzaG9vdERlcmluZ2luZyI6dHJ1ZSwib3B0aW1pc2VTY2FucyI6dHJ1ZSwicXVhbnRpc2F0aW9uVGFibGUiOjN9fX0%3D&w=3840&q=75"],
   },
   {
-    name: "Emerald Lake",
-    location: "Rocky Mountain National Park, Colorado",
-    date: "2023-08-12",
-    distance: 3.6,
-    elevation: 650,
-    duration: "2h 30m",
-    difficulty: "Moderate",
-    rating: 4.5,
-    description: "A popular trail passing by several beautiful alpine lakes including Nymph Lake, Dream Lake, and finally Emerald Lake, all set against a backdrop of stunning peaks.",
-    images: [
-      "https://www.nps.gov/romo/planyourvisit/images/Bear-Lake-Area_1.jpg",
-      "https://www.nps.gov/common/uploads/grid_builder/imr/crop16_9/FCCA8F69-1DD8-B71B-0BF8FBB30E20A9DE.jpg",
-      "https://www.nps.gov/romo/learn/nature/images/dream-lake_1.jpg"
-    ],
-    trailMapUrl: "https://www.alltrails.com/trail/us/colorado/emerald-lake-trail",
-    favoriteSpots: [
-      {
-        name: "Dream Lake",
-        description: "A spectacular mountain lake along the trail with perfect reflections of the surrounding peaks.",
-        imageUrl: "https://www.nps.gov/romo/learn/nature/images/dream-lake_1.jpg"
-      },
-      {
-        name: "Emerald Lake Vista",
-        description: "The end of the trail with amazing views of Hallett Peak and Flattop Mountain reflected in the lake.",
-        imageUrl: "https://www.nps.gov/common/uploads/grid_builder/imr/crop16_9/FCCA8F69-1DD8-B71B-0BF8FBB30E20A9DE.jpg"
-      }
-    ]
+    name: "Royal Arch Trail",
+    location: "Boulder, Colorado",
+    date: "2024-09-21",
+    distance: 3.3,
+    elevation: 1404,
+    difficulty: "Hard",
+    images: ["https://www.gore-tex.com/sites/default/files/blog_images/royal-arch-trail-guide.jpg"],
   },
   {
-    name: "Avalanche Lake",
-    location: "Glacier National Park, Montana",
-    date: "2023-07-07",
+    name: "Walker Ranch Loop",
+    location: "Boulder, Colorado",
+    date: "2024-09-28",
+    distance: 7.9,
+    elevation: 1610,
+    difficulty: "Hard",
+    images: ["https://i0.wp.com/travel2walk.com/wp-content/uploads/2021/09/20_9_walker_ranch-2.jpg?resize=750%2C563&ssl=1"],
+  },
+  {
+    name: "Eldorado Canyon: Eastern Section",
+    location: "Boulder, Colorado",
+    date: "2024-10-05",
     distance: 4.5,
-    elevation: 730,
-    duration: "3h 15m",
+    elevation: 866,
     difficulty: "Moderate",
-    rating: 4.8,
-    description: "A beautiful hike along Avalanche Creek through cedar and hemlock forest, ending at a stunning lake surrounded by steep cliffs with cascading waterfalls.",
-    images: [
-      "https://www.nps.gov/glac/planyourvisit/images/Avalanche-Lake.jpg",
-      "https://www.nps.gov/common/uploads/grid_builder/glac/crop16_9/FD49899A-1DD8-B71B-0BD1B9A1EBB29E23.jpg",
-      "https://www.nps.gov/glac/planyourvisit/images/DSC00288-copy.jpg"
-    ],
-    trailMapUrl: "https://www.alltrails.com/trail/us/montana/avalanche-lake-via-the-trail-of-the-cedars",
-    favoriteSpots: [
-      {
-        name: "Trail of the Cedars",
-        description: "A beautiful boardwalk section through ancient cedars at the beginning of the trail.",
-        imageUrl: "https://www.nps.gov/glac/planyourvisit/images/trail-cedars-10.jpg"
-      },
-      {
-        name: "Avalanche Gorge",
-        description: "A narrow, crystal-clear turquoise stream cutting through a gorge with stunning views.",
-        imageUrl: "https://www.nps.gov/common/uploads/grid_builder/glac/crop16_9/FD49899A-1DD8-B71B-0BD1B9A1EBB29E23.jpg"
-      }
-    ]
+    images: ["https://coloradobirdingtrail.com/wp-content/uploads/2024/05/Eldorado-Canyon-State-Park-Boulder-Creek.jpg"],
+  },
+  {
+    name: "South Boulder Creek",
+    location: "Boulder, Colorado",
+    date: "2024-10-12",
+    distance: 3.5,
+    elevation: 636,
+    difficulty: "Moderate",
+    images: ["https://bouldercolorado.gov/sites/default/files/styles/hero_image_977x557/public/2021-11/sbcw-trailhead-wildenberg.jpg?itok=AHvphVvm"],
+  },
+  {
+    name: "Castle and Walker's Dream and Meadow",
+    location: "Boulder, Colorado",
+    date: "2024-10-26",
+    distance: 3.9,
+    elevation: 465,
+    difficulty: "Moderate",
+    images: ["https://www.alltrails.com/_next/image?url=https%3A%2F%2Fimages.alltrails.com%2FeyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvODIyODcxODUvZGI3NmRmMmUzOTZhODQ4ZTJmOTM1Y2Q4NjE4NjMyNzcuanBnIiwiZWRpdHMiOnsidG9Gb3JtYXQiOiJ3ZWJwIiwicmVzaXplIjp7IndpZHRoIjoxMDgwLCJoZWlnaHQiOjcwMCwiZml0IjoiY292ZXIifSwicm90YXRlIjpudWxsLCJqcGVnIjp7InRyZWxsaXNRdWFudGlzYXRpb24iOnRydWUsIm92ZXJzaG9vdERlcmluZ2luZyI6dHJ1ZSwib3B0aW1pc2VTY2FucyI6dHJ1ZSwicXVhbnRpc2F0aW9uVGFibGUiOjN9fX0%3D&w=3840&q=75"],
+  },
+  {
+    name: "Mount Falcon Park Upper Loop",
+    location: "Boulder, Colorado",
+    date: "2024-11-02",
+    distance: 3.9,
+    elevation: 544,
+    difficulty: "Moderate",
+    images: ["https://peakvisor.com/img/news/Mount-Falcon-Park-Red-Rocks-Park.jpg"],
+  },
+  {
+    name: "Coyote Song Trail",
+    location: "Boulder, Colorado",
+    date: "2024-11-09",
+    distance: 2.9,
+    elevation: 321,
+    difficulty: "Easy",
+    images: ["https://i.ytimg.com/vi/4YfUa0DynMg/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCYGLv-fs2Zs_HXtXiX_MHC1VlJSA"],
   }
 ];
 
+// Group hikes by location
+export const groupHikesByLocation = (): LocationGroup[] => {
+  const locationMap = new Map<string, { hikes: Hike[], type: 'domestic' | 'international' }>();
+  
+  hikes.forEach(hike => {
+    // Extract state or country from location
+    const parts = hike.location.split(", ");
+    let locationKey = parts[parts.length - 1]; // Get the last part (state or country)
+    
+    // Determine if domestic or international
+    const type = ['California', 'Colorado', 'Missouri'].includes(locationKey) ? 'domestic' : 'international';
+    
+    if (!locationMap.has(locationKey)) {
+      locationMap.set(locationKey, { hikes: [], type });
+    }
+    
+    locationMap.get(locationKey)?.hikes.push(hike);
+  });
+  
+  // Convert map to array of location groups
+  return Array.from(locationMap.entries()).map(([name, data]) => {
+    const { hikes: locationHikes, type } = data;
+    
+    // Calculate statistics for this location
+    const totalHikes = locationHikes.length;
+    const totalDistance = locationHikes.reduce((sum, hike) => sum + hike.distance, 0);
+    const totalElevation = locationHikes.reduce((sum, hike) => sum + (hike.elevation || 0), 0);
+    
+    // Sort hikes by date (most recent first)
+    const sortedHikes = [...locationHikes].sort((a, b) => 
+      new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+    
+    return {
+      id: name.toLowerCase().replace(/\s+/g, '-'),
+      name,
+      type,
+      totalHikes,
+      totalDistance,
+      totalElevation,
+      hikes: sortedHikes
+    };
+  }).sort((a, b) => {
+    // Sort domestic locations first, then by name
+    if (a.type !== b.type) {
+      return a.type === 'domestic' ? -1 : 1;
+    }
+    return a.name.localeCompare(b.name);
+  });
+};
+
 // Calculate hiking stats
-export const calculateHikeStats = (): HikeStats => {
+export const calculateHikeStats = (): HikingStats => {
   const totalHikes = hikes.length;
   const totalDistance = hikes.reduce((sum, hike) => sum + hike.distance, 0);
-  const totalElevation = hikes.reduce((sum, hike) => sum + hike.elevation, 0);
+  const totalElevation = hikes.reduce((sum, hike) => sum + (hike.elevation || 0), 0);
   
   // Find hardest hike
   const difficultyMap = { 'Easy': 1, 'Moderate': 2, 'Hard': 3, 'Very Hard': 4 };
@@ -187,22 +233,37 @@ export const calculateHikeStats = (): HikeStats => {
     return difficultyMap[current.difficulty] > difficultyMap[hardest.difficulty] ? current : hardest;
   }, hikes[0]);
   
-  // Find highest rated hike
-  const highestRated = hikes.reduce((highest, current) => {
-    return current.rating > highest.rating ? current : highest;
-  }, hikes[0]);
-  
   // Find longest hike
   const longestHike = hikes.reduce((longest, current) => {
     return current.distance > longest.distance ? current : longest;
   }, hikes[0]);
   
+  // Count unique locations
+  const uniqueLocations = new Set(hikes.map(hike => hike.location));
+  
+  // Count countries and states
+  const countries = new Set();
+  const states = new Set();
+  
+  hikes.forEach(hike => {
+    const parts = hike.location.split(", ");
+    const lastPart = parts[parts.length - 1];
+    
+    if (['California', 'Colorado', 'Missouri'].includes(lastPart)) {
+      states.add(lastPart);
+    } else {
+      countries.add(lastPart);
+    }
+  });
+  
   return {
     totalHikes,
     totalDistance,
     totalElevation,
+    locations: uniqueLocations.size,
+    countries: countries.size,
+    states: states.size,
     hardestHike: hardestHike.name,
-    highestRated: highestRated.name,
     longestHike: longestHike.name
   };
 };

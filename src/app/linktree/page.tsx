@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Box, Container, Typography, Avatar, Stack, Grid, IconButton } from "@mui/material"
+import { Box, Container, Typography, Avatar, Stack, Grid, IconButton, Chip, Divider } from "@mui/material"
 import { links, contactInfo } from "./links"
 import NextLink from "next/link"
 import { LinkItem } from "./linkItem"
@@ -35,7 +35,7 @@ export default function LinkTree() {
             background: "linear-gradient(135deg, #4E65FF 0%, #92EFFD 100%)",
             filter: "blur(90px)",
             opacity: 0.2,
-            zIndex: -1,
+            zIndex: 1,
           }}
         />
         <Box
@@ -49,7 +49,7 @@ export default function LinkTree() {
             background: "linear-gradient(135deg, #FF057C 0%, #8D0B93 100%)",
             filter: "blur(90px)",
             opacity: 0.15,
-            zIndex: -1,
+            zIndex: 1,
           }}
         />
         <Box
@@ -63,7 +63,7 @@ export default function LinkTree() {
             background: "linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%)",
             filter: "blur(80px)",
             opacity: 0.1,
-            zIndex: -1,
+            zIndex: 1,
           }}
         />
 
@@ -108,19 +108,41 @@ export default function LinkTree() {
           }}>
           Zachary Reece
         </Typography>
-        <Typography
-          variant="subtitle1"
-          color="text.secondary"
-          align="center"
+
+        <Box
           sx={{
+            position: 'relative',
+            padding: '2px',
+            borderRadius: 16,
+            background: 'linear-gradient(45deg, #00FFFF, #FF00FF)',
             mb: 4.5,
-            fontWeight: 400,
-            letterSpacing: "0.01em",
-            opacity: 0.9,
-            px: 2,
-          }}>
-          software engineer by trade --- martial artist by choice --- philosopher by nature
-        </Typography>
+            mt: 1,
+            display: 'inline-flex',
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              bgcolor: theme => theme.palette.background.default,
+              borderRadius: 'inherit',
+              px: 2,
+              py: 0.5
+            }}
+          >
+            <Typography textAlign="center" variant="body2" sx={{ color: '#E1E1E1', fontWeight: 400, letterSpacing: "0.01em", lineHeight: 1 }}>
+              software engineer by trade
+            </Typography>
+            <Divider orientation="vertical" sx={{ mx: 1.5, borderColor: "#FFF" }} />
+            <Typography textAlign="center" variant="body2" sx={{ color: '#E1E1E1', fontWeight: 400, letterSpacing: "0.01em", lineHeight: 1 }}>
+              martial artist by choice
+            </Typography>
+            <Divider orientation="vertical" sx={{ mx: 1.5, borderColor: "#FFF" }} />
+            <Typography textAlign="center" variant="body2" sx={{ color: '#E1E1E1', fontWeight: 400, letterSpacing: "0.01em", lineHeight: 1 }}>
+              philosopher by nature
+            </Typography>
+          </Box>
+        </Box>
 
         <Grid container spacing={4}>
           <Grid size={12} sx={{ order: { xs: 2, md: 1 } }}>

@@ -29,46 +29,45 @@ export interface CourseStats {
   categoryCounts: Record<string, number>;
 }
 
+// Streak interface for tracking daily/weekly activity
+export interface Streak {
+  currentStreak: number; // Current continuous streak count
+  longestStreak: number; // Longest streak achieved
+  unit: 'day' | 'week'; // Streak counting unit
+  lastActivity: string; // Format: 'YYYY-MM-DD'
+  streakData: StreakDay[]; // Last 30 days of activity data
+}
+
+export interface StreakDay {
+  date: string; // Format: 'YYYY-MM-DD'
+  active: boolean; // Whether there was activity on this day
+  minutesSpent?: number; // Optional minutes spent studying
+}
+
 export const courses: Course[] = [
   {
     id: "khan-ap-calc-prep",
-    title: "Getting Ready for AP Calculus",
+    title: "Get Ready for AP Calculus",
     provider: "Khan Academy",
     category: "mathematics",
-    startDate: "2025-01-15",
-    progress: 85,
-    mastery: 78,
+    startDate: "2023-11-01",
+    progress: 99,
+    mastery: 99,
     description: "A comprehensive preparation course covering all the prerequisite topics needed for AP Calculus, including functions, trigonometry, and limits.",
-    imageUrl: "https://cdn.kastatic.org/images/khan-logo-dark-background.new.png",
+    imageUrl: "https://cdn.kastatic.org/genfiles/topic-icons/icons/polynomial_functions.png-9054bb-128c.png",
     courseUrl: "https://www.khanacademy.org/math/get-ready-for-ap-calc",
-    skills: ["Algebra", "Trigonometry", "Functions", "Limits"],
-    modules: [
-      { title: "Foundational Concepts", progress: 100, mastery: 92 },
-      { title: "Functions & Graphs", progress: 100, mastery: 85 },
-      { title: "Trigonometric Functions", progress: 90, mastery: 78 },
-      { title: "Limits & Continuity", progress: 65, mastery: 62 },
-    ]
   },
   {
     id: "khan-ap-calc-bc",
     title: "AP Calculus BC",
     provider: "Khan Academy",
     category: "mathematics",
-    startDate: "2025-02-01",
-    progress: 62,
-    mastery: 58,
+    startDate: "2024-07-01",
+    progress: 96,
+    mastery: 96,
     description: "Complete AP Calculus BC curriculum covering differential and integral calculus, as well as advanced topics such as infinite series and parametric equations.",
-    imageUrl: "https://cdn.kastatic.org/images/khan-logo-dark-background.new.png",
+    imageUrl: "https://cdn.kastatic.org/genfiles/topic-icons/icons/ap_calculus_ab.png-60df6c-128c.png",
     courseUrl: "https://www.khanacademy.org/math/ap-calculus-bc",
-    skills: ["Derivatives", "Integrals", "Series", "Parametric Equations", "Polar Coordinates"],
-    modules: [
-      { title: "Limits & Derivatives", progress: 100, mastery: 87 },
-      { title: "Applications of Derivatives", progress: 85, mastery: 76 },
-      { title: "Integration", progress: 75, mastery: 68 },
-      { title: "Applications of Integration", progress: 60, mastery: 54 },
-      { title: "Sequences & Series", progress: 35, mastery: 32 },
-      { title: "Parametric & Polar", progress: 20, mastery: 15 },
-    ]
   },
   {
     id: "khan-multivariable-calc",
@@ -76,21 +75,37 @@ export const courses: Course[] = [
     provider: "Khan Academy",
     category: "mathematics",
     startDate: "2025-02-20",
-    progress: 35,
-    mastery: 31,
+    progress: 48,
+    mastery: 48,
     description: "Advanced calculus course covering functions of multiple variables, partial derivatives, multiple integrals, and vector calculus.",
-    imageUrl: "https://cdn.kastatic.org/images/khan-logo-dark-background.new.png",
+    imageUrl: "https://cdn.kastatic.org/genfiles/topic-icons/icons/multivariable_calculus.png-ac2283-128c.png",
     courseUrl: "https://www.khanacademy.org/math/multivariable-calculus",
-    skills: ["Partial Derivatives", "Multiple Integrals", "Vector Calculus", "Line Integrals", "Green's Theorem"],
-    modules: [
-      { title: "Vectors & Spaces", progress: 90, mastery: 82 },
-      { title: "Multivariable Functions", progress: 75, mastery: 68 },
-      { title: "Partial Derivatives", progress: 40, mastery: 33 },
-      { title: "Multiple Integrals", progress: 15, mastery: 12 },
-      { title: "Vector Calculus", progress: 0, mastery: 0 },
-    ]
   },
 ];
+
+// Khan Academy streak data
+export const khanAcademyStreak: Streak = {
+  currentStreak: 19, // 19 week streak
+  longestStreak: 19, // 19 weeks was the longest
+  unit: 'week',
+  lastActivity: '2025-03-12', // Today's date
+  streakData: [
+    // Generate last 8 weeks of activity (most recent first)
+    { date: '2025-03-12', active: true, minutesSpent: 45 }, // Today
+    { date: '2025-03-05', active: true, minutesSpent: 60 },
+    { date: '2025-02-26', active: true, minutesSpent: 75 },
+    { date: '2025-02-19', active: true, minutesSpent: 90 },
+    { date: '2025-02-12', active: true, minutesSpent: 50 },
+    { date: '2025-02-05', active: true, minutesSpent: 65 },
+    { date: '2025-01-29', active: true, minutesSpent: 40 },
+    { date: '2025-01-22', active: true, minutesSpent: 55 },
+    // Example of some missed weeks before the current streak
+    { date: '2025-01-15', active: false },
+    { date: '2025-01-08', active: true, minutesSpent: 70 },
+    { date: '2025-01-01', active: true, minutesSpent: 30 },
+    { date: '2024-12-25', active: false },
+  ]
+};
 
 // Calculate course statistics
 export const calculateCourseStats = (): CourseStats => {
