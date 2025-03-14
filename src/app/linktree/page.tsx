@@ -127,18 +127,18 @@ export default function LinkTree() {
               bgcolor: theme => theme.palette.background.default,
               borderRadius: 'inherit',
               px: 2,
-              py: 0.5
+              position: 'relative'
             }}
           >
-            <Typography textAlign="center" variant="body2" sx={{ color: '#E1E1E1', fontWeight: 400, letterSpacing: "0.01em", lineHeight: 1 }}>
+            <Typography textAlign="center" variant="body2" sx={{ color: '#E1E1E1', letterSpacing: "0.01em", lineHeight: 1, py: 0.5 }}>
               software engineer by trade
             </Typography>
-            <Divider orientation="vertical" sx={{ mx: 1.5, borderColor: "#FFF" }} />
-            <Typography textAlign="center" variant="body2" sx={{ color: '#E1E1E1', fontWeight: 400, letterSpacing: "0.01em", lineHeight: 1 }}>
+            <Box sx={{ mx: 1.5, height: '100%', width: '2px', background: 'linear-gradient(to bottom, #00FFFF, #FF00FF)' }} />
+            <Typography textAlign="center" variant="body2" sx={{ color: '#E1E1E1', letterSpacing: "0.01em", lineHeight: 1, py: 0.5 }}>
               martial artist by choice
             </Typography>
-            <Divider orientation="vertical" sx={{ mx: 1.5, borderColor: "#FFF" }} />
-            <Typography textAlign="center" variant="body2" sx={{ color: '#E1E1E1', fontWeight: 400, letterSpacing: "0.01em", lineHeight: 1 }}>
+            <Box sx={{ mx: 1.5, height: '100%', width: '2px', background: 'linear-gradient(to bottom, #00FFFF, #FF00FF)' }} />
+            <Typography textAlign="center" variant="body2" sx={{ color: '#E1E1E1', letterSpacing: "0.01em", lineHeight: 1, py: 0.5 }}>
               philosopher by nature
             </Typography>
           </Box>

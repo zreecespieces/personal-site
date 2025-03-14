@@ -36,7 +36,7 @@ interface SubscribeParams {
   lastName?: string;
 }
 
-export async function subscribeToNewsletter({ email, firstName, lastName }: SubscribeParams): Promise<NewsletterResponse> {
+async function subscribeToNewsletter({ email, firstName, lastName }: SubscribeParams): Promise<NewsletterResponse> {
   try {
     // Email validation
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
