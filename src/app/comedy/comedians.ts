@@ -190,19 +190,14 @@ export const comedians: Comedian[] = [
   }
 ];
 
-// Helper functions
-
-// Get total number of comedy shows attended
 export function getTotalShows(): number {
   return comedians.reduce((total, comedian) => total + comedian.shows.length, 0);
 }
 
-// Get total number of comedians seen
 export function getTotalComediansSeen(): number {
   return comedians.length;
 }
 
-// Get comedians sorted by earliest seen
 export function getComediansByEarliestSeen(): Comedian[] {
   return [...comedians].sort((a, b) => {
     const aEarliestShow = a.shows.reduce((earliest, show) => 
@@ -213,9 +208,7 @@ export function getComediansByEarliestSeen(): Comedian[] {
   });
 }
 
-// Format date
 export function formatDate(dateString: string): string {
-  // Add a time component to ensure correct date in all timezones
   const dateTimeString = `${dateString}T12:00:00`;
   const date = new Date(dateTimeString);
   return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
