@@ -139,7 +139,7 @@ export const comedians: Comedian[] = [
     shows: [
       {
         date: "2025-03-14",
-        venue: "Pikes Peak Center",
+        venue: "The Broadmoor World Arena",
         city: "Colorado Springs, CO"
       }
     ]
@@ -150,11 +150,6 @@ export const comedians: Comedian[] = [
     shows: [
       {
         date: "2025-03-21",
-        venue: "Comedy Works",
-        city: "Denver, CO"
-      },
-      {
-        date: "2025-03-22",
         venue: "Comedy Works",
         city: "Denver, CO"
       }
