@@ -277,7 +277,7 @@ export const groupHikesByLocation = (): LocationGroup[] => {
     let locationKey = parts[parts.length - 1]; // Get the last part (state or country)
 
     // Determine if domestic or international
-    const type = ["California", "Colorado", "Missouri"].includes(locationKey) ? "domestic" : "international";
+    const type = ["California", "Colorado", "Missouri", "Utah"].includes(locationKey) ? "domestic" : "international";
 
     if (!locationMap.has(locationKey)) {
       locationMap.set(locationKey, { hikes: [], type });
