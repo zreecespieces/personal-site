@@ -265,6 +265,28 @@ export const hikes: Hike[] = [
       "https://www.alltrails.com/api/alltrails/v2/trails/10024284/photos/0?size=larger_wide&key=3p0t5s6b5g4g0e8k3c1j3w7y5c3m4t8i",
     ],
   },
+  {
+    name: "Dinosaur Ridge",
+    location: "Morrison, Colorado",
+    date: "2025-07-20",
+    distance: 3.8,
+    elevation: 696,
+    time: [1, 32],
+    difficulty: "Easy",
+    images: [
+      "https://images.alltrails.com/eyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvNDgzNjcxOTAvMGQzYWVjYTlkMWNmNTA3NDk1OTEzNjA5NTY0NTQ5ZTQuanBnIiwiZWRpdHMiOnsidG9Gb3JtYXQiOiJ3ZWJwIiwicmVzaXplIjp7IndpZHRoIjoyMDQ4LCJoZWlnaHQiOjIwNDgsImZpdCI6Imluc2lkZSJ9LCJyb3RhdGUiOm51bGwsImpwZWciOnsidHJlbGxpc1F1YW50aXNhdGlvbiI6dHJ1ZSwib3ZlcnNob290RGVyaW5naW5nIjp0cnVlLCJvcHRpbWlzZVNjYW5zIjp0cnVlLCJxdWFudGlzYXRpb25UYWJsZSI6M319fQ==",
+    ],
+  },
+  {
+    name: "Lost Lake via Hessie Trail",
+    location: "Nederland, Colorado",
+    date: "2025-08-09",
+    distance: 4.7,
+    elevation: 843,
+    time: [2, 20],
+    difficulty: "Moderate",
+    images: ["https://cdn.5280.com/2015/07/lostlake.jpg"],
+  },
 ];
 
 // Group hikes by location using last word in location string
