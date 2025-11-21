@@ -18,7 +18,7 @@ export const festivals: Festival[] = [
   },
   {
     name: "Decadence",
-    year: "2018",
+    year: "2017",
     location: "Denver, Colorado",
     url: "https://decadencenye.com",
     image: "/decadence.png",
@@ -67,7 +67,7 @@ export const festivals: Festival[] = [
   {
     name: "Dancefestopia",
     year: "2021",
-    location: "Kansas City, Missouri",
+    location: "Lacygne, Kansas",
     image: "/dancefest.png",
     description: "",
     url: "https://www.dancefestopia.com/",
@@ -122,7 +122,7 @@ export const festivals: Festival[] = [
   },
   {
     name: "Decadence",
-    year: "2025",
+    year: "2024",
     location: "Denver, Colorado",
     image: "/decadence.png",
     description: "",
@@ -145,5 +145,41 @@ export const festivals: Festival[] = [
     description:
       "My first DeadRocks - the annual event put on by Zeds Dead, currently my favorite EDM artist. Their latest album is probably my top EDM album of all time and it was an incredibly experience getting to see it live with such a big production. I went to both nights at Red Rocks along with the hangover set at Mission Ballroom.",
     url: "https://deadbeatsofficial.com/deadrocks",
+  },
+  {
+    name: "Dancefestopia",
+    year: "2025",
+    location: "Lacygne, Kansas",
+    image: "/dancefest.png",
+    description:
+      "My second Dancefest! First one in 4 years since 2021. This was one of my favorites ever. I got to be with all my hometown Kansas friends and grouped up with some amazing people that my friends had met at dancefest the year prior. Truly a beautiful time.",
+    url: "https://www.dancefestopia.com/",
+  },
+  {
+    name: "Lost Lands",
+    year: "2025",
+    location: "Legend Valley, Ohio",
+    image: "/lost-lands.png",
+    description:
+      "Friends I met at Dancefestopia this year convinced me to last minute send Lost Lands and it was the best decision of my life. I had always wanted to go but never had a group, so I was very grateful to join them. Without a doubt in a league of its own. I have never been to a festival with such unbelievably high production quality. Definitely becoming a new yearly.",
+    url: "https://www.lostlandsfestival.com/",
+  },
+  {
+    name: "Hulaween",
+    year: "2025",
+    location: "Live Oak, Florida",
+    image: "/hulaween.png",
+    description:
+      "Hula round 2! This was extra special since our neighbors from Bonnaroo this year (which got cancelled) came with us for their first time. We also linked up with our friends from Hula last year and had a massive camping group. Couldn't have been better! Got to ride the rail for Zeds Dead, my absolute favorite artist, which felt like such a once-in-a-lifetime experience.",
+    url: "https://hulaween.com",
+  },
+  {
+    name: "Decadence",
+    year: "2025",
+    location: "Denver, Colorado",
+    image: "/decadence.png",
+    description:
+      "Now that I live in Denver there's no excuse not to start and end my year with Decadence. What a year it's been. Got to celebrate the new year with old friends - nothing beats that.",
+    url: "https://decadencenye.com",
   },
 ];

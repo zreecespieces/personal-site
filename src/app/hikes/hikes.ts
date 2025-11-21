@@ -96,7 +96,9 @@ export const hikes: Hike[] = [
     distance: 10.3,
     elevation: 4980,
     difficulty: "Very Hard",
-    images: ["https://www.14ers.com/images/peaks/p10021.jpg"],
+    images: [
+      "https://images.alltrails.com/eyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvMTA4OTc5ODQwLzFiODA4ZmJlNjA0NzgzMDcxOTA1NzI0ZTQ1M2MwYWZmLmpwZyIsImVkaXRzIjp7InRvRm9ybWF0Ijoid2VicCIsInJlc2l6ZSI6eyJ3aWR0aCI6MjA0OCwiaGVpZ2h0IjoyMDQ4LCJmaXQiOiJpbnNpZGUifSwicm90YXRlIjpudWxsLCJqcGVnIjp7InRyZWxsaXNRdWFudGlzYXRpb24iOnRydWUsIm92ZXJzaG9vdERlcmluZ2luZyI6dHJ1ZSwib3B0aW1pc2VTY2FucyI6dHJ1ZSwicXVhbnRpc2F0aW9uVGFibGUiOjN9fX0=",
+    ],
   },
   {
     name: "Trilho da Geira Romana",
@@ -116,7 +118,9 @@ export const hikes: Hike[] = [
     distance: 3.3,
     elevation: 1404,
     difficulty: "Hard",
-    images: ["https://www.gore-tex.com/sites/default/files/blog_images/royal-arch-trail-guide.jpg"],
+    images: [
+      "https://images.alltrails.com/eyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvMjQzOTg5MzQvNjhkY2VlOWE1ZTBmNjNkNDlkYTliODc2NTAxNzU4NzMuanBnIiwiZWRpdHMiOnsidG9Gb3JtYXQiOiJ3ZWJwIiwicmVzaXplIjp7IndpZHRoIjoyMDQ4LCJoZWlnaHQiOjIwNDgsImZpdCI6Imluc2lkZSJ9LCJyb3RhdGUiOm51bGwsImpwZWciOnsidHJlbGxpc1F1YW50aXNhdGlvbiI6dHJ1ZSwib3ZlcnNob290RGVyaW5naW5nIjp0cnVlLCJvcHRpbWlzZVNjYW5zIjp0cnVlLCJxdWFudGlzYXRpb25UYWJsZSI6M319fQ==",
+    ],
   },
   {
     name: "Walker Ranch Loop",
@@ -286,6 +290,54 @@ export const hikes: Hike[] = [
     time: [2, 20],
     difficulty: "Moderate",
     images: ["https://cdn.5280.com/2015/07/lostlake.jpg"],
+  },
+  {
+    name: "Cabin Canyon, Siamese Twins, Palmer and Central Garden Trail Loop",
+    location: "Colorado Springs, Colorado",
+    date: "2025-08-17",
+    distance: 5.42,
+    elevation: 781,
+    time: [2, 34],
+    difficulty: "Moderate",
+    images: [
+      "https://images.alltrails.com/eyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvNzc3NDE1NjEvZDQ2ZGY3YjZiOGFjODZmODY3ZTU2NWUyNjI1MmI3NzkuanBnIiwiZWRpdHMiOnsidG9Gb3JtYXQiOiJ3ZWJwIiwicmVzaXplIjp7IndpZHRoIjoyMDQ4LCJoZWlnaHQiOjIwNDgsImZpdCI6Imluc2lkZSJ9LCJyb3RhdGUiOm51bGwsImpwZWciOnsidHJlbGxpc1F1YW50aXNhdGlvbiI6dHJ1ZSwib3ZlcnNob290RGVyaW5naW5nIjp0cnVlLCJvcHRpbWlzZVNjYW5zIjp0cnVlLCJxdWFudGlzYXRpb25UYWJsZSI6M319fQ==",
+    ],
+  },
+  {
+    name: "Grays and Torreys Peak",
+    location: "Arapaho National Forest, Colorado",
+    date: "2025-08-21",
+    distance: 8.33,
+    elevation: 3619,
+    time: [5, 27],
+    difficulty: "Hard",
+    images: [
+      "https://images.alltrails.com/eyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvMjgxNDc5MjIvYTEzZDAyOTNkMmFmY2ZkMTgxYjA3YmY4N2U1NTMwOWUuanBnIiwiZWRpdHMiOnsidG9Gb3JtYXQiOiJ3ZWJwIiwicmVzaXplIjp7IndpZHRoIjoyMDQ4LCJoZWlnaHQiOjIwNDgsImZpdCI6Imluc2lkZSJ9LCJyb3RhdGUiOm51bGwsImpwZWciOnsidHJlbGxpc1F1YW50aXNhdGlvbiI6dHJ1ZSwib3ZlcnNob290RGVyaW5naW5nIjp0cnVlLCJvcHRpbWlzZVNjYW5zIjp0cnVlLCJxdWFudGlzYXRpb25UYWJsZSI6M319fQ==",
+    ],
+  },
+  {
+    name: "Sloan's Lake Loop",
+    location: "Denver, Colorado",
+    date: "2025-08-24",
+    distance: 2.5,
+    elevation: 13,
+    time: [0, 56],
+    difficulty: "Easy",
+    images: [
+      "https://images.alltrails.com/eyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvNTMxNTYwNzMvMDhjZGYxMjczOTMzNmQ1NWQzNzExN2RiMWU4NDg3NDAuanBnIiwiZWRpdHMiOnsidG9Gb3JtYXQiOiJ3ZWJwIiwicmVzaXplIjp7IndpZHRoIjoyMDQ4LCJoZWlnaHQiOjIwNDgsImZpdCI6Imluc2lkZSJ9LCJyb3RhdGUiOm51bGwsImpwZWciOnsidHJlbGxpc1F1YW50aXNhdGlvbiI6dHJ1ZSwib3ZlcnNob290RGVyaW5naW5nIjp0cnVlLCJvcHRpbWlzZVNjYW5zIjp0cnVlLCJxdWFudGlzYXRpb25UYWJsZSI6M319fQ==",
+    ],
+  },
+  {
+    name: "Ralston Roost via Black Bear and Horeshoe Loop",
+    location: "Golden Gate Canyon State Park, Colorado",
+    date: "2025-10-12",
+    distance: 5,
+    elevation: 1247,
+    time: [2, 58],
+    difficulty: "Moderate",
+    images: [
+      "https://images.alltrails.com/eyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvNTA1NjI0MjgvMWRmNDkzNjBhOWRmZTc2ZmM1Zjc0M2U4ZWRkZTgxZjguanBnIiwiZWRpdHMiOnsidG9Gb3JtYXQiOiJ3ZWJwIiwicmVzaXplIjp7IndpZHRoIjoyMDQ4LCJoZWlnaHQiOjIwNDgsImZpdCI6Imluc2lkZSJ9LCJyb3RhdGUiOm51bGwsImpwZWciOnsidHJlbGxpc1F1YW50aXNhdGlvbiI6dHJ1ZSwib3ZlcnNob290RGVyaW5naW5nIjp0cnVlLCJvcHRpbWlzZVNjYW5zIjp0cnVlLCJxdWFudGlzYXRpb25UYWJsZSI6M319fQ==",
+    ],
   },
 ];
 
