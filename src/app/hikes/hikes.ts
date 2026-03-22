@@ -383,7 +383,9 @@ export const hikes: Hike[] = [
     elevation: 719,
     time: [1, 25],
     difficulty: "Moderate",
-    images: ["https://www.alltrails.com/trail/us/colorado/red-rocks-and-morrison-slide-trails--2"],
+    images: [
+      "https://images.alltrails.com/eyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvMTIwMTExNzA4LzcxNzBmYzIxYmZmNmU0N2QwZDFkNjI2MWVkMGU0Yzc1LmpwZyIsImVkaXRzIjp7InRvRm9ybWF0Ijoid2VicCIsInJlc2l6ZSI6eyJ3aWR0aCI6IjIwNDgiLCJoZWlnaHQiOiIyMDQ4IiwiZml0IjoiaW5zaWRlIn0sInJvdGF0ZSI6bnVsbCwianBlZyI6eyJ0cmVsbGlzUXVhbnRpc2F0aW9uIjp0cnVlLCJvdmVyc2hvb3REZXJpbmdpbmciOnRydWUsIm9wdGltaXNlU2NhbnMiOnRydWUsInF1YW50aXNhdGlvblRhYmxlIjozfX19",
+    ],
   },
   {
     name: "Turkey Trot Trail",
