@@ -1,7 +1,10 @@
 import React from "react";
 import { Metadata } from "next";
+import { fontVariables } from "@/theme/fonts";
+import { ink } from "@/theme/tokens";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://zacharyreece.dev"),
   title: "Zachary Reece",
   description: "software engineer by trade | martial artist by choice | philosopher by nature",
   openGraph: {
@@ -36,7 +39,12 @@ import { ClientRootLayout } from "../components/ClientRootLayout";
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning style={{ backgroundColor: "#121212" }}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={fontVariables}
+      style={{ backgroundColor: ink[950] }}
+    >
       <body>
         <ClientRootLayout>{props.children}</ClientRootLayout>
       </body>
