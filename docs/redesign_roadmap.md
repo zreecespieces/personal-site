@@ -160,19 +160,21 @@ All five will be prototyped in Phase 2 and made selectable in the home hero so t
 
 ## 2. Phased Task Roadmap
 
-### Phase 0 — Pre-Refactor Hygiene & Plumbing
+### Phase 0 — Pre-Refactor Hygiene & Plumbing ✅
 First commits on the redesign branch. Clean shop before stylistic work begins.
 
 - [x] Resolve all architectural decisions in §1.2 *(complete — see Decisions Log)*
-- [ ] Create the redesign git branch (e.g. `redesign/philosophical-systems-brutalism`)
-- [ ] **Install Vercel Analytics**: `npm i @vercel/analytics` and mount `<Analytics />` from `@vercel/analytics/next` inside `src/components/ClientRootLayout.tsx` (so it sits inside the client provider tree)
-- [ ] Add `.prettierrc` and run a one-pass format across `src/` to normalize 2/4-space indentation and quote style
-- [ ] Add an `.editorconfig` to match
-- [ ] Add minimal `.eslintrc` (or `eslint.config.mjs`) — at least extend `next/core-web-vitals`
-- [ ] Bump `tsconfig.json` `target` from `es5` to `es2022` (Next 15 / React 19 friendly)
-- [ ] Delete dead code: `InitColorSchemeScript` mount, stray Tailwind className in `comedy/layout.tsx:20`, backward-compat flat `links` export in `linktree/links.tsx:125`, unused `Divider`/`useTheme`/`Rating` imports flagged in exploration report
-- [ ] Move `.env` out of the repo (currently tracked with Firebase admin creds); document required vars in `.env.local.example`; rotate any committed credentials
-- [ ] Remove committed `.DS_Store` files; ensure `.gitignore` covers them
+- [x] Create the redesign git branch — `redesign/philosophical-systems-brutalism`
+- [x] **Install Vercel Analytics** — `@vercel/analytics` added; `<Analytics />` mounted in `ClientRootLayout` inside the provider tree
+- [x] Add `.prettierrc` + `.prettierignore`; one-pass format across `src/` normalized indentation, quote style, trailing commas
+- [x] Add `.editorconfig` to match
+- [x] Add `.eslintrc.json` extending `next/core-web-vitals`; `npm run lint` clean
+- [x] Bump `tsconfig.json` `target` from `es5` to `es2022`
+- [x] Delete dead code: `InitColorSchemeScript` mount removed, stray Tailwind className in `comedy/layout.tsx` removed, backward-compat flat `links` export removed, unused `Divider`/`useTheme`/`Rating` imports cleaned
+- [x] `.env` confirmed already gitignored and not tracked (only `.env.local.example` template is tracked, as intended). No rotation needed.
+- [x] `.DS_Store` files confirmed gitignored; none tracked in repo
+- [x] Add `format` and `format:check` npm scripts; drop codesandbox `post-update` script artifact
+- [x] Smoke test: `npm run lint`, `npm run format:check`, `npm run build` all green
 
 ### Phase 1 — Theme Foundation
 Goal: stand up the new `zacharyTheme`, fonts, and global texture _without_ touching pages yet. After this phase, every page will look broken-but-warm; we fix them in subsequent phases.
@@ -352,6 +354,22 @@ The redesign **fails** if it still feels like:
 
 ### 2026-05-13 — Initial roadmap drafted
 Roadmap drafted from `docs/personal_website_design_doc.md` and full codebase exploration. No code changes yet.
+
+### 2026-05-13 — Phase 0 complete
+Redesign branch `redesign/philosophical-systems-brutalism` created off `main`. Phase 0 landed in five commits:
+
+1. `add design doc and redesign roadmap` — docs only
+2. `add prettier, eslint, and editorconfig` — tooling configs
+3. `integrate vercel analytics, drop dead init-color-scheme script` — Analytics mount + Phase-1 prep for theme replacement
+4. `phase 0 cleanup: remove dead code, bump tsconfig target` — comedy Tailwind no-op, dead `links` export, unused imports, `target: es2022`
+5. `format codebase with prettier` — mechanical normalization (26 files, ~1300 insertions / 1000 deletions, all whitespace/quote/comma)
+
+Findings during execution:
+- `.env` was already correctly gitignored — the exploration report incorrectly flagged it as tracked. No credential rotation needed.
+- `.DS_Store` files also correctly gitignored — none in the repo.
+- `useTheme` in `art/page.tsx` is *actually* used (line 33); only `Divider` was dead there.
+- ESLint 9 + `eslint-config-next@15` works via legacy `.eslintrc.json` (Next.js handles the compat layer internally — no FlatCompat needed).
+- Build size and route output unchanged after Phase 0 — purely additive/cleanup work.
 
 ### 2026-05-13 — Architectural decisions resolved
 Working through the 10 open questions from §1.2 plus two additions (Vercel Analytics, tattoo motif integration). Outcomes:
