@@ -10,6 +10,7 @@ import HeroLayeredContourSigil from "./HeroLayeredContourSigil";
 import {
   HERO_VARIANTS,
   HERO_VARIANT_LABELS,
+  resolveHeroVariant,
   type HeroDiagramProps,
   type HeroVariant,
 } from "./types";
@@ -22,6 +23,7 @@ export {
   HeroLayeredContourSigil,
   HERO_VARIANTS,
   HERO_VARIANT_LABELS,
+  resolveHeroVariant,
 };
 export type { HeroDiagramProps, HeroVariant };
 
@@ -47,22 +49,6 @@ export function HeroDiagram({ variant, ...rest }: HeroDiagramProps2) {
     case "sigil":
       return <HeroLayeredContourSigil {...rest} />;
   }
-}
-
-/**
- * Map a `?hero=1..5` query param value to a variant key. The numbers
- * follow the order in the design doc / roadmap §1.4.
- */
-export function resolveHeroVariant(input?: string | string[] | null): HeroVariant {
-  const raw = Array.isArray(input) ? input[0] : input;
-  if (!raw) return "node-graph"; // Default — the strongest resume handshake
-  const n = Number(raw);
-  if (!Number.isNaN(n)) {
-    const byNum = ["mandala", "node-graph", "hex-lattice", "orbital", "sigil"] as const;
-    if (n >= 1 && n <= byNum.length) return byNum[n - 1];
-  }
-  if ((HERO_VARIANTS as readonly string[]).includes(raw)) return raw as HeroVariant;
-  return "node-graph";
 }
 
 /**

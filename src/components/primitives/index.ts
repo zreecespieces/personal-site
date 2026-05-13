@@ -51,7 +51,7 @@ export type { SacredGeometryProps, SacredGeometryShape } from "./patterns/Sacred
 export { Suminagashi } from "./patterns/Suminagashi";
 export type { SuminagashiProps } from "./patterns/Suminagashi";
 
-// Heroes
+// Heroes — client components from ./heroes/index.tsx
 export {
   HeroDiagram,
   HeroVariantSwitcher,
@@ -60,8 +60,9 @@ export {
   HeroSacredHexLattice,
   HeroConcentricOrbital,
   HeroLayeredContourSigil,
-  HERO_VARIANTS,
-  HERO_VARIANT_LABELS,
-  resolveHeroVariant,
 } from "./heroes";
-export type { HeroDiagramProps, HeroVariant } from "./heroes";
+// Hero constants + the server-safe `resolveHeroVariant` helper, re-exported
+// directly from the non-client module so server components (e.g. the
+// home page reading searchParams) can call them.
+export { HERO_VARIANTS, HERO_VARIANT_LABELS, resolveHeroVariant } from "./heroes/types";
+export type { HeroDiagramProps, HeroVariant } from "./heroes/types";
