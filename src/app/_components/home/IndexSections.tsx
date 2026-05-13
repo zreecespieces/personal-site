@@ -9,6 +9,7 @@ import {
   IndexRow,
   Overline,
   PageHeader,
+  Reveal,
   type GlyphName,
 } from "@/components/primitives";
 import { linkCategories, type LinkCategory } from "@/app/_data/links";
@@ -47,60 +48,62 @@ function CategorySection({ category, n }: { category: LinkCategory; n: number })
   const accent = theme.zr.sectionAccent[category.section];
 
   return (
-    <Box
-      data-section={category.section}
-      sx={{ "--zr-section-accent": accent } as React.CSSProperties}
-    >
-      <ArchiveAccordion
-        label={category.title}
-        index={n}
-        glyph={<Glyph name={SECTION_GLYPH[category.section]} size={18} />}
-        count={category.links.length}
-        defaultOpen
-        accent={accent}
+    <Reveal delay={n * 60}>
+      <Box
+        data-section={category.section}
+        sx={{ "--zr-section-accent": accent } as React.CSSProperties}
       >
-        <Box sx={{ mt: 1 }}>
-          {category.links.map((link, i) => (
-            <IndexRow
-              key={link.url}
-              index={i + 1}
-              title={link.title}
-              description={link.description}
-              category={link.subtitle}
-              href={link.url}
-              target={link.external ? "_blank" : undefined}
-              rel={link.external ? "noreferrer" : undefined}
-              endGlyph={
-                link.external ? (
-                  <Box
-                    component="svg"
-                    viewBox="0 0 16 16"
-                    sx={{ width: 14, height: 14 }}
-                    aria-hidden="true"
-                  >
-                    <polyline
-                      points="6,2 14,2 14,10"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={1.2}
-                    />
-                    <line x1="14" y1="2" x2="6" y2="10" stroke="currentColor" strokeWidth={1.2} />
-                    <polyline
-                      points="11,8 11,13 3,13 3,5 8,5"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={1.2}
-                    />
-                  </Box>
-                ) : (
-                  <ArrowRight />
-                )
-              }
-            />
-          ))}
-        </Box>
-      </ArchiveAccordion>
-    </Box>
+        <ArchiveAccordion
+          label={category.title}
+          index={n}
+          glyph={<Glyph name={SECTION_GLYPH[category.section]} size={18} />}
+          count={category.links.length}
+          defaultOpen
+          accent={accent}
+        >
+          <Box sx={{ mt: 1 }}>
+            {category.links.map((link, i) => (
+              <IndexRow
+                key={link.url}
+                index={i + 1}
+                title={link.title}
+                description={link.description}
+                category={link.subtitle}
+                href={link.url}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noreferrer" : undefined}
+                endGlyph={
+                  link.external ? (
+                    <Box
+                      component="svg"
+                      viewBox="0 0 16 16"
+                      sx={{ width: 14, height: 14 }}
+                      aria-hidden="true"
+                    >
+                      <polyline
+                        points="6,2 14,2 14,10"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={1.2}
+                      />
+                      <line x1="14" y1="2" x2="6" y2="10" stroke="currentColor" strokeWidth={1.2} />
+                      <polyline
+                        points="11,8 11,13 3,13 3,5 8,5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={1.2}
+                      />
+                    </Box>
+                  ) : (
+                    <ArrowRight />
+                  )
+                }
+              />
+            ))}
+          </Box>
+        </ArchiveAccordion>
+      </Box>
+    </Reveal>
   );
 }
 

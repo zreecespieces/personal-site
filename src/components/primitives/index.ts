@@ -38,6 +38,9 @@ export type { PortraitFrameProps } from "./PortraitFrame";
 export { MakersMarkFooter } from "./MakersMarkFooter";
 export type { MakersMarkFooterProps } from "./MakersMarkFooter";
 
+export { Reveal } from "./Reveal";
+export type { RevealProps } from "./Reveal";
+
 // Patterns
 export { Honeycomb } from "./patterns/Honeycomb";
 export type { HoneycombProps } from "./patterns/Honeycomb";
