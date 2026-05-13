@@ -59,7 +59,9 @@ export const hikes: Hike[] = [
     distance: 6.4,
     elevation: 2208,
     difficulty: "Moderate",
-    images: ["https://hikingguy.com/wp-content/uploads/mist-trail-hike-featured.jpg"],
+    images: [
+      "https://images.alltrails.com/eyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvMTI3NDEyMDA4LzRiZGUwZDNmNzdiYTExNTcxNjFkMDk4ZjUyZGMyODI4LmpwZyIsImVkaXRzIjp7InRvRm9ybWF0Ijoid2VicCIsInJlc2l6ZSI6eyJ3aWR0aCI6MjA0OCwiaGVpZ2h0IjoyMDQ4LCJmaXQiOiJpbnNpZGUifSwicm90YXRlIjpudWxsLCJqcGVnIjp7InRyZWxsaXNRdWFudGlzYXRpb24iOnRydWUsIm92ZXJzaG9vdERlcmluZ2luZyI6dHJ1ZSwib3B0aW1pc2VTY2FucyI6dHJ1ZSwicXVhbnRpc2F0aW9uVGFibGUiOjN9fX0=",
+    ],
   },
   {
     name: "Upper Yosemite Falls trail",

@@ -1,32 +1,32 @@
-"use client"
+"use client";
 
-import React, { useState } from "react"
-import { Box, Container, Typography, Avatar, Stack, Grid, IconButton, Collapse } from "@mui/material"
-import { contactInfo, linkCategories } from "./links"
-import NextLink from "next/link"
-import { LinkItem } from "./linkItem"
-import GradientBorder from "@/components/GradientBorder"
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
-import ExpandLessIcon from "@mui/icons-material/ExpandLess"
+import React, { useState } from "react";
+import { Box, Container, Typography, Avatar, Stack, Grid, IconButton, Collapse } from "@mui/material";
+import { contactInfo, linkCategories } from "./links";
+import NextLink from "next/link";
+import { LinkItem } from "./linkItem";
+import GradientBorder from "@/components/GradientBorder";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 
 const GRADIENT_PATTERNS = [
   ["#92EFFD", "#0072FF"], // Blue gradient
   ["#DAB1DA", "#8D0B93"], // Light purple to dark purple gradient
-]
+];
 
 export default function LinkTree() {
   // State to track which categories are expanded
   const [expandedCategories, setExpandedCategories] = useState<Record<number, boolean>>(
-    linkCategories.reduce((acc, _, index) => ({ ...acc, [index]: true }), {})
-  )
+    linkCategories.reduce((acc, _, index) => ({ ...acc, [index]: true }), {}),
+  );
 
   // Toggle expanded state for a category
   const toggleCategory = (index: number) => {
     setExpandedCategories((prev) => ({
       ...prev,
       [index]: !prev[index],
-    }))
-  }
+    }));
+  };
 
   return (
     <Container maxWidth={false} sx={{ py: 4, px: 0, overflow: "hidden" }}>
@@ -90,9 +90,11 @@ export default function LinkTree() {
               padding: "4px",
               borderRadius: "50%",
               background: "linear-gradient(45deg, #00FFFF, #FF00FF)",
-              mb: 3,
-              width: 208,
-              height: 208,
+              mb: 2,
+              width: "100%",
+              height: "100%",
+              maxWidth: "383px",
+              maxHeight: "383px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -100,10 +102,12 @@ export default function LinkTree() {
             }}>
             <Avatar
               alt="Zachary Reece"
-              src="/profile-picture.png"
+              src="/profile-picture.jpg"
               sx={{
-                width: 200,
-                height: 200,
+                width: "100%",
+                height: "100%",
+                maxHeight: "375px",
+                maxWidth: "375px",
                 background: "rgba(30, 30, 30, 0.8)",
               }}
             />
@@ -180,7 +184,7 @@ export default function LinkTree() {
               <GradientBorder
                 gradientColors={["#FF00FF", "#00FFFF"]}
                 sx={{ width: "100%", mb: { xs: 4.5, md: 0 } }}
-                contentSx={{ p: 2 }}>
+                contentSx={{ p: 1 }}>
                 <Typography
                   variant="subtitle1"
                   color="text.secondary"
@@ -190,16 +194,15 @@ export default function LinkTree() {
                     letterSpacing: "0.01em",
                     px: 1,
                   }}>
-                  I have been working professionally as a React developer since 2020, but I have been creating technology since
-                  early childhood. Since 2022 I have worked as a Senior React Developer for Cloudwell, a software consultancy
-                  specializing in enterprise cloud solutions within the Microsoft ecosystem. There I have gained exceptional
-                  professional software experience while working for clients ranging from cyber security defense contractors and
-                  multi-billion dollar commercial real estate brokers to federal government agencies and our own internal
-                  products. I have led efforts including significant refactors of mission-critical logic, rearchitecting a core
-                  automated testing system, and implementing brand new features in both a design and development capacity. Before
-                  that, I created a best-selling Udemy course on React and MUI development which has taught over 20,000 students
-                  in 145 countries. I'm now most interested in building agentic systems with LLMs to develop autonomous tools and
-                  workflows that could never have been previously imagined, specifically in education.
+                  I have been creating technology my entire life, since early childhood. In 2020 I created a best-selling Udemy
+                  course on React and MUI development which has now taught over 20,000 students in 145 countries. Since then I
+                  have worked with companies ranging from cyber security defense contractors and multi-billion dollar commercial
+                  real estate brokers to federal government agencies and software consultancies. In January 2026 I joined Flint,
+                  an edtech startup, as a Product Engineer building a next generation AI-powered LMS/SIS platform partnered with
+                  hundreds of schools across the world to automate tasks for teachers and deliver personalized learning to
+                  individual students. Learning will always be at the heart of what I do - from teaching myself to code as a
+                  child, to teaching people all over the world about coding, and now building tools that will redefine education
+                  for students everywhere.
                 </Typography>
               </GradientBorder>
             </Grid>
@@ -260,7 +263,7 @@ export default function LinkTree() {
 
           {/* Contact Info, icons only */}
           <Stack direction="row" spacing={2.5} sx={{ mt: { xs: 0, md: 3 }, mb: 1 }}>
-            {contactInfo.map(({ icon, title, url }, index) => (
+            {contactInfo.map(({ icon, url }, index) => (
               <IconButton key={index} component={NextLink} href={url}>
                 {icon}
               </IconButton>
@@ -269,5 +272,5 @@ export default function LinkTree() {
         </Container>
       </Box>
     </Container>
-  )
+  );
 }

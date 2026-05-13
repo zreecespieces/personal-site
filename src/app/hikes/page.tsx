@@ -2,13 +2,12 @@
 
 import React, { useState } from "react";
 import { Box, Container, Typography, Stack, Tabs, Tab, Grid, Chip, Dialog, IconButton, Button } from "@mui/material";
-import { hikes, calculateHikeStats, groupHikesByLocation } from "./hikes";
+import { calculateHikeStats, groupHikesByLocation } from "./hikes";
 import GradientBorder from "@/components/GradientBorder";
 import CloseIcon from "@mui/icons-material/Close";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import TimerIcon from "@mui/icons-material/Timer";
 import StraightenIcon from "@mui/icons-material/Straighten";
 import TerrainIcon from "@mui/icons-material/Terrain";
 import HikingIcon from "@mui/icons-material/Hiking";
@@ -26,11 +25,12 @@ export default function Hikes() {
   const hikeStats = calculateHikeStats();
   const locationGroups = groupHikesByLocation();
 
-  const [selectedLocationIndex, setSelectedLocationIndex] = useState(0);
+  const [selectedLocationId, setSelectedLocationId] = useState(() => locationGroups[0]?.id ?? "");
   const [imageDialogOpen, setImageDialogOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState("");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentImageSet, setCurrentImageSet] = useState<string[]>([]);
+  const selectedLocationGroup = locationGroups.find((location) => location.id === selectedLocationId) ?? locationGroups[0];
 
   // Image Dialog Handlers
   const handleImageOpen = (imageUrl: string, index: number, images: string[]) => {
@@ -128,10 +128,11 @@ export default function Hikes() {
         {/* Location Tabs */}
         <Box sx={{ width: "100%" }}>
           <Tabs
-            value={selectedLocationIndex}
-            onChange={(_, newValue) => setSelectedLocationIndex(newValue)}
+            value={selectedLocationGroup?.id ?? false}
+            onChange={(_, newValue: string) => setSelectedLocationId(newValue)}
             variant="scrollable"
             scrollButtons="auto"
+            aria-label="hike location tabs"
             sx={{
               mb: 3,
               "& .MuiTabs-indicator": {
@@ -149,9 +150,10 @@ export default function Hikes() {
                 },
               },
             }}>
-            {locationGroups.map((location, index) => (
+            {locationGroups.map((location) => (
               <Tab
                 key={location.id}
+                value={location.id}
                 label={location.name}
                 icon={location.type === "domestic" ? <FlagIcon fontSize="small" /> : <PublicIcon fontSize="small" />}
                 iconPosition="start"
@@ -160,31 +162,31 @@ export default function Hikes() {
           </Tabs>
 
           {/* Selected Location Content */}
-          {locationGroups.map((locationGroup, groupIndex) => (
-            <Box key={`location-${locationGroup.id}`} sx={{ display: selectedLocationIndex === groupIndex ? "block" : "none" }}>
+          {selectedLocationGroup && (
+            <Box key={`location-${selectedLocationGroup.id}`}>
               {/* Location Header */}
               <GradientBorder gradientColors={["#66ff00", "#228B22"]} sx={{ width: "100%", mb: 4 }} contentSx={{ p: 3 }}>
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
                   <Box>
                     <Typography variant="h4" fontWeight="700" gutterBottom>
-                      {locationGroup.name}
+                      {selectedLocationGroup.name}
                       <Typography component="span" variant="h6" color="text.secondary" sx={{ ml: 1 }}>
-                        {locationGroup.type === "domestic" ? "United States" : ""}
+                        {selectedLocationGroup.type === "domestic" ? "United States" : ""}
                       </Typography>
                     </Typography>
                     <Typography variant="subtitle1" color="text.secondary">
-                      {locationGroup.totalHikes} hikes • {locationGroup.totalDistance.toFixed(1)} miles hiked •{" "}
-                      {locationGroup.totalElevation.toLocaleString()} ft elevation gain
+                      {selectedLocationGroup.totalHikes} hikes • {selectedLocationGroup.totalDistance.toFixed(1)} miles hiked •{" "}
+                      {selectedLocationGroup.totalElevation.toLocaleString()} ft elevation gain
                     </Typography>
                   </Box>
                   <Box>
                     <Chip
-                      icon={locationGroup.type === "domestic" ? <FlagIcon /> : <PublicIcon />}
-                      label={locationGroup.type === "domestic" ? "Domestic" : "International"}
+                      icon={selectedLocationGroup.type === "domestic" ? <FlagIcon /> : <PublicIcon />}
+                      label={selectedLocationGroup.type === "domestic" ? "Domestic" : "International"}
                       sx={{
-                        bgcolor: locationGroup.type === "domestic" ? "rgba(33, 150, 243, 0.15)" : "rgba(156, 39, 176, 0.15)",
+                        bgcolor: selectedLocationGroup.type === "domestic" ? "rgba(33, 150, 243, 0.15)" : "rgba(156, 39, 176, 0.15)",
                         "& .MuiChip-icon": {
-                          color: locationGroup.type === "domestic" ? "#03DAC6" : "#9C27B0",
+                          color: selectedLocationGroup.type === "domestic" ? "#03DAC6" : "#9C27B0",
                         },
                       }}
                     />
@@ -194,8 +196,8 @@ export default function Hikes() {
 
               {/* Hikes Grid */}
               <Grid container spacing={3} sx={{ mb: 6 }}>
-                {locationGroup.hikes.map((hike, hikeIndex) => (
-                  <Grid key={`${locationGroup.id}-hike-${hikeIndex}`} size={{ xs: 12, md: 6, lg: 4 }}>
+                {selectedLocationGroup.hikes.map((hike, hikeIndex) => (
+                  <Grid key={`${selectedLocationGroup.id}-hike-${hikeIndex}`} size={{ xs: 12, md: 6, lg: 4 }}>
                     <GradientBorder
                       gradientColors={["#66ff00", "#228B22"]}
                       sx={{ width: "100%", height: "100%" }}
@@ -273,7 +275,7 @@ export default function Hikes() {
                 ))}
               </Grid>
             </Box>
-          ))}
+          )}
           <Button component={NextLink} href="/linktree" sx={{ mt: 4, color: "#66ff00", textTransform: "none" }}>
             Back to Linktree
           </Button>

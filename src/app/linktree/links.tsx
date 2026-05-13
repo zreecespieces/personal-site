@@ -1,23 +1,22 @@
-import GitHubIcon from '@mui/icons-material/GitHub';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import LanguageIcon from '@mui/icons-material/Language';
-import EmailIcon from '@mui/icons-material/Email';
-import SchoolIcon from '@mui/icons-material/School';
-import PaletteIcon from '@mui/icons-material/Palette';
-import DescriptionIcon from '@mui/icons-material/Description';
-import SportsKabaddiIcon from '@mui/icons-material/SportsKabaddi';
-import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
-import NightlifeIcon from '@mui/icons-material/Nightlife';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import PublicIcon from '@mui/icons-material/Public';
-import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
-import LandscapeIcon from '@mui/icons-material/Landscape';
-import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
-import WorkIcon from '@mui/icons-material/Work';
-import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
-import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
-import { LinkItemProps } from './linkItem';
+import GitHubIcon from "@mui/icons-material/GitHub";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LanguageIcon from "@mui/icons-material/Language";
+import EmailIcon from "@mui/icons-material/Email";
+import SchoolIcon from "@mui/icons-material/School";
+import PaletteIcon from "@mui/icons-material/Palette";
+import SportsKabaddiIcon from "@mui/icons-material/SportsKabaddi";
+import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
+import NightlifeIcon from "@mui/icons-material/Nightlife";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import PublicIcon from "@mui/icons-material/Public";
+import TheaterComedyIcon from "@mui/icons-material/TheaterComedy";
+import LandscapeIcon from "@mui/icons-material/Landscape";
+import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
+import WorkIcon from "@mui/icons-material/Work";
+import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
+import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
+import { LinkItemProps } from "./linkItem";
 
 export interface LinkCategory {
   title: string;
@@ -29,25 +28,24 @@ export interface LinkCategory {
 const professionalLinks: LinkItemProps[] = [
   {
     icon: <GitHubIcon />,
-    title: 'GitHub',
-    url: 'https://github.com/zreecespieces',
+    title: "GitHub",
+    url: "https://github.com/zreecespieces",
   },
   {
     icon: <LanguageIcon />,
-    title: 'Projects',
-    url: '/projects',
+    title: "Projects",
+    url: "/projects",
   },
   {
     icon: <HistoryEduIcon />,
-    title: 'Blog',
-    subtitle: "Coming soon",
-    url: '',
+    title: "Aberrant Quiddity",
+    subtitle: "blog",
+    url: "/blog",
   },
   {
-    icon: <DescriptionIcon />,
-    title: 'Resume',
-    subtitle: 'Last updated: March 2025',
-    url: '/resume.pdf',
+    icon: <WorkIcon />,
+    title: "Work",
+    url: "https://flintk12.com",
   },
 ];
 
@@ -55,95 +53,91 @@ const professionalLinks: LinkItemProps[] = [
 const hobbyLinks: LinkItemProps[] = [
   {
     icon: <PublicIcon />,
-    title: 'Travel',
-    url: '/travel',
+    title: "Travel",
+    url: "/travel",
   },
   {
     icon: <SportsKabaddiIcon />,
-    title: 'BJJ & Judo',
-    url: 'https://smoothcomp.com/en/profile/979762',
+    title: "BJJ & Judo",
+    url: "https://smoothcomp.com/en/profile/979762",
   },
   {
     icon: <PaletteIcon />,
-    title: 'AI Art',
-    url: '/art',
+    title: "AI Art",
+    url: "/art",
   },
   {
     icon: <NightlifeIcon />,
-    title: 'Music Festivals',
-    url: '/music-festivals',
+    title: "Music Festivals",
+    url: "/music-festivals",
   },
   {
     icon: <TheaterComedyIcon />,
-    title: 'Comedy',
-    url: '/comedy',
+    title: "Comedy",
+    url: "/comedy",
   },
   {
     icon: <LandscapeIcon />,
-    title: 'Hiking',
-    url: '/hikes',
-  }
+    title: "Hiking",
+    url: "/hikes",
+  },
 ];
 
 // Education links
 const educationLinks: LinkItemProps[] = [
   {
     icon: <SchoolIcon />,
-    title: 'Courses',
-    url: 'https://www.udemy.com/user/zacharyreece/',
+    title: "Courses",
+    url: "https://www.udemy.com/user/zacharyreece/",
   },
   {
     icon: <LocalLibraryIcon />,
-    title: 'Studying',
-    url: '/study',
+    title: "Studying",
+    url: "/study",
   },
   {
     icon: <MenuBookIcon />,
-    title: 'Reading',
-    url: '/reading',
+    title: "Reading",
+    url: "/reading",
   },
 ];
 
 // Categories
 export const linkCategories: LinkCategory[] = [
   {
-    title: 'Professional',
+    title: "Professional",
     icon: <WorkIcon />,
-    links: professionalLinks
+    links: professionalLinks,
   },
   {
-    title: 'Education',
+    title: "Education",
     icon: <SchoolOutlinedIcon />,
-    links: educationLinks
+    links: educationLinks,
   },
   {
-    title: 'Hobbies',
+    title: "Hobbies",
     icon: <DirectionsRunIcon />,
-    links: hobbyLinks
+    links: hobbyLinks,
   },
 ];
 
 // Keeping the old links array for backward compatibility if needed
-export const links: LinkItemProps[] = [
-    ...professionalLinks,
-    ...educationLinks,
-    ...hobbyLinks,
-];
+export const links: LinkItemProps[] = [...professionalLinks, ...educationLinks, ...hobbyLinks];
 
 export const contactInfo = [
   {
     icon: <InstagramIcon />,
-    title: 'Instagram',
-    url: 'https://www.instagram.com/zacharydreece/',
+    title: "Instagram",
+    url: "https://www.instagram.com/zacharydreece/",
   },
   {
     icon: <LinkedInIcon />,
-    title: 'LinkedIn',
-    url: 'https://www.linkedin.com/in/zachary-reece-b587811a8/',
+    title: "LinkedIn",
+    url: "https://www.linkedin.com/in/zachary-reece-b587811a8/",
   },
   {
     icon: <EmailIcon />,
-    title: 'Contact Me',
-    url: 'mailto:zachdreece@gmail.com',
-  }
-]
+    title: "Contact Me",
+    url: "mailto:zachdreece@gmail.com",
+  },
+];
