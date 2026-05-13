@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "post-update": "echo \"codesandbox preview only, need an update\" && pnpm update --latest"
+    "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,md}'",
+    "format:check": "prettier --check 'src/**/*.{ts,tsx,js,jsx,json,md}'"
   },
   "dependencies": {
     "@emotion/cache": "latest",
@@ -16,6 +17,7 @@
     "@mui/icons-material": "next",
     "@mui/material": "next",
     "@mui/material-nextjs": "next",
+    "@vercel/analytics": "^2.0.1",
     "firebase": "^11.4.0",
     "firebase-admin": "^13.2.0",
     "gray-matter": "^4.0.3",
@@ -31,6 +33,7 @@
     "@types/react-dom": "^19.0.0",
     "eslint": "latest",
     "eslint-config-next": "^15.0.0",
+    "prettier": "^3.8.3",
     "typescript": "latest"
   }
 }
