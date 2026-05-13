@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import React, { ReactNode } from 'react';
-import { Box, SxProps, Theme } from '@mui/material';
+import React, { ReactNode } from "react";
+import { Box, SxProps, Theme } from "@mui/material";
 
 interface GradientBorderProps {
   children: ReactNode;
@@ -18,32 +18,32 @@ interface GradientBorderProps {
  */
 export default function GradientBorder({
   children,
-  gradientColors = ['#FF00FF', '#00FFFF'],
+  gradientColors = ["#FF00FF", "#00FFFF"],
   borderWidth = 0.25,
   borderRadius = 3,
   sx = {},
   contentSx = {},
 }: GradientBorderProps) {
   const [color1, color2] = gradientColors;
-  
+
   return (
     <Box
       sx={{
-        position: 'relative',
+        position: "relative",
         padding: borderWidth,
-        borderRadius: borderRadius + (borderWidth / 8),
+        borderRadius: borderRadius + borderWidth / 8,
         background: `linear-gradient(45deg, ${color1}, ${color2})`,
-        ...sx
+        ...sx,
       }}
     >
       <Box
         sx={{
-          position: 'relative',
+          position: "relative",
           borderRadius: borderRadius,
           backgroundColor: (theme) => theme.palette.background.default,
-          overflow: 'hidden',
-          height: '100%',
-          ...contentSx
+          overflow: "hidden",
+          height: "100%",
+          ...contentSx,
         }}
       >
         {children}

@@ -55,7 +55,8 @@ export const courses: Course[] = [
     mastery: 99,
     description:
       "A comprehensive preparation course covering all the prerequisite topics needed for AP Calculus, including functions, trigonometry, and limits.",
-    imageUrl: "https://cdn.kastatic.org/genfiles/topic-icons/icons/polynomial_functions.png-9054bb-128c.png",
+    imageUrl:
+      "https://cdn.kastatic.org/genfiles/topic-icons/icons/polynomial_functions.png-9054bb-128c.png",
     courseUrl: "https://www.khanacademy.org/math/get-ready-for-ap-calc",
   },
   {
@@ -68,7 +69,8 @@ export const courses: Course[] = [
     mastery: 96,
     description:
       "Complete AP Calculus BC curriculum covering differential and integral calculus, as well as advanced topics such as infinite series and parametric equations.",
-    imageUrl: "https://cdn.kastatic.org/genfiles/topic-icons/icons/ap_calculus_ab.png-60df6c-128c.png",
+    imageUrl:
+      "https://cdn.kastatic.org/genfiles/topic-icons/icons/ap_calculus_ab.png-60df6c-128c.png",
     courseUrl: "https://www.khanacademy.org/math/ap-calculus-bc",
   },
   {
@@ -81,7 +83,8 @@ export const courses: Course[] = [
     mastery: 93,
     description:
       "Advanced calculus course covering functions of multiple variables, partial derivatives, multiple integrals, and vector calculus.",
-    imageUrl: "https://cdn.kastatic.org/genfiles/topic-icons/icons/multivariable_calculus.png-ac2283-128c.png",
+    imageUrl:
+      "https://cdn.kastatic.org/genfiles/topic-icons/icons/multivariable_calculus.png-ac2283-128c.png",
     courseUrl: "https://www.khanacademy.org/math/multivariable-calculus",
   },
 ];

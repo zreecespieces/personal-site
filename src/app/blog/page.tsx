@@ -29,7 +29,8 @@ export default function BlogPage() {
             textAlign: "center",
             background: BLOG_SURFACE,
             boxShadow: BLOG_SHADOW,
-          }}>
+          }}
+        >
           <Typography
             variant="h3"
             component="h1"
@@ -40,10 +41,14 @@ export default function BlogPage() {
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               letterSpacing: "0.02em",
-            }}>
+            }}
+          >
             Aberrant Quiddity
           </Typography>
-          <Typography variant="subtitle1" sx={{ color: "#FFFFFF", fontSize: "1.05rem", lineHeight: 1.5 }}>
+          <Typography
+            variant="subtitle1"
+            sx={{ color: "#FFFFFF", fontSize: "1.05rem", lineHeight: 1.5 }}
+          >
             Thoughts on software engineering, philosophy, and AI.
           </Typography>
         </GradientBorder>
@@ -59,7 +64,8 @@ export default function BlogPage() {
                 textDecoration: "none",
                 color: "inherit",
                 display: "block",
-              }}>
+              }}
+            >
               <Box
                 sx={{
                   background: BLOG_SURFACE,
@@ -84,7 +90,8 @@ export default function BlogPage() {
                     height: "3px",
                     background: `linear-gradient(90deg, ${BLOG_GRADIENT[0]}, ${BLOG_GRADIENT[1]})`,
                   },
-                }}>
+                }}
+              >
                 <Typography
                   variant="h5"
                   sx={{
@@ -94,7 +101,8 @@ export default function BlogPage() {
                     letterSpacing: "0.01em",
                     lineHeight: 1.15,
                     mb: 0.75,
-                  }}>
+                  }}
+                >
                   {post.title}
                 </Typography>
 
@@ -107,7 +115,8 @@ export default function BlogPage() {
                     fontWeight: 600,
                     lineHeight: 1.25,
                     mb: 1.25,
-                  }}>
+                  }}
+                >
                   {formatDate(post.date)}
                 </Typography>
 
@@ -119,7 +128,8 @@ export default function BlogPage() {
                     fontWeight: 400,
                     lineHeight: 1.6,
                     mb: 2.25,
-                  }}>
+                  }}
+                >
                   {post.description}
                 </Typography>
 
@@ -162,7 +172,8 @@ export default function BlogPage() {
               "&:hover": {
                 bgcolor: BLOG_HOVER,
               },
-            }}>
+            }}
+          >
             Back to LinkTree
           </Typography>
         </Box>

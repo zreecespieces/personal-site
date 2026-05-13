@@ -5,13 +5,7 @@ import NextLink from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import GradientBorder from "@/components/GradientBorder";
 import { getPostBySlug, getAllSlugs } from "@/lib/blog";
-import {
-  BLOG_GRADIENT,
-  BLOG_HOVER,
-  BLOG_SHADOW,
-  BLOG_SURFACE,
-  BLOG_TEXT,
-} from "../theme";
+import { BLOG_GRADIENT, BLOG_HOVER, BLOG_SHADOW, BLOG_SURFACE, BLOG_TEXT } from "../theme";
 
 const BLOG_BODY_FONT =
   '"Avenir Next", Avenir, "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif';
@@ -70,18 +64,10 @@ const mdxComponents = {
     />
   ),
   ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
-    <Box
-      component="ul"
-      sx={{ mb: 2, pl: 3, "& li": { mb: 0.75 } }}
-      {...props}
-    />
+    <Box component="ul" sx={{ mb: 2, pl: 3, "& li": { mb: 0.75 } }} {...props} />
   ),
   ol: (props: React.HTMLAttributes<HTMLOListElement>) => (
-    <Box
-      component="ol"
-      sx={{ mb: 2, pl: 3, "& li": { mb: 0.75 } }}
-      {...props}
-    />
+    <Box component="ol" sx={{ mb: 2, pl: 3, "& li": { mb: 0.75 } }} {...props} />
   ),
   li: (props: React.HTMLAttributes<HTMLLIElement>) => (
     <Typography
@@ -180,11 +166,7 @@ export async function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) return {};
@@ -195,11 +177,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
 

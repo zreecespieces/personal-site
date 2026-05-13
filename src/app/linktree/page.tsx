@@ -1,7 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box, Container, Typography, Avatar, Stack, Grid, IconButton, Collapse } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  Avatar,
+  Stack,
+  Grid,
+  IconButton,
+  Collapse,
+} from "@mui/material";
 import { contactInfo, linkCategories } from "./links";
 import NextLink from "next/link";
 import { LinkItem } from "./linkItem";
@@ -17,7 +26,7 @@ const GRADIENT_PATTERNS = [
 export default function LinkTree() {
   // State to track which categories are expanded
   const [expandedCategories, setExpandedCategories] = useState<Record<number, boolean>>(
-    linkCategories.reduce((acc, _, index) => ({ ...acc, [index]: true }), {}),
+    linkCategories.reduce((acc, _, index) => ({ ...acc, [index]: true }), {})
   );
 
   // Toggle expanded state for a category
@@ -37,7 +46,8 @@ export default function LinkTree() {
           alignItems: "center",
           position: "relative",
           pb: 8,
-        }}>
+        }}
+      >
         {/* Enhanced gradient background effects */}
         <Box
           sx={{
@@ -82,7 +92,10 @@ export default function LinkTree() {
           }}
         />
 
-        <Container maxWidth="md" sx={{ alignItems: "center", display: "flex", flexDirection: "column" }}>
+        <Container
+          maxWidth="md"
+          sx={{ alignItems: "center", display: "flex", flexDirection: "column" }}
+        >
           {/* Enhanced Profile Section */}
           <Box
             sx={{
@@ -99,7 +112,8 @@ export default function LinkTree() {
               alignItems: "center",
               justifyContent: "center",
               boxShadow: "0 8px 20px rgba(0, 0, 0, 0.4)",
-            }}>
+            }}
+          >
             <Avatar
               alt="Zachary Reece"
               src="/profile-picture.jpg"
@@ -124,7 +138,8 @@ export default function LinkTree() {
               WebkitTextFillColor: "transparent",
               letterSpacing: "0.02em",
               mb: 0,
-            }}>
+            }}
+          >
             Zachary Reece
           </Typography>
 
@@ -137,7 +152,8 @@ export default function LinkTree() {
               mb: 4.5,
               mt: 1,
               display: "inline-flex",
-            }}>
+            }}
+          >
             <Box
               sx={{
                 display: "flex",
@@ -154,25 +170,43 @@ export default function LinkTree() {
                   boxShadow: "0 4px 8px rgba(0,0,0,0.3)",
                   transform: "translateY(-1px)",
                 },
-              }}>
+              }}
+            >
               <Typography
                 textAlign="center"
                 variant="body2"
-                sx={{ color: "#FFFFFF", letterSpacing: "0.01em", lineHeight: 1, py: 0.5 }}>
+                sx={{ color: "#FFFFFF", letterSpacing: "0.01em", lineHeight: 1, py: 0.5 }}
+              >
                 software engineer by trade
               </Typography>
-              <Box sx={{ mx: 1.5, height: "100%", width: "2px", background: "linear-gradient(to bottom, #00FFFF, #FF00FF)" }} />
+              <Box
+                sx={{
+                  mx: 1.5,
+                  height: "100%",
+                  width: "2px",
+                  background: "linear-gradient(to bottom, #00FFFF, #FF00FF)",
+                }}
+              />
               <Typography
                 textAlign="center"
                 variant="body2"
-                sx={{ color: "#FFFFFF", letterSpacing: "0.01em", lineHeight: 1, py: 0.5 }}>
+                sx={{ color: "#FFFFFF", letterSpacing: "0.01em", lineHeight: 1, py: 0.5 }}
+              >
                 martial artist by choice
               </Typography>
-              <Box sx={{ mx: 1.5, height: "100%", width: "2px", background: "linear-gradient(to bottom, #00FFFF, #FF00FF)" }} />
+              <Box
+                sx={{
+                  mx: 1.5,
+                  height: "100%",
+                  width: "2px",
+                  background: "linear-gradient(to bottom, #00FFFF, #FF00FF)",
+                }}
+              />
               <Typography
                 textAlign="center"
                 variant="body2"
-                sx={{ color: "#FFFFFF", letterSpacing: "0.01em", lineHeight: 1, py: 0.5 }}>
+                sx={{ color: "#FFFFFF", letterSpacing: "0.01em", lineHeight: 1, py: 0.5 }}
+              >
                 philosopher by nature
               </Typography>
             </Box>
@@ -184,7 +218,8 @@ export default function LinkTree() {
               <GradientBorder
                 gradientColors={["#FF00FF", "#00FFFF"]}
                 sx={{ width: "100%", mb: { xs: 4.5, md: 0 } }}
-                contentSx={{ p: 1 }}>
+                contentSx={{ p: 1 }}
+              >
                 <Typography
                   variant="subtitle1"
                   color="text.secondary"
@@ -193,15 +228,19 @@ export default function LinkTree() {
                     fontWeight: 400,
                     letterSpacing: "0.01em",
                     px: 1,
-                  }}>
-                  I have been creating technology my entire life, since early childhood. In 2020 I created a best-selling Udemy
-                  course on React and MUI development which has now taught over 20,000 students in 145 countries. Since then I
-                  have worked with companies ranging from cyber security defense contractors and multi-billion dollar commercial
-                  real estate brokers to federal government agencies and software consultancies. In January 2026 I joined Flint,
-                  an edtech startup, as a Product Engineer building a next generation AI-powered LMS/SIS platform partnered with
-                  hundreds of schools across the world to automate tasks for teachers and deliver personalized learning to
-                  individual students. Learning will always be at the heart of what I do - from teaching myself to code as a
-                  child, to teaching people all over the world about coding, and now building tools that will redefine education
+                  }}
+                >
+                  I have been creating technology my entire life, since early childhood. In 2020 I
+                  created a best-selling Udemy course on React and MUI development which has now
+                  taught over 20,000 students in 145 countries. Since then I have worked with
+                  companies ranging from cyber security defense contractors and multi-billion dollar
+                  commercial real estate brokers to federal government agencies and software
+                  consultancies. In January 2026 I joined Flint, an edtech startup, as a Product
+                  Engineer building a next generation AI-powered LMS/SIS platform partnered with
+                  hundreds of schools across the world to automate tasks for teachers and deliver
+                  personalized learning to individual students. Learning will always be at the heart
+                  of what I do - from teaching myself to code as a child, to teaching people all
+                  over the world about coding, and now building tools that will redefine education
                   for students everywhere.
                 </Typography>
               </GradientBorder>
@@ -222,7 +261,8 @@ export default function LinkTree() {
                           opacity: 0.9,
                         },
                       }}
-                      onClick={() => toggleCategory(categoryIndex)}>
+                      onClick={() => toggleCategory(categoryIndex)}
+                    >
                       <Box sx={{ mr: 1, color: "primary.main" }}>{category.icon}</Box>
                       <Typography
                         variant="h6"
@@ -232,7 +272,8 @@ export default function LinkTree() {
                           WebkitTextFillColor: "transparent",
                           fontWeight: 600,
                           flex: 1,
-                        }}>
+                        }}
+                      >
                         {category.title}
                       </Typography>
                       {expandedCategories[categoryIndex] ? (
@@ -250,7 +291,11 @@ export default function LinkTree() {
                             <LinkItem
                               key={linkIndex}
                               {...link}
-                              gradientColors={GRADIENT_PATTERNS[(categoryIndex + linkIndex) % GRADIENT_PATTERNS.length]}
+                              gradientColors={
+                                GRADIENT_PATTERNS[
+                                  (categoryIndex + linkIndex) % GRADIENT_PATTERNS.length
+                                ]
+                              }
                             />
                           ))}
                       </Stack>

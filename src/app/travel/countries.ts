@@ -35,7 +35,7 @@ export const calculateDaysSpent = (visits: Visit[]): number => {
 
 // Simple list:
 // Greece - July 14 2019 - July 28 2019
-//  - Meteora, Mykonos, Santorini, Athens, Olympia, Corinth, Epidaurus, Delphi, 
+//  - Meteora, Mykonos, Santorini, Athens, Olympia, Corinth, Epidaurus, Delphi,
 // Canada - February 8 2023 - February 12 2023
 //  - Niagara Falls, Toronto, Aquarium, Casa Loma, CN Tower
 // Portugal - All of September 2023
@@ -49,7 +49,7 @@ export const calculateDaysSpent = (visits: Visit[]): number => {
 // Bulgaria - All of January 2024
 //  - Sofia, Belogradchik, Magura Cave, Rila Monastery,
 // Romania - All of February 2024
-//  - Bucharest, Peles Castle, Bran Castle (Dracula's castle), Braşov, Salina Turda, 
+//  - Bucharest, Peles Castle, Bran Castle (Dracula's castle), Braşov, Salina Turda,
 // Hungary - First week of March 2024
 //  - Budapest, Buda Castle, Fisherman's Bastion, Hungarian Parliament Building
 // Czechia - Second week of March 2024
@@ -61,39 +61,66 @@ export const countries: Country[] = [
   {
     name: "United States",
     flag: "🇺🇸",
-    coverImage: "https://upload.wikimedia.org/wikipedia/commons/1/1f/Wichita%2C_Kansas_skyline_aerial_view.jpg",
+    coverImage:
+      "https://upload.wikimedia.org/wikipedia/commons/1/1f/Wichita%2C_Kansas_skyline_aerial_view.jpg",
     visits: [
       {
         startDate: "1998-09-02",
         endDate: "2022-08-21",
-        purpose: "Born in Wichita, Kansas"
+        purpose: "Born in Wichita, Kansas",
       },
       {
         startDate: "2022-08-21",
         endDate: "2023-07-31",
-        purpose: "Moved to Akron, Ohio"
+        purpose: "Moved to Akron, Ohio",
       },
       {
         startDate: "2024-08-20",
-        endDate: new Date().toISOString().split('T')[0],
-        purpose: "Moved to Denver, Colorado"
-      }
+        endDate: new Date().toISOString().split("T")[0],
+        purpose: "Moved to Denver, Colorado",
+      },
     ],
     favoriteSpots: [],
     description: "My home country",
-    states: ["Kansas", "Colorado", "Ohio", "Missouri", "Oklahoma", "Arkansas", "Louisiana", "Florida", "Texas", "New York", "Illinois", "California", "Washington", "Washington DC", "Virginia", "Maryland", "Pennsylvania", "Nevada", "Utah", "Michigan", "Indiana", "Tennessee", "Georgia", "Kentucky"],
-    isHomeCountry: true
+    states: [
+      "Kansas",
+      "Colorado",
+      "Ohio",
+      "Missouri",
+      "Oklahoma",
+      "Arkansas",
+      "Louisiana",
+      "Florida",
+      "Texas",
+      "New York",
+      "Illinois",
+      "California",
+      "Washington",
+      "Washington DC",
+      "Virginia",
+      "Maryland",
+      "Pennsylvania",
+      "Nevada",
+      "Utah",
+      "Michigan",
+      "Indiana",
+      "Tennessee",
+      "Georgia",
+      "Kentucky",
+    ],
+    isHomeCountry: true,
   },
   {
     name: "Mexico",
     flag: "🇲🇽",
-    coverImage: "https://cdn.britannica.com/60/92960-050-327CF926/pyramid-Mayan-Chichen-Itza-Mex.jpg",
+    coverImage:
+      "https://cdn.britannica.com/60/92960-050-327CF926/pyramid-Mayan-Chichen-Itza-Mex.jpg",
     visits: [
       {
         startDate: "2010-07-19",
         endDate: "2010-07-24",
-        purpose: "Tourism"
-      }
+        purpose: "Tourism",
+      },
     ],
     favoriteSpots: [
       {
@@ -107,11 +134,12 @@ export const countries: Country[] = [
       {
         name: "Progreso",
         description: "Port city with access to Mayan historical sites",
-      }
+      },
     ],
-    description: "Cruise vacation with grandparents and family to visit Cozumel and Progreso, including the ancient ruins of Chichen Itza"
+    description:
+      "Cruise vacation with grandparents and family to visit Cozumel and Progreso, including the ancient ruins of Chichen Itza",
   },
-  
+
   {
     name: "Greece",
     flag: "🇬🇷",
@@ -120,8 +148,8 @@ export const countries: Country[] = [
       {
         startDate: "2019-07-14",
         endDate: "2019-07-28",
-        purpose: "Tourism"
-      }
+        purpose: "Tourism",
+      },
     ],
     favoriteSpots: [
       {
@@ -155,20 +183,22 @@ export const countries: Country[] = [
       {
         name: "Delphi",
         description: "Ancient sanctuary dedicated to Apollo",
-      }
+      },
     ],
-    description: "Known for its rich history, stunning islands, Mediterranean cuisine, and ancient ruins."
+    description:
+      "Known for its rich history, stunning islands, Mediterranean cuisine, and ancient ruins.",
   },
   {
     name: "Canada",
     flag: "🇨🇦",
-    coverImage: "https://cdn.britannica.com/35/100235-050-CE3936EE/view-CN-Tower-Toronto-skyline-observation-deck.jpg",
+    coverImage:
+      "https://cdn.britannica.com/35/100235-050-CE3936EE/view-CN-Tower-Toronto-skyline-observation-deck.jpg",
     visits: [
       {
         startDate: "2023-02-08",
         endDate: "2023-02-12",
-        purpose: "Tourism"
-      }
+        purpose: "Tourism",
+      },
     ],
     favoriteSpots: [
       {
@@ -190,20 +220,22 @@ export const countries: Country[] = [
       {
         name: "CN Tower",
         description: "Iconic communications and observation tower",
-      }
+      },
     ],
-    description: "The world's second-largest country by total area, known for its diverse culture, natural beauty, and friendly people."
+    description:
+      "The world's second-largest country by total area, known for its diverse culture, natural beauty, and friendly people.",
   },
   {
     name: "Portugal",
     flag: "🇵🇹",
-    coverImage: "https://www.nationalgeographic.com/content/dam/expeditions/destinations/europe/journeys/Discover-Portugal/hero-portugal.jpg",
+    coverImage:
+      "https://www.nationalgeographic.com/content/dam/expeditions/destinations/europe/journeys/Discover-Portugal/hero-portugal.jpg",
     visits: [
       {
         startDate: "2023-09-01",
         endDate: "2023-09-30",
-        purpose: "Tourism"
-      }
+        purpose: "Tourism",
+      },
     ],
     favoriteSpots: [
       {
@@ -237,20 +269,21 @@ export const countries: Country[] = [
       {
         name: "Almendres Cromlech",
         description: "Megalithic complex from the 6th millennium BC",
-      }
+      },
     ],
-    description: "Home to beautiful beaches, historic cities, delicious cuisine, and port wine."
+    description: "Home to beautiful beaches, historic cities, delicious cuisine, and port wine.",
   },
   {
     name: "Spain",
     flag: "🇪🇸",
-    coverImage: "https://www.spain.info/export/sites/segtur/.content/imagenes/cabeceras-grandes/cataluna/park-guell-barcelona-s-305364611.jpg",
+    coverImage:
+      "https://www.spain.info/export/sites/segtur/.content/imagenes/cabeceras-grandes/cataluna/park-guell-barcelona-s-305364611.jpg",
     visits: [
       {
         startDate: "2023-10-01",
         endDate: "2023-10-31",
-        purpose: "Tourism"
-      }
+        purpose: "Tourism",
+      },
     ],
     favoriteSpots: [
       {
@@ -288,20 +321,22 @@ export const countries: Country[] = [
       {
         name: "FC Barcelona Match",
         description: "Home game of the famous FC Barcelona football team",
-      }
+      },
     ],
-    description: "Known for its rich culture, beautiful beaches, historic cities, and vibrant nightlife."
+    description:
+      "Known for its rich culture, beautiful beaches, historic cities, and vibrant nightlife.",
   },
   {
     name: "Italy",
     flag: "🇮🇹",
-    coverImage: "https://upload.wikimedia.org/wikipedia/commons/5/53/Colosseum_in_Rome%2C_Italy_-_April_2007.jpg",
+    coverImage:
+      "https://upload.wikimedia.org/wikipedia/commons/5/53/Colosseum_in_Rome%2C_Italy_-_April_2007.jpg",
     visits: [
       {
         startDate: "2023-11-01",
         endDate: "2023-11-30",
-        purpose: "Tourism"
-      }
+        purpose: "Tourism",
+      },
     ],
     favoriteSpots: [
       {
@@ -326,14 +361,15 @@ export const countries: Country[] = [
       },
       {
         name: "Vatican City",
-        description: "Smallest independent state with St. Peter's Basilica and Vatican Museums"
+        description: "Smallest independent state with St. Peter's Basilica and Vatican Museums",
       },
       {
         name: "Naples",
         description: "Historic city known for its culture and cuisine",
-      }
+      },
     ],
-    description: "Famous for its art, architecture, food, wine, beautiful coastlines, and ancient ruins."
+    description:
+      "Famous for its art, architecture, food, wine, beautiful coastlines, and ancient ruins.",
   },
   {
     name: "Bosnia and Herzegovina",
@@ -343,8 +379,8 @@ export const countries: Country[] = [
       {
         startDate: "2023-12-01",
         endDate: "2023-12-31",
-        purpose: "Tourism"
-      }
+        purpose: "Tourism",
+      },
     ],
     favoriteSpots: [
       {
@@ -353,24 +389,29 @@ export const countries: Country[] = [
       },
       {
         name: "Latin Bridge",
-        description: "Historic bridge where Archduke Franz Ferdinand was assassinated, sparking World War I",
+        description:
+          "Historic bridge where Archduke Franz Ferdinand was assassinated, sparking World War I",
       },
-      { name: "Trebević",
-        description: "Beautiful mountain overlooking Sarajevo with a cable car connecting it to the city",
-      }
+      {
+        name: "Trebević",
+        description:
+          "Beautiful mountain overlooking Sarajevo with a cable car connecting it to the city",
+      },
     ],
-    description: "Rich in natural beauty with rugged mountains, medieval villages, and a fascinating blend of Ottoman and Austro-Hungarian influences."
+    description:
+      "Rich in natural beauty with rugged mountains, medieval villages, and a fascinating blend of Ottoman and Austro-Hungarian influences.",
   },
   {
     name: "Bulgaria",
     flag: "🇧🇬",
-    coverImage: "https://assets.vogue.com/photos/66cf9fcf8e300baeca058f80/4:3/w_2560%2Cc_limit/1303587513",
+    coverImage:
+      "https://assets.vogue.com/photos/66cf9fcf8e300baeca058f80/4:3/w_2560%2Cc_limit/1303587513",
     visits: [
       {
         startDate: "2024-01-01",
         endDate: "2024-01-31",
-        purpose: "Tourism"
-      }
+        purpose: "Tourism",
+      },
     ],
     favoriteSpots: [
       {
@@ -388,9 +429,10 @@ export const countries: Country[] = [
       {
         name: "Rila Monastery",
         description: "Largest and most famous Eastern Orthodox monastery in Bulgaria",
-      }
+      },
     ],
-    description: "Beautiful country with diverse landscapes, from Black Sea beaches to mountains, with rich history and cultural heritage."
+    description:
+      "Beautiful country with diverse landscapes, from Black Sea beaches to mountains, with rich history and cultural heritage.",
   },
   {
     name: "Romania",
@@ -400,8 +442,8 @@ export const countries: Country[] = [
       {
         startDate: "2024-02-01",
         endDate: "2024-02-29",
-        purpose: "Tourism"
-      }
+        purpose: "Tourism",
+      },
     ],
     favoriteSpots: [
       {
@@ -423,20 +465,22 @@ export const countries: Country[] = [
       {
         name: "Salina Turda",
         description: "Ancient salt mine transformed into an underground theme park",
-      }
+      },
     ],
-    description: "Home to medieval towns, Dracula's castle, the Carpathian Mountains, and beautiful countryside."
+    description:
+      "Home to medieval towns, Dracula's castle, the Carpathian Mountains, and beautiful countryside.",
   },
   {
     name: "Hungary",
     flag: "🇭🇺",
-    coverImage: "https://upload.wikimedia.org/wikipedia/commons/7/79/Budapest_Orsz%C3%A1gh%C3%A1z_%2831355012995%29.jpg",
+    coverImage:
+      "https://upload.wikimedia.org/wikipedia/commons/7/79/Budapest_Orsz%C3%A1gh%C3%A1z_%2831355012995%29.jpg",
     visits: [
       {
         startDate: "2024-03-01",
         endDate: "2024-03-07",
-        purpose: "Tourism"
-      }
+        purpose: "Tourism",
+      },
     ],
     favoriteSpots: [
       {
@@ -454,9 +498,10 @@ export const countries: Country[] = [
       {
         name: "Hungarian Parliament Building",
         description: "Impressive Neo-Gothic building with beautiful architecture",
-      }
+      },
     ],
-    description: "Known for its rich history, thermal spas, impressive architecture, and unique cuisine."
+    description:
+      "Known for its rich history, thermal spas, impressive architecture, and unique cuisine.",
   },
   {
     name: "Czechia",
@@ -466,8 +511,8 @@ export const countries: Country[] = [
       {
         startDate: "2024-03-08",
         endDate: "2024-03-14",
-        purpose: "Tourism"
-      }
+        purpose: "Tourism",
+      },
     ],
     favoriteSpots: [
       {
@@ -489,9 +534,10 @@ export const countries: Country[] = [
       {
         name: "Kutna Hora",
         description: "Medieval town with beautiful architecture and a stunning Gothic cathedral",
-      }
+      },
     ],
-    description: "Home to hundreds of museums, countless churches, and beautiful architecture, with Prague's historic center a UNESCO World Heritage site."
+    description:
+      "Home to hundreds of museums, countless churches, and beautiful architecture, with Prague's historic center a UNESCO World Heritage site.",
   },
   {
     name: "Scotland",
@@ -501,8 +547,8 @@ export const countries: Country[] = [
       {
         startDate: "2024-09-21",
         endDate: "2024-09-24",
-        purpose: "Tourism"
-      }
+        purpose: "Tourism",
+      },
     ],
     favoriteSpots: [
       {
@@ -520,9 +566,10 @@ export const countries: Country[] = [
       {
         name: "Loch Ness",
         description: "Famous lake known for the legendary Loch Ness Monster",
-      }
+      },
     ],
-    description: "Land of highlands, historic castles, and rich cultural heritage with breathtaking natural landscapes."
+    description:
+      "Land of highlands, historic castles, and rich cultural heritage with breathtaking natural landscapes.",
   },
   {
     name: "Ireland",
@@ -532,8 +579,8 @@ export const countries: Country[] = [
       {
         startDate: "2024-09-25",
         endDate: "2024-09-30",
-        purpose: "Tourism"
-      }
+        purpose: "Tourism",
+      },
     ],
     favoriteSpots: [
       {
@@ -566,34 +613,50 @@ export const countries: Country[] = [
       },
       {
         name: "The River Shannon",
-        description: "Ireland's longest river flowing through beautiful countryside, and my mother's namesake",
-      }
+        description:
+          "Ireland's longest river flowing through beautiful countryside, and my mother's namesake",
+      },
     ],
-    description: "Emerald Isle known for its lush landscapes, friendly people, rich folklore, and vibrant pub culture."
-  }
+    description:
+      "Emerald Isle known for its lush landscapes, friendly people, rich folklore, and vibrant pub culture.",
+  },
 ];
 
 // Get countries sorted by most recent visit
 export const getCountriesByRecent = (): Country[] => {
   return [...countries].sort((a, b) => {
-    const aLatestVisit = a.visits.length > 0 ? new Date(a.visits.sort((v1, v2) => 
-      new Date(v2.endDate).getTime() - new Date(v1.endDate).getTime())[0].endDate) : new Date(0);
-    const bLatestVisit = b.visits.length > 0 ? new Date(b.visits.sort((v1, v2) => 
-      new Date(v2.endDate).getTime() - new Date(v1.endDate).getTime())[0].endDate) : new Date(0);
+    const aLatestVisit =
+      a.visits.length > 0
+        ? new Date(
+            a.visits.sort(
+              (v1, v2) => new Date(v2.endDate).getTime() - new Date(v1.endDate).getTime()
+            )[0].endDate
+          )
+        : new Date(0);
+    const bLatestVisit =
+      b.visits.length > 0
+        ? new Date(
+            b.visits.sort(
+              (v1, v2) => new Date(v2.endDate).getTime() - new Date(v1.endDate).getTime()
+            )[0].endDate
+          )
+        : new Date(0);
     return bLatestVisit.getTime() - aLatestVisit.getTime();
   });
 };
 
 // Get total countries visited
 export const getTotalCountriesVisited = (): number => {
-  return countries.filter(country => country.visits.length > 0).length;
+  return countries.filter((country) => country.visits.length > 0).length;
 };
 
 // Get total days spent traveling
 export const getTotalDaysSpent = (): number => {
-  return countries.filter(c => !c.isHomeCountry).reduce((total, country) => {
-    return total + calculateDaysSpent(country.visits);
-  }, 0);
+  return countries
+    .filter((c) => !c.isHomeCountry)
+    .reduce((total, country) => {
+      return total + calculateDaysSpent(country.visits);
+    }, 0);
 };
 
 export const getTotalStatesVisited = (): number => {

@@ -1,7 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box, Container, Typography, Stack, Tabs, Tab, Grid, Chip, Dialog, IconButton, Button } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  Stack,
+  Tabs,
+  Tab,
+  Grid,
+  Chip,
+  Dialog,
+  IconButton,
+  Button,
+} from "@mui/material";
 import { calculateHikeStats, groupHikesByLocation } from "./hikes";
 import GradientBorder from "@/components/GradientBorder";
 import CloseIcon from "@mui/icons-material/Close";
@@ -30,7 +42,8 @@ export default function Hikes() {
   const [currentImage, setCurrentImage] = useState("");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentImageSet, setCurrentImageSet] = useState<string[]>([]);
-  const selectedLocationGroup = locationGroups.find((location) => location.id === selectedLocationId) ?? locationGroups[0];
+  const selectedLocationGroup =
+    locationGroups.find((location) => location.id === selectedLocationId) ?? locationGroups[0];
 
   // Image Dialog Handlers
   const handleImageOpen = (imageUrl: string, index: number, images: string[]) => {
@@ -80,7 +93,11 @@ export default function Hikes() {
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Stack spacing={6}>
         {/* Title and Stats */}
-        <GradientBorder gradientColors={["#66ff00", "#228B22"]} sx={{ width: "100%" }} contentSx={{ p: 4, textAlign: "center" }}>
+        <GradientBorder
+          gradientColors={["#66ff00", "#228B22"]}
+          sx={{ width: "100%" }}
+          contentSx={{ p: 4, textAlign: "center" }}
+        >
           <Typography
             variant="h3"
             component="h1"
@@ -91,7 +108,8 @@ export default function Hikes() {
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               letterSpacing: "0.02em",
-            }}>
+            }}
+          >
             Hiking
           </Typography>
           <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: 3, mt: 2 }}>
@@ -149,13 +167,20 @@ export default function Hikes() {
                   WebkitTextFillColor: "transparent",
                 },
               },
-            }}>
+            }}
+          >
             {locationGroups.map((location) => (
               <Tab
                 key={location.id}
                 value={location.id}
                 label={location.name}
-                icon={location.type === "domestic" ? <FlagIcon fontSize="small" /> : <PublicIcon fontSize="small" />}
+                icon={
+                  location.type === "domestic" ? (
+                    <FlagIcon fontSize="small" />
+                  ) : (
+                    <PublicIcon fontSize="small" />
+                  )
+                }
                 iconPosition="start"
               />
             ))}
@@ -165,26 +190,51 @@ export default function Hikes() {
           {selectedLocationGroup && (
             <Box key={`location-${selectedLocationGroup.id}`}>
               {/* Location Header */}
-              <GradientBorder gradientColors={["#66ff00", "#228B22"]} sx={{ width: "100%", mb: 4 }} contentSx={{ p: 3 }}>
-                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
+              <GradientBorder
+                gradientColors={["#66ff00", "#228B22"]}
+                sx={{ width: "100%", mb: 4 }}
+                contentSx={{ p: 3 }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                    gap: 2,
+                  }}
+                >
                   <Box>
                     <Typography variant="h4" fontWeight="700" gutterBottom>
                       {selectedLocationGroup.name}
-                      <Typography component="span" variant="h6" color="text.secondary" sx={{ ml: 1 }}>
+                      <Typography
+                        component="span"
+                        variant="h6"
+                        color="text.secondary"
+                        sx={{ ml: 1 }}
+                      >
                         {selectedLocationGroup.type === "domestic" ? "United States" : ""}
                       </Typography>
                     </Typography>
                     <Typography variant="subtitle1" color="text.secondary">
-                      {selectedLocationGroup.totalHikes} hikes • {selectedLocationGroup.totalDistance.toFixed(1)} miles hiked •{" "}
+                      {selectedLocationGroup.totalHikes} hikes •{" "}
+                      {selectedLocationGroup.totalDistance.toFixed(1)} miles hiked •{" "}
                       {selectedLocationGroup.totalElevation.toLocaleString()} ft elevation gain
                     </Typography>
                   </Box>
                   <Box>
                     <Chip
-                      icon={selectedLocationGroup.type === "domestic" ? <FlagIcon /> : <PublicIcon />}
-                      label={selectedLocationGroup.type === "domestic" ? "Domestic" : "International"}
+                      icon={
+                        selectedLocationGroup.type === "domestic" ? <FlagIcon /> : <PublicIcon />
+                      }
+                      label={
+                        selectedLocationGroup.type === "domestic" ? "Domestic" : "International"
+                      }
                       sx={{
-                        bgcolor: selectedLocationGroup.type === "domestic" ? "rgba(33, 150, 243, 0.15)" : "rgba(156, 39, 176, 0.15)",
+                        bgcolor:
+                          selectedLocationGroup.type === "domestic"
+                            ? "rgba(33, 150, 243, 0.15)"
+                            : "rgba(156, 39, 176, 0.15)",
                         "& .MuiChip-icon": {
                           color: selectedLocationGroup.type === "domestic" ? "#03DAC6" : "#9C27B0",
                         },
@@ -197,11 +247,15 @@ export default function Hikes() {
               {/* Hikes Grid */}
               <Grid container spacing={3} sx={{ mb: 6 }}>
                 {selectedLocationGroup.hikes.map((hike, hikeIndex) => (
-                  <Grid key={`${selectedLocationGroup.id}-hike-${hikeIndex}`} size={{ xs: 12, md: 6, lg: 4 }}>
+                  <Grid
+                    key={`${selectedLocationGroup.id}-hike-${hikeIndex}`}
+                    size={{ xs: 12, md: 6, lg: 4 }}
+                  >
                     <GradientBorder
                       gradientColors={["#66ff00", "#228B22"]}
                       sx={{ width: "100%", height: "100%" }}
-                      contentSx={{ p: 0, height: "100%", display: "flex", flexDirection: "column" }}>
+                      contentSx={{ p: 0, height: "100%", display: "flex", flexDirection: "column" }}
+                    >
                       {/* Hike Image */}
                       <Box
                         sx={{
@@ -210,7 +264,8 @@ export default function Hikes() {
                           position: "relative",
                           cursor: "pointer",
                         }}
-                        onClick={() => handleImageOpen(hike.images[0], 0, hike.images)}>
+                        onClick={() => handleImageOpen(hike.images[0], 0, hike.images)}
+                      >
                         <img
                           src={hike.images[0]}
                           alt={hike.name}
@@ -229,11 +284,19 @@ export default function Hikes() {
                             right: 0,
                             p: 1,
                             bgcolor: "rgba(0,0,0,0.5)",
-                          }}>
-                          <Typography variant="subtitle1" fontWeight="600" sx={{ color: "white", fontSize: "0.8rem" }}>
+                          }}
+                        >
+                          <Typography
+                            variant="subtitle1"
+                            fontWeight="600"
+                            sx={{ color: "white", fontSize: "0.8rem" }}
+                          >
                             {hike.name}
                           </Typography>
-                          <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.8)", fontSize: "0.65rem" }}>
+                          <Typography
+                            variant="body2"
+                            sx={{ color: "rgba(255,255,255,0.8)", fontSize: "0.65rem" }}
+                          >
                             {formatDate(hike.date)}
                           </Typography>
                         </Box>
@@ -266,7 +329,10 @@ export default function Hikes() {
                         </Box>
 
                         <Typography variant="body2" color="text.secondary" sx={{ mb: 2, flex: 1 }}>
-                          <LocationOnIcon fontSize="small" sx={{ verticalAlign: "middle", mr: 0.5, opacity: 0.7 }} />
+                          <LocationOnIcon
+                            fontSize="small"
+                            sx={{ verticalAlign: "middle", mr: 0.5, opacity: 0.7 }}
+                          />
                           {hike.location}
                         </Typography>
                       </Box>
@@ -276,7 +342,11 @@ export default function Hikes() {
               </Grid>
             </Box>
           )}
-          <Button component={NextLink} href="/linktree" sx={{ mt: 4, color: "#66ff00", textTransform: "none" }}>
+          <Button
+            component={NextLink}
+            href="/linktree"
+            sx={{ mt: 4, color: "#66ff00", textTransform: "none" }}
+          >
             Back to Linktree
           </Button>
         </Box>
@@ -300,7 +370,8 @@ export default function Hikes() {
             height: "auto",
             maxHeight: "90vh",
           },
-        }}>
+        }}
+      >
         <Box sx={{ position: "relative", width: "100%", height: "100%" }}>
           <img
             src={currentImage}
@@ -323,7 +394,8 @@ export default function Hikes() {
               "&:hover": {
                 bgcolor: "rgba(0, 0, 0, 0.7)",
               },
-            }}>
+            }}
+          >
             <CloseIcon />
           </IconButton>
 
@@ -341,7 +413,8 @@ export default function Hikes() {
                   "&:hover": {
                     bgcolor: "rgba(0, 0, 0, 0.7)",
                   },
-                }}>
+                }}
+              >
                 <NavigateBeforeIcon />
               </IconButton>
               <IconButton
@@ -356,7 +429,8 @@ export default function Hikes() {
                   "&:hover": {
                     bgcolor: "rgba(0, 0, 0, 0.7)",
                   },
-                }}>
+                }}
+              >
                 <NavigateNextIcon />
               </IconButton>
               <Box
@@ -371,7 +445,8 @@ export default function Hikes() {
                   py: 0.5,
                   borderRadius: 4,
                   fontSize: "0.875rem",
-                }}>
+                }}
+              >
                 {currentImageIndex + 1} / {currentImageSet.length}
               </Box>
             </>

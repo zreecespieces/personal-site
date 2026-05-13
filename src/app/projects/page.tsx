@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React, { useState } from "react"
+import React, { useState } from "react";
 import {
   Box,
   Container,
@@ -17,17 +17,23 @@ import {
   DialogContent,
   IconButton,
   Link,
-} from "@mui/material"
-import { getTotalProjects, getTotalTechnologies, formatDate, getProjectsSortedByDate, Technology } from "./projects"
-import CloseIcon from "@mui/icons-material/Close"
-import CodeIcon from "@mui/icons-material/Code"
-import ConstructionIcon from "@mui/icons-material/Construction"
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
-import LaunchIcon from "@mui/icons-material/Launch"
-import GitHubIcon from "@mui/icons-material/GitHub"
-import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList"
-import CheckCircleIcon from "@mui/icons-material/CheckCircle"
-import GradientBorder from "@/components/GradientBorder"
+} from "@mui/material";
+import {
+  getTotalProjects,
+  getTotalTechnologies,
+  formatDate,
+  getProjectsSortedByDate,
+  Technology,
+} from "./projects";
+import CloseIcon from "@mui/icons-material/Close";
+import CodeIcon from "@mui/icons-material/Code";
+import ConstructionIcon from "@mui/icons-material/Construction";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import LaunchIcon from "@mui/icons-material/Launch";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import GradientBorder from "@/components/GradientBorder";
 
 function FancyChip({ tech, techIndex }: { tech: Technology; techIndex: number }) {
   return (
@@ -51,33 +57,37 @@ function FancyChip({ tech, techIndex }: { tech: Technology; techIndex: number })
         transition: "all 0.2s ease-in-out",
       }}
     />
-  )
+  );
 }
 
 export default function Projects() {
-  const sortedProjects = getProjectsSortedByDate()
-  const [selectedProject, setSelectedProject] = useState<number>(0)
-  const [openImageDialog, setOpenImageDialog] = useState(false)
-  const [dialogImage, setDialogImage] = useState<{ url: string; caption?: string }>({ url: "" })
+  const sortedProjects = getProjectsSortedByDate();
+  const [selectedProject, setSelectedProject] = useState<number>(0);
+  const [openImageDialog, setOpenImageDialog] = useState(false);
+  const [dialogImage, setDialogImage] = useState<{ url: string; caption?: string }>({ url: "" });
 
   const handleProjectChange = (event: React.SyntheticEvent, newValue: number) => {
-    setSelectedProject(newValue)
-  }
+    setSelectedProject(newValue);
+  };
 
   const openImage = (imageUrl: string, caption?: string) => {
-    setDialogImage({ url: imageUrl, caption })
-    setOpenImageDialog(true)
-  }
+    setDialogImage({ url: imageUrl, caption });
+    setOpenImageDialog(true);
+  };
 
   const handleCloseDialog = () => {
-    setOpenImageDialog(false)
-  }
+    setOpenImageDialog(false);
+  };
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Stack spacing={6}>
         {/* Title */}
-        <GradientBorder gradientColors={["#00FFFF", "#FF00FF"]} sx={{ width: "100%" }} contentSx={{ p: 4, textAlign: "center" }}>
+        <GradientBorder
+          gradientColors={["#00FFFF", "#FF00FF"]}
+          sx={{ width: "100%" }}
+          contentSx={{ p: 4, textAlign: "center" }}
+        >
           <Typography
             variant="h3"
             component="h1"
@@ -88,24 +98,32 @@ export default function Projects() {
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               letterSpacing: "0.02em",
-            }}>
+            }}
+          >
             Projects
           </Typography>
 
           <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: 2, my: 2 }}>
-            <FancyChip 
-              tech={{ name: `${getTotalProjects()} Project${getTotalProjects() === 1 ? "" : "s"}`, color: "#00FFFF" }} 
-              techIndex={0} 
+            <FancyChip
+              tech={{
+                name: `${getTotalProjects()} Project${getTotalProjects() === 1 ? "" : "s"}`,
+                color: "#00FFFF",
+              }}
+              techIndex={0}
             />
-            <FancyChip 
-              tech={{ name: `${getTotalTechnologies()} Technologies`, color: "#FF00FF" }} 
-              techIndex={1} 
+            <FancyChip
+              tech={{ name: `${getTotalTechnologies()} Technologies`, color: "#FF00FF" }}
+              techIndex={1}
             />
           </Box>
         </GradientBorder>
 
         {/* Project Tabs */}
-        <GradientBorder gradientColors={["#00FFFF", "#FF00FF"]} sx={{ width: "100%" }} contentSx={{ p: 0 }}>
+        <GradientBorder
+          gradientColors={["#00FFFF", "#FF00FF"]}
+          sx={{ width: "100%" }}
+          contentSx={{ p: 0 }}
+        >
           <Tabs
             value={selectedProject}
             onChange={handleProjectChange}
@@ -124,7 +142,8 @@ export default function Projects() {
                 py: 3,
                 px: 4,
               },
-            }}>
+            }}
+          >
             {sortedProjects.map((project, index) => (
               <Tab key={project.id} label={project.title} />
             ))}
@@ -144,7 +163,8 @@ export default function Projects() {
                   background: "linear-gradient(to right, #00FFFF, #FF00FF)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
-                }}>
+                }}
+              >
                 {project.title}
               </Typography>
 
@@ -155,7 +175,8 @@ export default function Projects() {
                   color: "#E0E0E0",
                   fontWeight: 500,
                   mb: 2,
-                }}>
+                }}
+              >
                 {project.subtitle}
               </Typography>
 
@@ -164,12 +185,20 @@ export default function Projects() {
                 <CalendarMonthIcon sx={{ color: "#00FFFF" }} />
                 <Typography variant="body1">
                   {formatDate(project.startDate)}
-                  {project.isOngoing ? " - Present" : project.endDate ? ` - ${formatDate(project.endDate)}` : ""}
+                  {project.isOngoing
+                    ? " - Present"
+                    : project.endDate
+                      ? ` - ${formatDate(project.endDate)}`
+                      : ""}
                 </Typography>
               </Box>
 
               {/* Project Description */}
-              <GradientBorder gradientColors={["#00FFFF", "#FF00FF"]} sx={{ width: "100%" }} contentSx={{ p: 3 }}>
+              <GradientBorder
+                gradientColors={["#00FFFF", "#FF00FF"]}
+                sx={{ width: "100%" }}
+                contentSx={{ p: 3 }}
+              >
                 <Typography variant="body1" sx={{ lineHeight: 1.6, textAlign: "justify" }}>
                   {project.description}
                 </Typography>
@@ -185,12 +214,15 @@ export default function Projects() {
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   fontWeight: 600,
-                }}>
+                }}
+              >
                 Technologies
               </Typography>
 
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
-                {project.technologies.map((tech, techIndex) => <FancyChip key={techIndex} tech={tech} techIndex={techIndex} />)}
+                {project.technologies.map((tech, techIndex) => (
+                  <FancyChip key={techIndex} tech={tech} techIndex={techIndex} />
+                ))}
               </Box>
 
               {/* Features */}
@@ -202,14 +234,19 @@ export default function Projects() {
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   fontWeight: 600,
-                }}>
+                }}
+              >
                 Key Features
               </Typography>
 
               <Grid container spacing={2}>
                 {project.features.map((feature, featureIndex) => (
                   <Grid size={{ xs: 12, md: 6 }} key={featureIndex}>
-                    <GradientBorder gradientColors={["#00FFFF", "#FF00FF"]} sx={{ height: "100%" }} contentSx={{ p: 2 }}>
+                    <GradientBorder
+                      gradientColors={["#00FFFF", "#FF00FF"]}
+                      sx={{ height: "100%" }}
+                      contentSx={{ p: 2 }}
+                    >
                       <Typography
                         variant="h6"
                         component="h4"
@@ -219,7 +256,8 @@ export default function Projects() {
                           color: "#FFFFFF",
                           fontWeight: 600,
                           mb: 1,
-                        }}>
+                        }}
+                      >
                         <FeaturedPlayListIcon sx={{ mr: 1, color: "#00FFFF" }} />
                         {feature.title}
                       </Typography>
@@ -242,13 +280,17 @@ export default function Projects() {
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                       fontWeight: 600,
-                    }}>
+                    }}
+                  >
                     Highlights
                   </Typography>
 
                   <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
                     {project.highlights.map((highlight, highlightIndex) => (
-                      <Box key={highlightIndex} sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                      <Box
+                        key={highlightIndex}
+                        sx={{ display: "flex", alignItems: "center", gap: 1.5 }}
+                      >
                         <CheckCircleIcon sx={{ color: "#00FFFF" }} />
                         <Typography variant="body1">{highlight}</Typography>
                       </Box>
@@ -269,7 +311,8 @@ export default function Projects() {
                       WebkitTextFillColor: "transparent",
                       fontWeight: 600,
                       mb: 2,
-                    }}>
+                    }}
+                  >
                     Gallery
                   </Typography>
                 </>
@@ -293,7 +336,8 @@ export default function Projects() {
                           left: 0,
                           width: "100%",
                           height: "100%",
-                          background: "linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.6))",
+                          background:
+                            "linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.6))",
                           opacity: 0,
                           transition: "opacity 0.3s ease",
                         },
@@ -303,7 +347,8 @@ export default function Projects() {
                         "&:hover img": {
                           transform: "scale(1.05)",
                         },
-                      }}>
+                      }}
+                    >
                       <Box
                         component="img"
                         src={image.url}
@@ -325,7 +370,8 @@ export default function Projects() {
                           mt: 1,
                           color: "#AAAAAA",
                           textAlign: "center",
-                        }}>
+                        }}
+                      >
                         {image.caption}
                       </Typography>
                     )}
@@ -359,14 +405,16 @@ export default function Projects() {
                         borderRadius: "inherit",
                         padding: "2px",
                         background: "linear-gradient(45deg, #00FFFF, #FF00FF)",
-                        WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                        WebkitMask:
+                          "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
                         WebkitMaskComposite: "xor",
                         maskComposite: "exclude",
                       },
                       "&:hover": {
                         bgcolor: "rgba(0, 0, 0, 0.7)",
                       },
-                    }}>
+                    }}
+                  >
                     View Live Project
                   </Button>
                 )}
@@ -387,12 +435,17 @@ export default function Projects() {
                         borderColor: "#FFFFFF",
                         background: "rgba(255,255,255,0.05)",
                       },
-                    }}>
+                    }}
+                  >
                     View Code
                   </Button>
                 )}
               </Box>
-              <Button component={Link} href="/linktree" sx={{ color: "#00FFFF", textTransform: "none", alignSelf: "flex-start" }}>
+              <Button
+                component={Link}
+                href="/linktree"
+                sx={{ color: "#00FFFF", textTransform: "none", alignSelf: "flex-start" }}
+              >
                 Back to LinkTree
               </Button>
             </Stack>
@@ -412,7 +465,8 @@ export default function Projects() {
             borderRadius: 2,
             overflow: "hidden",
           },
-        }}>
+        }}
+      >
         <DialogContent sx={{ p: 0, position: "relative" }}>
           <IconButton
             onClick={handleCloseDialog}
@@ -425,7 +479,8 @@ export default function Projects() {
               "&:hover": {
                 bgcolor: "rgba(0, 0, 0, 0.7)",
               },
-            }}>
+            }}
+          >
             <CloseIcon />
           </IconButton>
           <Box
@@ -445,12 +500,13 @@ export default function Projects() {
                 p: 2,
                 textAlign: "center",
                 color: "#CCCCCC",
-              }}>
+              }}
+            >
               {dialogImage.caption}
             </Typography>
           )}
         </DialogContent>
       </Dialog>
     </Container>
-  )
+  );
 }

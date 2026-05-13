@@ -31,7 +31,11 @@ export function NewsletterDialog() {
   const [lastName, setLastName] = useState("");
   const [dontAskAgain, setDontAskAgain] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: "success" | "error" }>({
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    message: string;
+    severity: "success" | "error";
+  }>({
     open: false,
     message: "",
     severity: "success",
@@ -92,7 +96,11 @@ export function NewsletterDialog() {
         setSnackbar({ open: true, message: result.message, severity: "error" });
       }
     } catch (error) {
-      setSnackbar({ open: true, message: "An error occurred. Please try again later.", severity: "error" });
+      setSnackbar({
+        open: true,
+        message: "An error occurred. Please try again later.",
+        severity: "error",
+      });
     } finally {
       setLoading(false);
     }
@@ -118,7 +126,8 @@ export function NewsletterDialog() {
               overflow: "hidden",
             },
           },
-        }}>
+        }}
+      >
         {/* Decorative gradients */}
         <Box
           sx={{
@@ -159,7 +168,8 @@ export function NewsletterDialog() {
             top: 8,
             color: "text.secondary",
             zIndex: 1,
-          }}>
+          }}
+        >
           <CloseIcon />
         </IconButton>
 
@@ -171,7 +181,8 @@ export function NewsletterDialog() {
             display: "flex",
             alignItems: "center",
             gap: 1.5,
-          }}>
+          }}
+        >
           <EmailIcon color="primary" />
           <Typography
             variant="h5"
@@ -181,15 +192,16 @@ export function NewsletterDialog() {
               background: "linear-gradient(to right, #BB86FC, #03DAC6)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
-            }}>
+            }}
+          >
             Stay Connected
           </Typography>
         </DialogTitle>
 
         <DialogContent sx={{ position: "relative", zIndex: 1 }}>
           <DialogContentText sx={{ mb: 3 }}>
-            I won't be trying to sell you stuff, it's just a way to keep up with whenever I make or do something interesting. It
-            won't be often, but when it does happen it should be cool.
+            I won't be trying to sell you stuff, it's just a way to keep up with whenever I make or
+            do something interesting. It won't be often, but when it does happen it should be cool.
           </DialogContentText>
 
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -225,7 +237,13 @@ export function NewsletterDialog() {
             </Box>
 
             <FormControlLabel
-              control={<Checkbox checked={dontAskAgain} onChange={(e) => setDontAskAgain(e.target.checked)} color="primary" />}
+              control={
+                <Checkbox
+                  checked={dontAskAgain}
+                  onChange={(e) => setDontAskAgain(e.target.checked)}
+                  color="primary"
+                />
+              }
               label="Don't ask me again"
               sx={{ mt: 2 }}
             />
@@ -239,7 +257,8 @@ export function NewsletterDialog() {
                 variant="contained"
                 color="primary"
                 disabled={loading}
-                startIcon={loading ? <CircularProgress size={20} /> : <MailOutlineIcon />}>
+                startIcon={loading ? <CircularProgress size={20} /> : <MailOutlineIcon />}
+              >
                 {loading ? "Subscribing..." : "Subscribe"}
               </Button>
             </DialogActions>
@@ -252,13 +271,15 @@ export function NewsletterDialog() {
         open={snackbar.open}
         autoHideDuration={6000}
         onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
         <Alert
           onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))}
           severity={snackbar.severity}
           variant="filled"
           slotProps={{ message: { sx: { color: "#FFF" } } }}
-          sx={{ width: "100%" }}>
+          sx={{ width: "100%" }}
+        >
           {snackbar.message}
         </Alert>
       </Snackbar>

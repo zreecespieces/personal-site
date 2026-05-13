@@ -70,7 +70,9 @@ export const hikes: Hike[] = [
     distance: 6.6,
     elevation: 3254,
     difficulty: "Hard",
-    images: ["https://www.yosemite.com/wp-content/uploads/2016/05/Yosemite-Falls-in-Fall-Autumn-topaz-enhance-4x-scaled.jpeg"],
+    images: [
+      "https://www.yosemite.com/wp-content/uploads/2016/05/Yosemite-Falls-in-Fall-Autumn-topaz-enhance-4x-scaled.jpeg",
+    ],
   },
   {
     name: "Mariposa Grove of Giant Sequoias",
@@ -79,7 +81,9 @@ export const hikes: Hike[] = [
     distance: 6.7,
     elevation: 1217,
     difficulty: "Moderate",
-    images: ["https://www.yosemite.com/wp-content/uploads/2023/04/bachelor-3-graces-1024x600-AdobeStock_383292495.jpg"],
+    images: [
+      "https://www.yosemite.com/wp-content/uploads/2023/04/bachelor-3-graces-1024x600-AdobeStock_383292495.jpg",
+    ],
   },
   {
     name: "The Ozarks",
@@ -132,7 +136,9 @@ export const hikes: Hike[] = [
     elevation: 1610,
     time: [3, 13],
     difficulty: "Hard",
-    images: ["https://i0.wp.com/travel2walk.com/wp-content/uploads/2021/09/20_9_walker_ranch-2.jpg?resize=750%2C563&ssl=1"],
+    images: [
+      "https://i0.wp.com/travel2walk.com/wp-content/uploads/2021/09/20_9_walker_ranch-2.jpg?resize=750%2C563&ssl=1",
+    ],
   },
   {
     name: "Eldorado Canyon: Eastern Section",
@@ -141,7 +147,9 @@ export const hikes: Hike[] = [
     distance: 4.5,
     elevation: 866,
     difficulty: "Moderate",
-    images: ["https://coloradobirdingtrail.com/wp-content/uploads/2024/05/Eldorado-Canyon-State-Park-Boulder-Creek.jpg"],
+    images: [
+      "https://coloradobirdingtrail.com/wp-content/uploads/2024/05/Eldorado-Canyon-State-Park-Boulder-Creek.jpg",
+    ],
   },
   {
     name: "South Boulder Creek",
@@ -425,7 +433,9 @@ export const groupHikesByLocation = (): LocationGroup[] => {
     let locationKey = parts[parts.length - 1]; // Get the last part (state or country)
 
     // Determine if domestic or international
-    const type = ["California", "Colorado", "Missouri", "Utah"].includes(locationKey) ? "domestic" : "international";
+    const type = ["California", "Colorado", "Missouri", "Utah"].includes(locationKey)
+      ? "domestic"
+      : "international";
 
     if (!locationMap.has(locationKey)) {
       locationMap.set(locationKey, { hikes: [], type });
@@ -445,7 +455,9 @@ export const groupHikesByLocation = (): LocationGroup[] => {
       const totalElevation = locationHikes.reduce((sum, hike) => sum + (hike.elevation || 0), 0);
 
       // Sort hikes by date (most recent first)
-      const sortedHikes = [...locationHikes].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      const sortedHikes = [...locationHikes].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
 
       return {
         id: name.toLowerCase().replace(/\s+/g, "-"),
@@ -475,7 +487,9 @@ export const calculateHikeStats = (): HikingStats => {
   // Find hardest hike
   const difficultyMap = { Easy: 1, Moderate: 2, Hard: 3, "Very Hard": 4 };
   const hardestHike = hikes.reduce((hardest, current) => {
-    return difficultyMap[current.difficulty] > difficultyMap[hardest.difficulty] ? current : hardest;
+    return difficultyMap[current.difficulty] > difficultyMap[hardest.difficulty]
+      ? current
+      : hardest;
   }, hikes[0]);
 
   // Find longest hike

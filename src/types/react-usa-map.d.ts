@@ -1,5 +1,5 @@
-declare module 'react-usa-map' {
-  import React from 'react';
+declare module "react-usa-map" {
+  import React from "react";
 
   interface USAMapProps {
     customize?: Record<string, { fill: string }>;

@@ -33,7 +33,8 @@ export const LinkItem: React.FC<LinkItemProps & { gradientColors: string[] }> = 
                 boxShadow: "0 15px 30px rgba(0, 0, 0, 0.4)",
               },
             }),
-      }}>
+      }}
+    >
       <Card
         component="a"
         href={url === "" ? undefined : url}
@@ -52,7 +53,8 @@ export const LinkItem: React.FC<LinkItemProps & { gradientColors: string[] }> = 
           color: "text.primary",
           border: "none",
           m: 0,
-        }}>
+        }}
+      >
         <Box
           sx={{
             mr: 2.5,
@@ -70,15 +72,26 @@ export const LinkItem: React.FC<LinkItemProps & { gradientColors: string[] }> = 
             "& > svg": {
               fontSize: 22,
             },
-          }}>
+          }}
+        >
           {icon}
         </Box>
         <Stack>
-          <Typography variant="subtitle1" component="span" fontWeight="600" sx={{ letterSpacing: "0.02em", mb: -0.5 }}>
+          <Typography
+            variant="subtitle1"
+            component="span"
+            fontWeight="600"
+            sx={{ letterSpacing: "0.02em", mb: -0.5 }}
+          >
             {title}
           </Typography>
           {subtitle && (
-            <Typography variant="caption" component="span" color="text.secondary" sx={{ opacity: 0.8 }}>
+            <Typography
+              variant="caption"
+              component="span"
+              color="text.secondary"
+              sx={{ opacity: 0.8 }}
+            >
               {subtitle}
             </Typography>
           )}

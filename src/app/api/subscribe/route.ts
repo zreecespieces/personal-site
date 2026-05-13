@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import admin from 'firebase-admin';
+import { NextRequest, NextResponse } from "next/server";
+import admin from "firebase-admin";
 
 interface SubscriberData {
   email: string;
@@ -19,7 +19,7 @@ if (!admin.apps.length) {
     credential: admin.credential.cert({
       projectId: process.env.FIREBASE_PROJECT_ID,
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
     }),
   });
 }
@@ -36,39 +36,43 @@ interface SubscribeParams {
   lastName?: string;
 }
 
-async function subscribeToNewsletter({ email, firstName, lastName }: SubscribeParams): Promise<NewsletterResponse> {
+async function subscribeToNewsletter({
+  email,
+  firstName,
+  lastName,
+}: SubscribeParams): Promise<NewsletterResponse> {
   try {
     // Email validation
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return {
         success: false,
-        message: 'Please provide a valid email address'
+        message: "Please provide a valid email address",
       };
     }
-    
+
     // Use a document ID based on the email to avoid duplicates
-    const cleanEmail = email.toLowerCase().replace(/[^a-z0-9]/g, '_');
-    const subscriberRef = db.collection('newsletter_subscribers').doc(cleanEmail);
+    const cleanEmail = email.toLowerCase().replace(/[^a-z0-9]/g, "_");
+    const subscriberRef = db.collection("newsletter_subscribers").doc(cleanEmail);
 
     // Add new subscriber
     const newSubscriber: SubscriberData = {
       email: email.toLowerCase(),
       ...(firstName && { firstName }),
       ...(lastName && { lastName }),
-      subscribedAt: new Date()
+      subscribedAt: new Date(),
     };
 
     await subscriberRef.set(newSubscriber);
 
     return {
       success: true,
-      message: 'Successfully subscribed to the newsletter! Thanks!'
+      message: "Successfully subscribed to the newsletter! Thanks!",
     };
   } catch (error) {
-    console.error('Error subscribing to newsletter:', error);
+    console.error("Error subscribing to newsletter:", error);
     return {
       success: false,
-      message: 'An error occurred while subscribing. Please try again later.'
+      message: "An error occurred while subscribing. Please try again later.",
     };
   }
 }
@@ -83,22 +87,19 @@ export async function POST(request: NextRequest) {
     const { email, firstName, lastName } = body;
 
     if (!email) {
-      return NextResponse.json(
-        { success: false, message: 'Email is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, message: "Email is required" }, { status: 400 });
     }
 
     // Subscribe the user to Firebase
     const result = await subscribeToNewsletter({ email, firstName, lastName });
 
-    return NextResponse.json(result, { 
-      status: result.success ? 200 : 400 
+    return NextResponse.json(result, {
+      status: result.success ? 200 : 400,
     });
   } catch (error) {
-    console.error('Error in subscribe API route:', error);
+    console.error("Error in subscribe API route:", error);
     return NextResponse.json(
-      { success: false, message: 'An error occurred while processing your request' },
+      { success: false, message: "An error occurred while processing your request" },
       { status: 500 }
     );
   }

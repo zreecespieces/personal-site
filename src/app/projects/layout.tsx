@@ -5,7 +5,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Projects | Zachary Reece",
-  description: "Explore a showcase of software development projects by Zachary Reece including web applications, AI tools, and other technology innovations.",
+  description:
+    "Explore a showcase of software development projects by Zachary Reece including web applications, AI tools, and other technology innovations.",
 };
 
 export default function ProjectsLayout({
@@ -13,7 +14,5 @@ export default function ProjectsLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <section className={inter.className}>{children}</section>
-  );
+  return <section className={inter.className}>{children}</section>;
 }
