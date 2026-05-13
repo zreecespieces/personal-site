@@ -1,47 +1,67 @@
-# Material UI - Next.js App Router example in TypeScript
+# zacharyreece.dev
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped using [`create-next-app`](https://github.com/vercel/next.js/tree/HEAD/packages/create-next-app) with Material UI installed.
+The source for [zacharyreece.dev](https://zacharyreece.dev) — a personal site
+built as a designed artifact rather than a portfolio template.
 
-## How to use
+## Design
 
-Download the example [or clone the repo](https://github.com/mui/material-ui):
+The site uses the **Philosophical Systems Brutalism** design system —
+warm ink and bone, editorial typography (Space Grotesk + IBM Plex Sans
++ IBM Plex Mono), thin construction lines, and tattoo-inspired SVG
+motifs (honeycomb, topographic contours, sacred geometry, suminagashi).
 
-<!-- #repo-reference -->
+Full design direction lives in
+[`docs/personal_website_design_doc.md`](./docs/personal_website_design_doc.md);
+the implementation roadmap lives in
+[`docs/redesign_roadmap.md`](./docs/redesign_roadmap.md).
 
-```bash
-curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2  material-ui-master/examples/material-ui-nextjs-ts
-cd material-ui-nextjs-ts
+## Stack
+
+- Next.js 15 (App Router) · React 19 · TypeScript
+- MUI 6/7 with a custom theme (`src/theme/`)
+- `next/font` for self-hosted Google Fonts
+- MDX for blog posts (`src/content/blog/`)
+- Firebase Admin for newsletter signups (`/api/subscribe` → Firestore)
+- Vercel Analytics
+
+## Project structure
+
+```
+src/
+├── app/                      # App Router routes
+│   ├── _components/home/     # Home decomposition (Hero, IndexSections)
+│   ├── _data/                # Site nav taxonomy and other shared data
+│   ├── about/                # Long-form narrative
+│   ├── blog/, projects/, …   # Section routes (Education / Hobbies / Professional)
+│   ├── preview/              # Dev-only primitive gallery (/preview)
+│   ├── layout.tsx            # Root layout — fonts, OG, theme
+│   └── page.tsx              # Canonical home (?hero=1..5)
+├── components/
+│   └── primitives/           # Redesign component layer (cards, chips, heroes, patterns)
+├── content/blog/             # MDX posts
+├── lib/blog.ts               # MDX loader
+├── theme/                    # zacharyTheme — tokens, fonts, MUI theme
+└── utils/firebase.ts         # Newsletter prompt local-state helpers
 ```
 
-Install it and run:
+## Development
 
 ```bash
 npm install
-npm run dev
+npm run dev      # → http://localhost:3000
+npm run build    # production build
+npm run lint     # eslint
+npm run format   # prettier --write
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit `/preview` for a single-scroll gallery of every redesign primitive
+and all five hero diagram options.
 
-or:
+The home hero accepts `?hero=1..5` to switch between hero diagram options
+and `?heroNav=1` to surface the in-page variant switcher.
 
-<!-- #repo-reference -->
+## Environment
 
-[![Edit on StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/mui/material-ui/tree/master/examples/material-ui-nextjs-ts)
-
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/mui/material-ui/tree/master/examples/material-ui-nextjs-ts)
-
-## Learn more
-
-To learn more about this example:
-
-<!-- #host-reference -->
-
-- [Next.js documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Customizing Material UI](https://next.mui.com/material-ui/customization/how-to-customize/) - approaches to customizing Material UI.
-
-## What's next?
-
-<!-- #host-reference -->
-
-You now have a working example project.
-You can head back to the documentation and continue by browsing the [templates](https://next.mui.com/material-ui/getting-started/templates/) section.
+`/api/subscribe` requires Firebase Admin credentials. Copy
+`.env.local.example` to `.env.local` and fill in the values. The
+production deployment uses Vercel environment variables.

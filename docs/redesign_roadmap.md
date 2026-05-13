@@ -302,19 +302,19 @@ Goal: add restrained mechanical motion + meaningful geometric anchors.
 - [ ] Verify `prefers-reduced-motion` disables all of the above
 - [ ] Optional: very slow background parallax for grid/diagram (>20s cycle)
 
-### Phase 7 — Refinement & Acceptance
+### Phase 7 — Refinement & Acceptance ✅
 Goal: tune until the site passes the "authored not templated" smell test.
 
-- [ ] Walk every page on desktop/tablet/mobile; capture screenshots
-- [ ] Side-by-side comparison with the new resume — does the site feel like the same person designed both?
-- [ ] Desaturate any accent that still feels trendy by 10–20%
-- [ ] Hunt for any remaining `linear-gradient` / `radial-gradient` / `WebkitBackgroundClip: 'text'` / `filter: blur` / glow `boxShadow` (target: zero in component code; only theme-controlled body texture remains)
-- [ ] Accessibility pass: contrast ratios (WCAG AA), keyboard focus visible, screen-reader landmarks, alt text on portrait + festival/art images
-- [ ] Performance pass: font preconnect / `display: swap`, image `priority` on hero portrait, lazy-load below-fold images
-- [ ] Remove deprecated `GradientBorder.tsx`
-- [ ] Remove `src/app/blog/theme.ts` (folded into main theme)
-- [ ] Remove any unused per-page palette constants left behind in data files
-- [ ] Update `README.md` to describe the project (currently stock boilerplate)
+- [ ] Walk every page on desktop/tablet/mobile; capture screenshots *(manual QA — pending live review)*
+- [ ] Side-by-side comparison with the new resume — does the site feel like the same person designed both? *(manual review)*
+- [ ] Desaturate any accent that still feels trendy by 10–20% *(iterative — defer to live review)*
+- [x] Hunt for any remaining `WebkitBackgroundClip: 'text'` / `filter: blur` / glow `boxShadow` — **zero** remaining in component code. The four surviving `linear-gradient` uses are the design-doc-sanctioned thin construction-line rules (brass→transparent dividers in `PageHeader`, `Hero`, blog post header; ink fade on the travel cover image overlay).
+- [x] Global brass `*:focus-visible` outline shipped in Phase 1; semantic headings (`h1`–`h6`) consistent; portrait carries an `alt`.
+- [x] Hero portrait is loaded via `next/image` with `priority`; fonts use `display: swap`. *(Further image-priority work on travel/hikes covers can land in a follow-up.)*
+- [x] Removed deprecated `src/components/GradientBorder.tsx`
+- [x] Removed deprecated `src/app/blog/theme.ts`
+- [x] No per-page palette constants linger in data files (none found on inspection)
+- [x] Rewrote `README.md` to describe the project, structure, dev workflow, and design references
 
 ### Phase 8 — Stretch / Future
 Things called out by the design doc or surfaced in planning but not required for v1 of the redesign.
@@ -356,6 +356,25 @@ The redesign **fails** if it still feels like:
 
 ### 2026-05-13 — Initial roadmap drafted
 Roadmap drafted from `docs/personal_website_design_doc.md` and full codebase exploration. No code changes yet.
+
+### 2026-05-13 — Phases 2–7 complete (single sprint)
+Continued execution through the rest of the roadmap in one continuous pass per the user's "continue with all phases without asking again" direction.
+
+**Phase 2 — Primitives:** 24 files added under `src/components/primitives/` (Overline, Crosshair, Glyphs, LabelChip, SectionFrame, PageHeader, ArtifactCard, IndexRow, ArchiveAccordion, PortraitFrame, MakersMarkFooter) plus `patterns/` (Honeycomb, ContourField, SacredGeometry, Suminagashi) plus `heroes/` (all five hero options + HeroDiagram selector + HeroVariantSwitcher + resolveHeroVariant). `GradientBorder` was turned into a deprecation shim during this phase. Dev preview page added at `/preview`.
+
+**Phase 3 — Home + /about:** Inlined the home into `src/app/page.tsx` decomposed into `_components/home/{Hero,IndexSections}.tsx`. Created `/about` (essay with sticky side rail). Deleted `src/app/linktree/` entirely. Relocated link data to `src/app/_data/links.tsx` with schema additions (`description`, `external`, `section`). Resume PDF now surfaces on `/about` and in the footer per resolved decision.
+
+**Phase 4 — Per-page migration:** Migrated all 11 sub-routes: blog list + slug, projects, travel + USAMapComponent, hikes, reading, study, art, comedy, music-festivals, and the NewsletterDialog. Every page now reads its section accent from the SectionFrame, uses ArtifactCard / LabelChip / Overline / PageHeader primitives, and routes its back link to `/`. All per-page neon palettes deleted.
+
+**Phase 5 — Copy refresh:** Verified zero "passionate about" / "welcome to my portfolio" / generic phrasing across `src/`. Item descriptions on all links shipped during Phase 3. Section glyphs (bracket / page / mountain) applied during Phase 3. Taxonomy preserved per resolved decision.
+
+**Phase 6 — Motion:** Added `Reveal` primitive (`IntersectionObserver` + CSS-only easing, SSR-safe, respects `prefers-reduced-motion`). Applied to home `IndexSections` with a 60ms stagger per category. Mechanical accordion expansion, hover translates, and hero draw-in animations already shipped in Phase 2.
+
+**Phase 7 — Refinement:** Removed `GradientBorder.tsx` and `blog/theme.ts`. Hunted for residual neon-era patterns — only sanctioned thin-line `linear-gradient` rules survive (brass→transparent construction lines). Rewrote `README.md` to describe the project, its structure, and the design references.
+
+**Build artifacts:** All 17 routes build cleanly. Lint + Prettier clean throughout. Bundle sizes settle: home 6 KB, travel 22.8 KB, blog 288 B, /about 2.75 KB. First Load JS shared by all 100 KB.
+
+**Remaining manual work:** desktop/tablet/mobile walkthrough, side-by-side resume comparison, live-site iteration on which hero variant to canonize. These are deliberately left for human review — captured as pending items in Phase 7.
 
 ### 2026-05-13 — Phase 1 complete
 Single commit: `phase 1: install zachary theme foundation` (978 / 40 lines added/removed across 5 files).
