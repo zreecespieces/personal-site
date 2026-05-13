@@ -176,24 +176,26 @@ First commits on the redesign branch. Clean shop before stylistic work begins.
 - [x] Add `format` and `format:check` npm scripts; drop codesandbox `post-update` script artifact
 - [x] Smoke test: `npm run lint`, `npm run format:check`, `npm run build` all green
 
-### Phase 1 — Theme Foundation
+### Phase 1 — Theme Foundation ✅
 Goal: stand up the new `zacharyTheme`, fonts, and global texture _without_ touching pages yet. After this phase, every page will look broken-but-warm; we fix them in subsequent phases.
 
-- [ ] Create `src/theme/tokens.ts` exporting raw constants: `ink`, `stone`, `bone`, `accent` (ember, brass, moss, oxide, clay, teal), `easing`, line/surface tokens
-- [ ] Define a **section-accent map** in `src/theme/tokens.ts`: `{ professional: brass, education: bone, hobbies: moss }` consumed by section components and sub-pages
-- [ ] Create `src/theme/fonts.ts` using `next/font/google` for `Space_Grotesk`, `IBM_Plex_Sans`, `IBM_Plex_Mono` (CSS variables `--font-space-grotesk`, `--font-plex-sans`, `--font-plex-mono`)
-- [ ] Create `src/theme/index.ts` implementing the full theme spec from the design doc (`zacharyTheme`) — palette, typography scale, shape, shadows array, component overrides (`MuiCssBaseline`, `MuiContainer`, `MuiPaper`, `MuiCard`, `MuiCardHeader`, `MuiCardContent`, `MuiButton`, `MuiChip`, `MuiAccordion`, `MuiAccordionSummary`, `MuiAccordionDetails`, `MuiDivider`, `MuiIconButton`, `MuiAvatar`, `MuiTooltip`, `MuiMenu`, `MuiMenuItem`, `MuiTextField`, `MuiOutlinedInput`, `MuiInputLabel`, `MuiAppBar`, `MuiTabs`, `MuiTab`)
-- [ ] Wire the three font CSS variables onto `<html>` or `<body>` in `src/app/layout.tsx`
-- [ ] Update `src/app/layout.tsx` hard-coded `backgroundColor` from `#121212` → `--zr-ink-950` / `#0f0f0d`
-- [ ] Replace the theme in `src/components/ClientRootLayout.tsx` with `zacharyTheme` import; keep `AppRouterCacheProvider` + `CssBaseline`; remove dead `InitColorSchemeScript`
-- [ ] Add `MuiCssBaseline` body texture layers per the design doc, **all driven by CSS custom properties** so layers can be swapped without touching components:
+- [x] Create `src/theme/tokens.ts` — raw constants (`ink`, `graphite`, `stone`, `bone`, `accent`, `surfaces`, `lines`, `easing`, `duration`, `layout`)
+- [x] Define section-accent map + page→section mapping in `tokens.ts` (`{ professional: brass, education: bone, hobbies: moss }`)
+- [x] Define CSS variable names registry (`cssVars`) in `tokens.ts` so texture/line/surface variable names have a single source of truth
+- [x] Create `src/theme/fonts.ts` using `next/font/google` for Space Grotesk, IBM Plex Sans, IBM Plex Mono with CSS variables + combined `fontVariables` className export
+- [x] Create `src/theme/index.ts` implementing the full `zacharyTheme` spec — palette, typography scale, shape, shadows array, and all 23 component overrides (`MuiCssBaseline`, `MuiContainer`, `MuiPaper`, `MuiCard`, `MuiCardHeader`, `MuiCardContent`, `MuiButton`, `MuiChip`, `MuiAccordion`, `MuiAccordionSummary`, `MuiAccordionDetails`, `MuiDivider`, `MuiIconButton`, `MuiAvatar`, `MuiTooltip`, `MuiMenu`, `MuiMenuItem`, `MuiTextField`, `MuiOutlinedInput`, `MuiInputLabel`, `MuiAppBar`, `MuiTabs`, `MuiTab`)
+- [x] Module augmentation — `theme.zr` namespace exposes the raw token bundle to components without a direct tokens import
+- [x] Wire `fontVariables` className onto `<html>` in `src/app/layout.tsx`
+- [x] Update `src/app/layout.tsx` hard-coded `backgroundColor` from `#121212` → `ink[950]` (`#0f0f0d`)
+- [x] Replace the theme in `src/components/ClientRootLayout.tsx` with `zacharyTheme` import; `AppRouterCacheProvider` + `CssBaseline` retained; `Analytics` mount preserved
+- [x] CSS-variable-driven body texture stack via `MuiCssBaseline`:
   - `--zr-bg-base` — warm ink base color
   - `--zr-bg-vignette` — radial brass/ember vignettes
-  - `--zr-bg-grid` — construction grid (`body::before`)
-  - `--zr-bg-texture` — noise/stipple/topographic layer (`body::after`) — initially CSS-only; designed to be repointable at a tattoo-derived asset later
-- [ ] Add global `*:focus-visible` outline (brass) and `prefers-reduced-motion` overrides
-- [ ] Update OG metadata in `src/app/layout.tsx` if any color references need refresh (favicon/icon background)
-- [ ] Smoke-test build (`npm run build`) — expect visual regression on every page but no runtime errors
+  - `--zr-bg-grid` — construction grid on `body::before` with radial mask
+  - `--zr-bg-texture` — stipple noise on `body::after` with `mix-blend-mode: overlay` — repointable at a real asset in Phase 8
+- [x] Global `*:focus-visible` outline (brass) and `prefers-reduced-motion` overrides
+- [x] Set `metadataBase` in `src/app/layout.tsx` to clear the Next.js social-image resolution warning
+- [x] Smoke-test build — all 17 routes built cleanly; bundle grew ~1 KB per route from fonts + theme overhead; no runtime errors
 
 ### Phase 2 — Primitive Component Layer
 Goal: build the reusable artifact-style primitives once so pages stop inlining sx blocks. Primitives live in `src/components/primitives/`.
@@ -354,6 +356,22 @@ The redesign **fails** if it still feels like:
 
 ### 2026-05-13 — Initial roadmap drafted
 Roadmap drafted from `docs/personal_website_design_doc.md` and full codebase exploration. No code changes yet.
+
+### 2026-05-13 — Phase 1 complete
+Single commit: `phase 1: install zachary theme foundation` (978 / 40 lines added/removed across 5 files).
+
+Structure landed:
+- `src/theme/tokens.ts` (199 LOC) — raw constants + section/page accent maps + CSS variable name registry
+- `src/theme/fonts.ts` (44 LOC) — three `next/font/google` declarations + combined `fontVariables` className
+- `src/theme/index.ts` (~600 LOC) — full MUI theme with 23 component overrides, module-augmented `theme.zr` namespace
+
+The site now boots against the warm ink palette + brass/ember vignettes + bone construction grid + stipple texture layer. The Inter / Material-You / blue-purple cluster is fully evicted from the global theme. Inline `sx` styling on the existing pages still references the old neon palette — those pages will look "broken-but-warm" (gradient borders fighting brass typography) until Phases 3–4 migrate them. This is the expected state.
+
+Findings:
+- MUI v6/v7-beta's `createTheme` works fine with module augmentation; `theme.zr` is typed properly across all consumers.
+- The `shadows` array required a cast (`as unknown as ReturnType<typeof createTheme>["shadows"]`) because MUI types it as a 25-element tuple — annoying but harmless.
+- Used `display: "swap"` on all three font loads to avoid FOIT; combined with the system-font fallback stacks in the theme, SSR renders are flicker-free.
+- Bundle impact is small (~1 KB per route) thanks to `next/font` self-hosting (no Google CDN runtime fetches) and `enableCssLayer` in `AppRouterCacheProvider`.
 
 ### 2026-05-13 — Phase 0 complete
 Redesign branch `redesign/philosophical-systems-brutalism` created off `main`. Phase 0 landed in five commits:
