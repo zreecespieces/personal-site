@@ -13,14 +13,18 @@ interface HomeProps {
  * The canonical home page.
  *
  * Accepts `?hero=1..5` to switch between the five hero diagram options
- * (resolved via `resolveHeroVariant`) and `?heroNav=1` to surface the
- * dev-only variant switcher in the corner — useful during the iteration
- * phase per `docs/redesign_roadmap.md` §1.4.
+ * (resolved via `resolveHeroVariant`).
+ *
+ * The floating `HeroVariantSwitcher` is currently always-on so the
+ * options can be compared on the live site during the iteration phase.
+ * Pass `?heroNav=0` to hide it. Once a hero is canonized, drop the
+ * switcher mount and the resolveHeroVariant query-param handling.
  */
 export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;
   const heroVariant = resolveHeroVariant(params.hero);
-  const showVariantSwitcher = params.heroNav === "1";
+  // Default on; explicit `?heroNav=0` hides it.
+  const showVariantSwitcher = params.heroNav !== "0";
 
   return (
     <Box component="main">
