@@ -1,18 +1,24 @@
 "use client";
 
 import React from "react";
-import { Box, Container, Stack, Typography, Card, Rating, LinearProgress } from "@mui/material";
-import { currentlyReading, completedBooks } from "./books";
+import { Box, LinearProgress, Rating, Stack, Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import NextLink from "next/link";
-import GradientBorder from "@/components/GradientBorder";
+import {
+  ArtifactCard,
+  LabelChip,
+  MakersMarkFooter,
+  Overline,
+  PageHeader,
+  SectionFrame,
+} from "@/components/primitives";
+import { completedBooks, currentlyReading } from "./books";
 
-// Format date from YYYY-MM-DD to Month Day, Year
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   return date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 };
 
-// Helper to format "days ago" for currently reading books
 const getDaysAgo = (dateString: string) => {
   const startDate = new Date(dateString);
   const today = new Date();
@@ -22,302 +28,232 @@ const getDaysAgo = (dateString: string) => {
 };
 
 export default function Reading() {
+  const theme = useTheme();
+
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Stack spacing={6}>
-        {/* Title */}
-        <GradientBorder
-          gradientColors={["#8B4513", "#F5DEB3"]}
-          sx={{ width: "100%" }}
-          contentSx={{ p: 4, textAlign: "center" }}
-        >
-          <Typography
-            variant="h3"
-            component="h1"
-            fontWeight="700"
-            gutterBottom
-            sx={{
-              background: "linear-gradient(to right, #8B4513, #F5DEB3)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              letterSpacing: "0.02em",
-            }}
-          >
-            Reading List
-          </Typography>
-          <Typography variant="subtitle1">{completedBooks.length} books completed</Typography>
-        </GradientBorder>
+    <Box component="main">
+      <SectionFrame section="education" spacing="loose">
+        <PageHeader
+          overline="Learning · Reading"
+          index="03"
+          title="Currently reading, recently completed, and annotated as I go."
+          subtitle="A running shelf — fiction and nonfiction, in roughly equal measure."
+          size="md"
+          meta={
+            <Stack direction="row" gap={1}>
+              <LabelChip>{currentlyReading.length} In Progress</LabelChip>
+              <LabelChip>{completedBooks.length} Completed</LabelChip>
+            </Stack>
+          }
+        />
+      </SectionFrame>
 
-        {/* Currently Reading Section */}
-        <Box>
-          <Typography
-            variant="h4"
-            component="h2"
-            gutterBottom
-            fontWeight="600"
-            sx={{
-              mb: 3,
-              borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
-              pb: 1,
-            }}
-          >
-            Currently Reading
-          </Typography>
-
-          <Box sx={{ display: "flex", flexWrap: "wrap", mx: -2 }}>
-            {currentlyReading.map((book, index) => (
-              <Box key={`${book.title}-${index}`} sx={{ width: { xs: "100%", md: "50%" }, p: 2 }}>
-                <Card
-                  sx={{
-                    display: "flex",
-                    flexDirection: { xs: "column", sm: "row" },
-                    height: "100%",
-                    bgcolor: "rgba(30, 30, 30, 0.7)",
-                    backdropFilter: "blur(10px)",
-                    borderRadius: 3,
-                    overflow: "hidden",
-                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                    "&:hover": {
-                      transform: "translateY(-5px)",
-                      boxShadow: "0 15px 30px rgba(0, 0, 0, 0.4)",
-                    },
-                  }}
-                >
-                  {/* Book Cover */}
-                  {book.coverImage && (
-                    <Box
-                      sx={{
-                        width: { xs: "100%", sm: 150 },
-                        height: { xs: 200, sm: "auto" },
-                        flexShrink: 0,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        overflow: "hidden",
-                        bgcolor: "black",
-                      }}
-                    >
-                      <img
-                        src={book.coverImage}
-                        alt={book.title}
-                        style={{
-                          height: "100%",
-                          width: "100%",
-                          objectFit: "cover",
+      <SectionFrame section="education" spacing="none">
+        <Stack gap={6}>
+          <Stack gap={2.5}>
+            <Overline index="01">Currently Reading</Overline>
+            <Box
+              sx={{
+                display: "grid",
+                gap: 3,
+                gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+              }}
+            >
+              {currentlyReading.map((book) => (
+                <ArtifactCard key={book.title} padding="none" hoverable={false}>
+                  <Stack direction={{ xs: "column", sm: "row" }} sx={{ height: "100%" }}>
+                    {book.coverImage && (
+                      <Box
+                        sx={{
+                          width: { xs: "100%", sm: 150 },
+                          height: { xs: 220, sm: "auto" },
+                          flexShrink: 0,
+                          overflow: "hidden",
+                          backgroundColor: theme.zr.ink[900],
+                          borderRight: { sm: `1px solid ${theme.zr.lines.muted}` },
+                          borderBottom: { xs: `1px solid ${theme.zr.lines.muted}`, sm: "none" },
                         }}
-                      />
-                    </Box>
-                  )}
-
-                  {/* Book Details */}
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                      p: 3,
-                      width: "100%",
-                    }}
-                  >
-                    <Stack spacing={1}>
+                      >
+                        <Box
+                          component="img"
+                          src={book.coverImage}
+                          alt={book.title}
+                          sx={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            filter: "saturate(0.85)",
+                          }}
+                        />
+                      </Box>
+                    )}
+                    <Stack gap={1} sx={{ p: 3, flex: 1 }}>
                       <Typography
                         component="a"
                         href={book.url}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="noreferrer"
                         variant="h5"
-                        fontWeight="600"
                         sx={{
                           textDecoration: "none",
-                          color: "inherit",
-                          "&:hover": { color: (theme) => theme.palette.primary.main },
+                          color: "text.primary",
+                          "&:hover": { color: theme.zr.accent.brassLight },
                         }}
                       >
                         {book.title}
                       </Typography>
-
-                      <Typography variant="subtitle1" color="text.secondary">
+                      <Typography variant="subtitle2" color="text.secondary">
                         by {book.author}
                       </Typography>
-
                       <Typography variant="caption" color="text.secondary">
-                        Started {formatDate(book.startedDate)} ({getDaysAgo(book.startedDate)})
+                        Started {formatDate(book.startedDate)} · {getDaysAgo(book.startedDate)}
                       </Typography>
 
-                      <Box sx={{ mt: 1 }}>
-                        <Typography variant="body2" sx={{ mb: 0.5 }}>
-                          Progress: {book.progress}%
-                        </Typography>
+                      <Stack gap={0.75} sx={{ mt: 1.5 }}>
+                        <Stack direction="row" justifyContent="space-between">
+                          <Overline>Progress</Overline>
+                          <Typography
+                            variant="caption"
+                            sx={{
+                              fontFamily: `var(${theme.zr.cssVars.fontMono})`,
+                              color: theme.zr.bone[200],
+                            }}
+                          >
+                            {book.progress}%
+                          </Typography>
+                        </Stack>
                         <LinearProgress
                           variant="determinate"
                           value={book.progress}
                           sx={{
-                            height: 8,
-                            borderRadius: 4,
+                            height: 3,
+                            borderRadius: 0,
+                            backgroundColor: theme.zr.lines.muted,
                             "& .MuiLinearProgress-bar": {
-                              background: `linear-gradient(to right, ${index % 2 === 0 ? "#8B4513, #F5DEB3" : "#A0522D, #DEB887"})`,
+                              backgroundColor: theme.zr.accent.brass,
+                              borderRadius: 0,
                             },
                           }}
                         />
-                      </Box>
+                      </Stack>
                     </Stack>
-                  </Box>
-                </Card>
-              </Box>
-            ))}
-          </Box>
-        </Box>
+                  </Stack>
+                </ArtifactCard>
+              ))}
+            </Box>
+          </Stack>
 
-        {/* Completed Books Section */}
-        <Box>
-          <Typography
-            variant="h4"
-            component="h2"
-            gutterBottom
-            fontWeight="600"
-            sx={{
-              mb: 3,
-              borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
-              pb: 1,
-            }}
-          >
-            Completed Books
-          </Typography>
-
-          <Box sx={{ display: "flex", flexWrap: "wrap", mx: -2 }}>
-            {completedBooks.map((book, index) => (
-              <Box
-                key={`${book.title}-${index}`}
-                sx={{ width: { xs: "100%", md: "50%", lg: "33.333%" }, p: 2 }}
-              >
-                <Card
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    height: "100%",
-                    bgcolor: "rgba(30, 30, 30, 0.7)",
-                    backdropFilter: "blur(10px)",
-                    borderRadius: 3,
-                    overflow: "hidden",
-                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                    position: "relative",
-                    "&:hover": {
-                      transform: "translateY(-5px)",
-                      boxShadow: "0 15px 30px rgba(0, 0, 0, 0.4)",
-                    },
-                    "&::before": {
-                      content: '""',
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      height: "4px",
-                      background: `linear-gradient(90deg, ${index % 2 === 0 ? "#8B4513, #F5DEB3" : "#A0522D, #DEB887"})`,
-                    },
-                  }}
-                >
-                  {/* Book Cover */}
+          <Stack gap={2.5}>
+            <Overline index="02">Completed</Overline>
+            <Box
+              sx={{
+                display: "grid",
+                gap: 3,
+                gridTemplateColumns: {
+                  xs: "1fr",
+                  md: "repeat(2, 1fr)",
+                  lg: "repeat(3, 1fr)",
+                },
+              }}
+            >
+              {completedBooks.map((book) => (
+                <ArtifactCard key={book.title} padding="none" hoverable={false}>
                   {book.coverImage && (
                     <Box
                       sx={{
                         width: "100%",
-                        height: 550,
-                        flexShrink: 0,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
+                        height: 360,
                         overflow: "hidden",
-                        bgcolor: "black",
+                        backgroundColor: theme.zr.ink[900],
+                        borderBottom: `1px solid ${theme.zr.lines.muted}`,
                       }}
                     >
-                      <img
+                      <Box
+                        component="img"
                         src={book.coverImage}
                         alt={book.title}
-                        style={{
-                          height: "100%",
+                        sx={{
                           width: "100%",
+                          height: "100%",
                           objectFit: "contain",
+                          filter: "saturate(0.85)",
                         }}
                       />
                     </Box>
                   )}
-
-                  {/* Book Details */}
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      flexGrow: 1,
-                      justifyContent: "space-between",
-                      p: 3,
-                    }}
-                  >
-                    <Stack spacing={1}>
-                      <Typography
-                        component="a"
-                        href={book.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        variant="h6"
-                        fontWeight="600"
+                  <Stack gap={1} sx={{ p: 3 }}>
+                    <Typography
+                      component="a"
+                      href={book.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      variant="h6"
+                      sx={{
+                        textDecoration: "none",
+                        color: "text.primary",
+                        "&:hover": { color: theme.zr.accent.brassLight },
+                      }}
+                    >
+                      {book.title}
+                    </Typography>
+                    <Typography variant="subtitle2" color="text.secondary">
+                      by {book.author}
+                    </Typography>
+                    {book.rating && (
+                      <Rating
+                        value={book.rating}
+                        readOnly
+                        size="small"
                         sx={{
-                          textDecoration: "none",
-                          color: "inherit",
-                          "&:hover": { color: (theme) => theme.palette.primary.main },
+                          mt: 0.5,
+                          "& .MuiRating-iconFilled": { color: theme.zr.accent.brass },
+                          "& .MuiRating-iconEmpty": { color: theme.zr.lines.muted },
+                        }}
+                      />
+                    )}
+                    {book.completedDate && (
+                      <Typography variant="caption" color="text.secondary">
+                        Completed {formatDate(book.completedDate)}
+                      </Typography>
+                    )}
+                    {book.review && (
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          mt: 1.5,
+                          fontStyle: "italic",
+                          color: "text.secondary",
+                          borderLeft: `2px solid ${theme.zr.accent.brass}`,
+                          pl: 1.5,
                         }}
                       >
-                        {book.title}
+                        &ldquo;{book.review}&rdquo;
                       </Typography>
+                    )}
+                  </Stack>
+                </ArtifactCard>
+              ))}
+            </Box>
+          </Stack>
+        </Stack>
 
-                      <Typography variant="subtitle2" color="text.secondary">
-                        by {book.author}
-                      </Typography>
-
-                      {book.rating && (
-                        <Rating value={book.rating} readOnly size="small" sx={{ mt: 0.5 }} />
-                      )}
-
-                      {book.completedDate && (
-                        <Typography variant="caption" color="text.secondary">
-                          Completed: {formatDate(book.completedDate)}
-                        </Typography>
-                      )}
-
-                      {book.review && (
-                        <Typography variant="body2" sx={{ mt: 1, fontStyle: "italic" }}>
-                          "{book.review}"
-                        </Typography>
-                      )}
-                    </Stack>
-                  </Box>
-                </Card>
-              </Box>
-            ))}
-          </Box>
-        </Box>
-
-        {/* Back to LinkTree Button */}
-        <Box sx={{ display: "flex", justifyContent: "left", mt: 2 }}>
+        <Box sx={{ mt: 6 }}>
           <Typography
             component={NextLink}
-            href="/linktree"
-            variant="body1"
+            href="/"
+            variant="overline"
             sx={{
-              textDecoration: "none",
-              color: "#8B4513",
-              py: 1,
-              px: 3,
-              borderRadius: 2,
-              transition: "all 0.3s ease",
-              "&:hover": {
-                bgcolor: "rgba(139, 69, 19, 0.1)",
-              },
+              color: "text.secondary",
+              textDecorationColor: "var(--zr-section-accent)",
+              "&:hover": { color: "text.primary" },
             }}
           >
-            Back to LinkTree
+            ← Back to index
           </Typography>
         </Box>
-      </Stack>
-    </Container>
+      </SectionFrame>
+
+      <MakersMarkFooter />
+    </Box>
   );
 }

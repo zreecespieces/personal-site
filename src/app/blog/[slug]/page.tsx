@@ -1,14 +1,16 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import { Box, Container, Stack, Typography, Chip } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import NextLink from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import GradientBorder from "@/components/GradientBorder";
+import {
+  ArtifactCard,
+  LabelChip,
+  MakersMarkFooter,
+  Overline,
+  SectionFrame,
+} from "@/components/primitives";
 import { getPostBySlug, getAllSlugs } from "@/lib/blog";
-import { BLOG_GRADIENT, BLOG_HOVER, BLOG_SHADOW, BLOG_SURFACE, BLOG_TEXT } from "../theme";
-
-const BLOG_BODY_FONT =
-  '"Avenir Next", Avenir, "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif';
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -19,14 +21,15 @@ const formatDate = (dateString: string) => {
   });
 };
 
-// MDX component overrides styled for the blog's dark theme.
+// MDX component overrides — typography flows through the theme's
+// editorial scale; only the surfaces (blockquote, code, hr) need bespoke
+// styling.
 const mdxComponents = {
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <Typography
       variant="h3"
       component="h1"
-      fontWeight="700"
-      sx={{ color: BLOG_TEXT, mt: 5, mb: 2 }}
+      sx={{ color: "text.primary", mt: 5, mb: 2 }}
       {...props}
     />
   ),
@@ -34,8 +37,7 @@ const mdxComponents = {
     <Typography
       variant="h4"
       component="h2"
-      fontWeight="600"
-      sx={{ color: BLOG_TEXT, mt: 4, mb: 2 }}
+      sx={{ color: "text.primary", mt: 4, mb: 2 }}
       {...props}
     />
   ),
@@ -43,21 +45,18 @@ const mdxComponents = {
     <Typography
       variant="h5"
       component="h3"
-      fontWeight="600"
-      sx={{ color: BLOG_TEXT, mt: 3, mb: 1.5 }}
+      sx={{ color: "text.primary", mt: 3, mb: 1.5 }}
       {...props}
     />
   ),
   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
     <Typography
       variant="body1"
+      component="p"
       sx={{
         mb: 2.5,
-        color: BLOG_TEXT,
-        fontFamily: BLOG_BODY_FONT,
-        fontSize: { xs: "1.22rem", md: "1.38rem" },
-        fontWeight: 400,
-        letterSpacing: "0.008em",
+        color: "text.primary",
+        fontSize: { xs: "1.05rem", md: "1.15rem" },
         lineHeight: 1.78,
       }}
       {...props}
@@ -74,11 +73,8 @@ const mdxComponents = {
       component="li"
       variant="body1"
       sx={{
-        color: BLOG_TEXT,
-        fontFamily: BLOG_BODY_FONT,
-        fontSize: { xs: "1.22rem", md: "1.38rem" },
-        fontWeight: 400,
-        letterSpacing: "0.008em",
+        color: "text.primary",
+        fontSize: { xs: "1.05rem", md: "1.15rem" },
         lineHeight: 1.78,
       }}
       {...props}
@@ -88,12 +84,13 @@ const mdxComponents = {
     <Box
       component="blockquote"
       sx={{
-        borderLeft: `3px solid ${BLOG_GRADIENT[0]}`,
+        borderLeft: "2px solid var(--zr-section-accent)",
         pl: 3,
         py: 0.5,
-        my: 2,
-        bgcolor: "rgba(163, 230, 53, 0.08)",
-        borderRadius: "0 8px 8px 0",
+        my: 3,
+        ml: 0,
+        color: "text.secondary",
+        fontStyle: "italic",
         "& p": { mb: 0 },
       }}
       {...props}
@@ -103,13 +100,13 @@ const mdxComponents = {
     <Box
       component="code"
       sx={{
-        bgcolor: "rgba(163, 230, 53, 0.12)",
-        color: BLOG_GRADIENT[0],
+        backgroundColor: "rgba(238, 229, 210, 0.08)",
+        color: "text.primary",
         px: 0.75,
         py: 0.25,
         borderRadius: 1,
         fontSize: "0.875em",
-        fontFamily: "monospace",
+        fontFamily: "var(--font-plex-mono)",
       }}
       {...props}
     />
@@ -118,17 +115,18 @@ const mdxComponents = {
     <Box
       component="pre"
       sx={{
-        bgcolor: "rgba(10, 15, 14, 0.9)",
-        border: "1px solid rgba(163, 230, 53, 0.2)",
-        borderRadius: 2,
+        backgroundColor: "rgba(15, 15, 13, 0.6)",
+        border: "1px solid var(--zr-line-muted)",
+        borderRadius: 1,
         p: 2.5,
-        my: 2,
+        my: 3,
         overflowX: "auto",
+        fontFamily: "var(--font-plex-mono)",
+        fontSize: "0.875rem",
         "& code": {
-          bgcolor: "transparent",
+          backgroundColor: "transparent",
           px: 0,
           py: 0,
-          fontSize: "0.875rem",
         },
       }}
       {...props}
@@ -138,12 +136,12 @@ const mdxComponents = {
     <Box
       component="a"
       sx={{
-        color: BLOG_GRADIENT[0],
-        textDecoration: "none",
-        borderBottom: `1px solid transparent`,
-        transition: "border-color 0.2s ease",
+        color: "text.primary",
+        textDecorationColor: "var(--zr-section-accent)",
+        textUnderlineOffset: "0.22em",
         "&:hover": {
-          borderBottom: `1px solid ${BLOG_GRADIENT[0]}`,
+          color: "text.primary",
+          textUnderlineOffset: "0.32em",
         },
       }}
       {...props}
@@ -154,9 +152,9 @@ const mdxComponents = {
       component="hr"
       sx={{
         border: "none",
-        height: "1px",
-        background: `linear-gradient(90deg, transparent, ${BLOG_GRADIENT[0]}, transparent)`,
-        my: 4,
+        height: 1,
+        backgroundColor: "var(--zr-line-muted)",
+        my: 5,
       }}
     />
   ),
@@ -184,101 +182,66 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) notFound();
 
   return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
-      <Stack spacing={4}>
-        {/* Post Header */}
-        <GradientBorder
-          gradientColors={BLOG_GRADIENT}
-          sx={{ width: "100%" }}
-          contentSx={{ p: 4, background: BLOG_SURFACE, boxShadow: BLOG_SHADOW }}
-        >
-          <Typography
-            variant="h3"
-            component="h1"
-            fontWeight="700"
-            sx={{
-              background: `linear-gradient(to right, ${BLOG_GRADIENT[0]}, ${BLOG_GRADIENT[1]})`,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              letterSpacing: "0.02em",
-              lineHeight: 1.08,
-              mb: 1,
-            }}
-          >
-            {post.title}
-          </Typography>
-
-          <Typography
-            variant="subtitle1"
-            sx={{
-              color: "#FFFFFF",
-              fontFamily: BLOG_BODY_FONT,
-              fontWeight: 500,
-              fontSize: "1.08rem",
-              lineHeight: 1.2,
-              mb: 1,
-            }}
-          >
-            {formatDate(post.date)}
-          </Typography>
-
-          <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-            {post.tags.map((tag) => (
-              <Chip
-                key={tag}
-                label={tag}
-                size="medium"
-                sx={{
-                  bgcolor: "rgba(163, 230, 53, 0.12)",
-                  border: "1px solid rgba(163, 230, 53, 0.18)",
-                  color: BLOG_GRADIENT[0],
-                  fontSize: "0.9rem",
-                  fontWeight: 500,
-                  height: 32,
-                  minWidth: 56,
-                  "& .MuiChip-label": { px: 1.25 },
-                }}
-              />
-            ))}
+    <Box component="main">
+      <SectionFrame section="professional" spacing="loose">
+        <Stack gap={6}>
+          {/* Post header */}
+          <Stack gap={2.5}>
+            <Stack direction="row" gap={2} alignItems="center">
+              <Overline>Field Notes</Overline>
+              <Overline accent="var(--zr-section-accent)">{formatDate(post.date)}</Overline>
+            </Stack>
+            <Typography
+              variant="h2"
+              component="h1"
+              sx={{
+                color: "text.primary",
+                maxWidth: "22ch",
+              }}
+            >
+              {post.title}
+            </Typography>
+            <Box
+              aria-hidden
+              sx={{
+                height: 1,
+                width: { xs: 96, md: 160 },
+                background: "linear-gradient(90deg, var(--zr-section-accent), transparent)",
+              }}
+            />
+            {post.tags.length > 0 && (
+              <Stack direction="row" gap={0.75} flexWrap="wrap" sx={{ mt: 1 }}>
+                {post.tags.map((tag) => (
+                  <LabelChip key={tag}>{tag}</LabelChip>
+                ))}
+              </Stack>
+            )}
           </Stack>
-        </GradientBorder>
 
-        {/* Post Body */}
-        <Box
-          sx={{
-            background: BLOG_SURFACE,
-            backdropFilter: "blur(10px)",
-            border: "1px solid rgba(163, 230, 53, 0.16)",
-            borderRadius: 3,
-            p: { xs: 3, md: 5 },
-            boxShadow: BLOG_SHADOW,
-          }}
-        >
-          <MDXRemote source={post.content} components={mdxComponents} />
-        </Box>
+          {/* Post body */}
+          <ArtifactCard padding="loose" hoverable={false} sx={{ maxWidth: 760 }}>
+            <MDXRemote source={post.content} components={mdxComponents} />
+          </ArtifactCard>
 
-        {/* Navigation */}
-        <Stack direction="row" spacing={2}>
-          <Typography
-            component={NextLink}
-            href="/blog"
-            variant="body1"
-            sx={{
-              textDecoration: "none",
-              color: BLOG_GRADIENT[0],
-              py: 1,
-              px: 3,
-              borderRadius: 2,
-              transition: "all 0.3s ease",
-              "&:hover": {
-                bgcolor: BLOG_HOVER,
-              },
-            }}
-          >
-            Back to Blog
-          </Typography>
+          {/* Navigation */}
+          <Box>
+            <Typography
+              component={NextLink}
+              href="/blog"
+              variant="overline"
+              sx={{
+                color: "text.secondary",
+                textDecorationColor: "var(--zr-section-accent)",
+                "&:hover": { color: "text.primary" },
+              }}
+            >
+              ← Back to Field Notes
+            </Typography>
+          </Box>
         </Stack>
-      </Stack>
-    </Container>
+      </SectionFrame>
+
+      <MakersMarkFooter />
+    </Box>
   );
 }

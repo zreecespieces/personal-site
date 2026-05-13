@@ -3,37 +3,36 @@
 import React, { useState } from "react";
 import {
   Box,
-  Container,
-  Stack,
-  Typography,
-  Card,
-  Chip,
-  Tabs,
-  Tab,
   ButtonBase,
   Dialog,
   DialogContent,
   IconButton,
+  Stack,
+  Tab,
+  Tabs,
+  Typography,
 } from "@mui/material";
+import NextLink from "next/link";
 import {
-  countries,
+  ArtifactCard,
+  LabelChip,
+  MakersMarkFooter,
+  Overline,
+  PageHeader,
+  SectionFrame,
+} from "@/components/primitives";
+import {
   calculateDaysSpent,
+  countries,
   getTotalCountriesVisited,
   getTotalDaysSpent,
   getTotalStatesVisited,
 } from "./countries";
-import NextLink from "next/link";
 import CloseIcon from "@mui/icons-material/Close";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import PublicIcon from "@mui/icons-material/Public";
-import FlightIcon from "@mui/icons-material/Flight";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import GradientBorder from "@/components/GradientBorder";
 import USAMapComponent from "./USAMapComponent";
 
 // Format date from YYYY-MM-DD to Month Day, Year
 const formatDate = (dateString: string) => {
-  // Add a time component to ensure correct date in all timezones
   const dateTimeString = `${dateString}T12:00:00`;
   const date = new Date(dateTimeString);
   return date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
@@ -54,7 +53,7 @@ export default function Travel() {
   const [openImageDialog, setOpenImageDialog] = useState(false);
   const [dialogImage, setDialogImage] = useState("");
 
-  const handleCountryChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleCountryChange = (_event: React.SyntheticEvent, newValue: number) => {
     setSelectedCountry(newValue);
   };
 
@@ -63,401 +62,235 @@ export default function Travel() {
     setOpenImageDialog(true);
   };
 
-  const handleCloseDialog = () => {
-    setOpenImageDialog(false);
-  };
+  const handleCloseDialog = () => setOpenImageDialog(false);
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Stack spacing={6}>
-        {/* Title */}
-        <GradientBorder
-          gradientColors={["#0072FF", "#92EFFD"]}
-          sx={{ width: "100%" }}
-          contentSx={{ p: 4, textAlign: "center" }}
+    <Box component="main">
+      <SectionFrame section="hobbies" spacing="loose">
+        <PageHeader
+          overline="Disciplines · Travel"
+          index="01"
+          title="Countries, states, and the slow accumulation of distance."
+          subtitle="A running log of trips — where, when, and what stayed with me."
+          size="md"
+          meta={
+            <Stack direction="row" gap={1} flexWrap="wrap">
+              <LabelChip>{getTotalCountriesVisited()} Countries</LabelChip>
+              <LabelChip>{getTotalStatesVisited()} States</LabelChip>
+              <LabelChip>{getTotalDaysSpent()} Days Abroad</LabelChip>
+            </Stack>
+          }
+        />
+      </SectionFrame>
+
+      <SectionFrame section="hobbies" spacing="none">
+        <Tabs
+          value={selectedCountry}
+          onChange={handleCountryChange}
+          variant="scrollable"
+          scrollButtons="auto"
+          sx={{ borderBottom: "1px solid var(--zr-line-muted)", mb: 5 }}
         >
-          <Typography
-            variant="h3"
-            component="h1"
-            fontWeight="700"
-            gutterBottom
-            sx={{
-              background: "linear-gradient(to right, #0072FF, #92EFFD)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              letterSpacing: "0.02em",
-            }}
-          >
-            Travel
-          </Typography>
-
-          <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: 2, my: 2 }}>
-            <Chip
-              icon={<FlightIcon />}
-              label={`${getTotalStatesVisited()} States Visited`}
-              sx={{
-                bgcolor: "rgba(146, 239, 253, 0.1)",
-                color: "#92EFFD",
-                fontWeight: 500,
-                px: 1,
-                width: "12rem",
-              }}
-            />
-            <Chip
-              icon={<PublicIcon />}
-              label={`${getTotalCountriesVisited()} Countries Visited`}
-              sx={{
-                bgcolor: "rgba(0, 114, 255, 0.1)",
-                color: "#0072FF",
-                fontWeight: 500,
-                px: 1,
-                width: "12rem",
-              }}
-            />
-            <Chip
-              icon={<AccessTimeIcon />}
-              label={`${getTotalDaysSpent()} Days Abroad`}
-              sx={{
-                bgcolor: "rgba(146, 239, 253, 0.1)",
-                color: "#92EFFD",
-                fontWeight: 500,
-                px: 1,
-                width: "12rem",
-              }}
-            />
-          </Box>
-        </GradientBorder>
-
-        {/* Country Selection Tabs */}
-        <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%", overflowX: "auto" }}>
-          <Tabs
-            value={selectedCountry}
-            onChange={handleCountryChange}
-            variant="scrollable"
-            scrollButtons="auto"
-            sx={{
-              "& .MuiTab-root": {
-                textTransform: "none",
-                fontWeight: 600,
-                fontSize: "1rem",
-                p: 2,
-                minWidth: 0,
-                mr: 2,
-              },
-              "& .Mui-selected": {
-                color: "#0072FF !important",
-              },
-              "& .MuiTabs-indicator": {
-                backgroundColor: "#0072FF",
-                height: 3,
-              },
-            }}
-          >
-            {countries.map((country, index) => (
-              <Tab
-                key={country.name}
-                label={
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <span>{country.flag}</span>
-                    <span>{country.name}</span>
-                  </Box>
-                }
-              />
-            ))}
-          </Tabs>
-        </Box>
-
-        {/* Country Details */}
-        <Box>
-          {countries.map((country, index) => (
-            <Box
+          {countries.map((country) => (
+            <Tab
               key={country.name}
-              sx={{
-                display: selectedCountry === index ? "block" : "none",
-                animation: "fadeIn 0.5s",
-                "@keyframes fadeIn": {
-                  "0%": { opacity: 0 },
-                  "100%": { opacity: 1 },
-                },
-              }}
-            >
-              {/* Country Header with Cover Image */}
+              label={
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <span>{country.flag}</span>
+                  <span>{country.name}</span>
+                </Box>
+              }
+            />
+          ))}
+        </Tabs>
+
+        {countries.map((country, index) => (
+          <Box key={country.name} sx={{ display: selectedCountry === index ? "block" : "none" }}>
+            <Stack gap={5}>
+              {/* Cover image */}
               <Box
                 sx={{
                   position: "relative",
-                  mb: 4,
-                  height: { xs: 200, sm: 300, md: 400 },
-                  borderRadius: 3,
+                  height: { xs: 220, sm: 320, md: 420 },
+                  borderRadius: 1,
                   overflow: "hidden",
-                  boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)",
+                  border: "1px solid var(--zr-line-muted)",
                 }}
               >
                 <Box
                   component="img"
                   src={country.coverImage}
                   alt={country.name}
+                  onClick={() => openImage(country.coverImage)}
                   sx={{
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
+                    cursor: "pointer",
+                    display: "block",
+                    filter: "saturate(0.9) contrast(1.02)",
                   }}
-                  onClick={() => openImage(country.coverImage)}
-                  style={{ cursor: "pointer" }}
                 />
-
-                {/* Overlay with country name */}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    inset: 0,
+                    background:
+                      "linear-gradient(180deg, transparent 55%, rgba(15,15,13,0.85) 100%)",
+                    pointerEvents: "none",
+                  }}
+                />
                 <Box
                   sx={{
                     position: "absolute",
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    p: 3,
-                    background: "linear-gradient(transparent, rgba(0,0,0,0.8))",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-end",
+                    p: { xs: 2.5, md: 4 },
                   }}
                 >
-                  <Box>
-                    <Typography variant="h4" fontWeight="700" color="white">
-                      {country.name} {country.flag}
+                  <Stack gap={0.5}>
+                    <Overline>{country.flag}</Overline>
+                    <Typography variant="h3" component="h2" sx={{ color: "text.primary" }}>
+                      {country.name}
                     </Typography>
-                    <Typography variant="body1" color="rgba(255, 255, 255, 0.8)">
+                    <Typography variant="body2" color="text.secondary">
                       {country.isHomeCountry
-                        ? "I live here! Born and raised in Kansas."
-                        : `${country.visits.length} ${country.visits.length === 1 ? "visit" : "visits"} · ${calculateDaysSpent(country.visits)} total days`}
+                        ? "Home — born and raised in Kansas."
+                        : `${country.visits.length} ${country.visits.length === 1 ? "visit" : "visits"} · ${calculateDaysSpent(country.visits)} days total`}
                     </Typography>
-                  </Box>
+                  </Stack>
                 </Box>
               </Box>
 
-              {/* Country Description */}
               {country.description && (
-                <Box sx={{ mb: 4 }}>
-                  <Typography variant="body1" sx={{ fontSize: "1.1rem", lineHeight: 1.7 }}>
-                    {country.description}
-                  </Typography>
-                </Box>
+                <Typography variant="body1" sx={{ lineHeight: 1.7, maxWidth: 760 }}>
+                  {country.description}
+                </Typography>
               )}
 
-              {/* Visits History */}
-              <Box sx={{ mb: 4 }}>
-                <Typography
-                  variant="h5"
-                  component="h2"
-                  sx={{
-                    mb: 2,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                    "&::after": {
-                      content: '""',
-                      height: "1px",
-                      flexGrow: 1,
-                      bgcolor: "divider",
-                      ml: 2,
-                    },
-                  }}
-                >
-                  <FlightIcon color="primary" />
-                  Visit History
-                </Typography>
-
-                <Stack spacing={2}>
+              <Stack gap={2}>
+                <Overline index="01">Visit History</Overline>
+                <Stack gap={1.5}>
                   {country.visits.map((visit, vIndex) => (
-                    <Card
+                    <ArtifactCard
                       key={`${visit.startDate}-${vIndex}`}
-                      sx={{
-                        p: 2,
-                        bgcolor: "rgba(30, 30, 30, 0.7)",
-                        backdropFilter: "blur(10px)",
-                        borderRadius: 2,
-                      }}
+                      padding="regular"
+                      hoverable={false}
                     >
                       <Stack
                         direction={{ xs: "column", sm: "row" }}
                         spacing={2}
+                        alignItems={{ sm: "center" }}
                         justifyContent="space-between"
                       >
                         <Box>
-                          <Typography variant="subtitle1" fontWeight="600">
-                            {formatDate(visit.startDate)} - {formatDate(visit.endDate)}
+                          <Typography variant="subtitle1" component="div">
+                            {formatDate(visit.startDate)} — {formatDate(visit.endDate)}
                           </Typography>
                           <Typography variant="body2" color="text.secondary">
                             {calculateDuration(visit.startDate, visit.endDate)}
                           </Typography>
                         </Box>
-                        <Chip
-                          label={visit.purpose}
-                          size="small"
-                          sx={{
-                            bgcolor:
-                              vIndex % 2 === 0
-                                ? "rgba(0, 114, 255, 0.1)"
-                                : "rgba(255, 215, 0, 0.1)",
-                            color: vIndex % 2 === 0 ? "#0072FF" : "#FFD700",
-                            fontWeight: 500,
-                            height: "auto",
-                            py: 0.5,
-                          }}
-                        />
+                        <LabelChip>{visit.purpose}</LabelChip>
                       </Stack>
-                    </Card>
+                    </ArtifactCard>
                   ))}
                 </Stack>
-              </Box>
+              </Stack>
 
-              {/* Favorite Spots */}
-              <Box>
-                <Typography
-                  variant="h5"
-                  component="h2"
-                  sx={{
-                    mb: 3,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                    "&::after": {
-                      content: '""',
-                      height: "1px",
-                      flexGrow: 1,
-                      bgcolor: "divider",
-                      ml: 2,
-                    },
-                  }}
-                >
-                  <FavoriteIcon sx={{ color: "#e91e63" }} />
-                  Favorite Places
-                </Typography>
-
-                <Box sx={{ display: "flex", flexWrap: "wrap", mx: -2 }}>
-                  {country.favoriteSpots.map((spot, sIndex) => (
-                    <Box
-                      key={`${spot.name}-${sIndex}`}
-                      sx={{ width: { xs: "100%", md: "50%" }, p: 2 }}
-                    >
-                      <Card
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          height: "100%",
-                          bgcolor: "rgba(30, 30, 30, 0.7)",
-                          backdropFilter: "blur(10px)",
-                          borderRadius: 3,
-                          overflow: "hidden",
-                          transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                          position: "relative",
-                          "&:hover": {
-                            transform: "translateY(-5px)",
-                            boxShadow: "0 15px 30px rgba(0, 0, 0, 0.4)",
-                          },
-                          "&::before": {
-                            content: '""',
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            height: "4px",
-                            background: `linear-gradient(90deg, ${sIndex % 2 === 0 ? "#0072FF, #92EFFD" : "#FFD700, #FFA500"})`,
-                          },
-                        }}
+              {country.favoriteSpots.length > 0 && (
+                <Stack gap={2}>
+                  <Overline index="02">Favorite Places</Overline>
+                  <Box
+                    sx={{
+                      display: "grid",
+                      gap: 3,
+                      gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+                    }}
+                  >
+                    {country.favoriteSpots.map((spot, sIndex) => (
+                      <ArtifactCard
+                        key={`${spot.name}-${sIndex}`}
+                        padding="none"
+                        hoverable={Boolean(spot.image)}
+                        onClick={spot.image ? () => openImage(spot.image as string) : undefined}
                       >
-                        {/* Spot Image */}
                         {spot.image && (
-                          <ButtonBase
+                          <Box
                             sx={{
                               width: "100%",
                               height: 200,
-                              display: "block",
+                              overflow: "hidden",
+                              borderBottom: "1px solid var(--zr-line-muted)",
                             }}
-                            onClick={() => openImage(spot.image || "")}
                           >
                             <Box
+                              component="img"
+                              src={spot.image}
+                              alt={spot.name}
                               sx={{
                                 width: "100%",
                                 height: "100%",
-                                position: "relative",
-                                overflow: "hidden",
-                                bgcolor: "black",
+                                objectFit: "cover",
+                                display: "block",
+                                filter: "saturate(0.9)",
                               }}
-                            >
-                              <img
-                                src={spot.image}
-                                alt={spot.name}
-                                style={{
-                                  height: "100%",
-                                  width: "100%",
-                                  objectFit: "cover",
-                                  transition: "transform 0.5s ease",
-                                }}
-                              />
-                            </Box>
-                          </ButtonBase>
+                            />
+                          </Box>
                         )}
-
-                        {/* Spot Details */}
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            flexGrow: 1,
-                            p: 3,
-                          }}
-                        >
-                          <Typography variant="h6" fontWeight="600" gutterBottom>
+                        <Box sx={{ p: 3 }}>
+                          <Typography variant="h6" component="h3">
                             {spot.name}
                           </Typography>
-                          <Typography variant="body2" sx={{ mt: 1 }}>
+                          <Typography variant="body2" sx={{ mt: 1 }} color="text.secondary">
                             {spot.description}
                           </Typography>
                         </Box>
-                      </Card>
-                    </Box>
-                  ))}
-                </Box>
-              </Box>
+                      </ArtifactCard>
+                    ))}
+                  </Box>
+                </Stack>
+              )}
 
               {country.name === "United States" && country.states && (
-                <USAMapComponent visitedStates={country.states} />
+                <Stack gap={2}>
+                  <Overline index="03">States Map</Overline>
+                  <USAMapComponent visitedStates={country.states} />
+                </Stack>
               )}
-            </Box>
-          ))}
-        </Box>
+            </Stack>
+          </Box>
+        ))}
 
-        {/* Back to LinkTree Button */}
-        <Box sx={{ display: "flex", justifyContent: "left", mt: 2 }}>
+        <Box sx={{ mt: 8 }}>
           <Typography
             component={NextLink}
-            href="/linktree"
-            variant="body1"
+            href="/"
+            variant="overline"
             sx={{
-              textDecoration: "none",
-              color: "#0072FF",
-              py: 1,
-              px: 3,
-              borderRadius: 2,
-              transition: "all 0.3s ease",
-              "&:hover": {
-                bgcolor: "rgba(187, 134, 252, 0.1)",
-              },
+              color: "text.secondary",
+              textDecorationColor: "var(--zr-section-accent)",
+              "&:hover": { color: "text.primary" },
             }}
           >
-            Back to LinkTree
+            ← Back to index
           </Typography>
         </Box>
-      </Stack>
+      </SectionFrame>
 
-      {/* Image Dialog */}
+      <MakersMarkFooter />
+
       <Dialog
         open={openImageDialog}
         onClose={handleCloseDialog}
         maxWidth="lg"
         PaperProps={{
           sx: {
-            bgcolor: "rgba(18, 18, 18, 0.95)",
-            borderRadius: 2,
-            boxShadow: "0 10px 40px rgba(0, 0, 0, 0.5)",
+            backgroundColor: "rgba(15, 15, 13, 0.96)",
+            backgroundImage: "none",
+            border: "1px solid var(--zr-line-muted)",
+            borderRadius: 1,
             overflow: "hidden",
           },
         }}
@@ -469,30 +302,29 @@ export default function Travel() {
             position: "absolute",
             right: 8,
             top: 8,
-            color: "white",
+            color: "text.primary",
             zIndex: 1,
-            bgcolor: "rgba(0, 0, 0, 0.5)",
-            "&:hover": {
-              bgcolor: "rgba(0, 0, 0, 0.7)",
-            },
+            backgroundColor: "rgba(0, 0, 0, 0.4)",
+            "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.6)" },
           }}
         >
           <CloseIcon />
         </IconButton>
         <DialogContent sx={{ p: 0 }}>
-          <img
+          <Box
+            component="img"
             src={dialogImage}
             alt="Enlarged view"
-            style={{
+            sx={{
               width: "100%",
               height: "auto",
               display: "block",
-              maxHeight: "80vh",
+              maxHeight: "85vh",
               objectFit: "contain",
             }}
           />
         </DialogContent>
       </Dialog>
-    </Container>
+    </Box>
   );
 }

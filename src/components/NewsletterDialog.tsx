@@ -117,47 +117,16 @@ export function NewsletterDialog() {
         slotProps={{
           paper: {
             sx: {
-              bgcolor: "rgba(30, 30, 30, 0.95)",
-              backdropFilter: "blur(10px)",
-              borderRadius: 3,
-              border: "1px solid rgba(81, 81, 81, 0.3)",
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4)",
+              backgroundColor: "rgba(15, 15, 13, 0.96)",
+              backgroundImage: "none",
+              border: "1px solid var(--zr-line-muted)",
+              borderRadius: 1,
               position: "relative",
               overflow: "hidden",
             },
           },
         }}
       >
-        {/* Decorative gradients */}
-        <Box
-          sx={{
-            position: "absolute",
-            top: -80,
-            right: -80,
-            width: 200,
-            height: 200,
-            borderRadius: "50%",
-            background: "linear-gradient(135deg, #4E65FF 0%, #92EFFD 100%)",
-            filter: "blur(70px)",
-            opacity: 0.15,
-            zIndex: 0,
-          }}
-        />
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: -50,
-            left: -50,
-            width: 150,
-            height: 150,
-            borderRadius: "50%",
-            background: "linear-gradient(135deg, #FF057C 0%, #8D0B93 100%)",
-            filter: "blur(60px)",
-            opacity: 0.1,
-            zIndex: 0,
-          }}
-        />
-
         {/* Close button */}
         <IconButton
           aria-label="close"
@@ -183,17 +152,8 @@ export function NewsletterDialog() {
             gap: 1.5,
           }}
         >
-          <EmailIcon color="primary" />
-          <Typography
-            variant="h5"
-            component="span"
-            sx={{
-              fontWeight: 600,
-              background: "linear-gradient(to right, #BB86FC, #03DAC6)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
+          <EmailIcon color="primary" fontSize="small" />
+          <Typography variant="h5" component="span" sx={{ fontWeight: 500 }}>
             Stay Connected
           </Typography>
         </DialogTitle>

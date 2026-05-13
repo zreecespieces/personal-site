@@ -1,6 +1,4 @@
 import { Metadata } from "next";
-import { Box } from "@mui/material";
-import { BLOG_BACKGROUND, BLOG_TEXT } from "./theme";
 
 export const metadata: Metadata = {
   title: "Blog | Zachary Reece",
@@ -31,15 +29,5 @@ export const metadata: Metadata = {
 };
 
 export default function BlogLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        background: BLOG_BACKGROUND,
-        color: BLOG_TEXT,
-      }}
-    >
-      {children}
-    </Box>
-  );
+  return <>{children}</>;
 }

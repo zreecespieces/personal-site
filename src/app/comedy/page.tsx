@@ -2,42 +2,42 @@
 
 import React, { useState } from "react";
 import {
+  Avatar,
   Box,
-  Container,
-  Stack,
-  Typography,
-  Card,
-  Chip,
-  Tabs,
-  Tab,
   ButtonBase,
   Dialog,
   DialogContent,
   IconButton,
-  Avatar,
-  Link,
-  Button,
+  Stack,
+  Tab,
+  Tabs,
+  Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import NextLink from "next/link";
 import {
-  comedians,
-  getTotalShows,
-  getTotalComediansSeen,
+  ArtifactCard,
+  LabelChip,
+  MakersMarkFooter,
+  Overline,
+  PageHeader,
+  SectionFrame,
+} from "@/components/primitives";
+import {
   formatDate,
   getComediansByEarliestSeen,
+  getTotalComediansSeen,
+  getTotalShows,
 } from "./comedians";
-import NextLink from "next/link";
 import CloseIcon from "@mui/icons-material/Close";
-import TheaterComedyIcon from "@mui/icons-material/TheaterComedy";
-import EventIcon from "@mui/icons-material/Event";
-import StarIcon from "@mui/icons-material/Star";
-import GradientBorder from "@/components/GradientBorder";
 
 export default function Comedy() {
+  const theme = useTheme();
   const [selectedComedian, setSelectedComedian] = useState<number>(0);
   const [openImageDialog, setOpenImageDialog] = useState(false);
   const [dialogImage, setDialogImage] = useState("");
 
-  const handleComedianChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleComedianChange = (_event: React.SyntheticEvent, newValue: number) => {
     setSelectedComedian(newValue);
   };
 
@@ -46,322 +46,204 @@ export default function Comedy() {
     setOpenImageDialog(true);
   };
 
-  const handleCloseDialog = () => {
-    setOpenImageDialog(false);
-  };
+  const handleCloseDialog = () => setOpenImageDialog(false);
+
+  const comedians = getComediansByEarliestSeen();
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Stack spacing={6}>
-        {/* Title */}
-        <GradientBorder
-          gradientColors={["#FF0055", "gold"]}
-          sx={{ width: "100%" }}
-          contentSx={{ p: 4, textAlign: "center" }}
+    <Box component="main">
+      <SectionFrame section="hobbies" spacing="loose">
+        <PageHeader
+          overline="Disciplines · Comedy"
+          index="04"
+          title="Stand-up comedians and live shows attended."
+          subtitle="An ongoing log of the comics I keep going back to and the nights worth remembering."
+          size="md"
+          meta={
+            <Stack direction="row" gap={1}>
+              <LabelChip>{getTotalComediansSeen()} Comedians</LabelChip>
+              <LabelChip>{getTotalShows()} Shows</LabelChip>
+            </Stack>
+          }
+        />
+      </SectionFrame>
+
+      <SectionFrame section="hobbies" spacing="none">
+        <Tabs
+          value={selectedComedian}
+          onChange={handleComedianChange}
+          variant="scrollable"
+          scrollButtons="auto"
+          sx={{ borderBottom: `1px solid ${theme.zr.lines.muted}`, mb: 5 }}
         >
-          <Typography
-            variant="h3"
-            component="h1"
-            fontWeight="700"
-            gutterBottom
-            sx={{
-              background: "linear-gradient(to right, #FF0055, gold)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              letterSpacing: "0.02em",
-            }}
-          >
-            Comedy
-          </Typography>
-
-          <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: 2, my: 2 }}>
-            <Chip
-              icon={<TheaterComedyIcon />}
-              label={`${getTotalComediansSeen()} Comedians Seen`}
-              sx={{
-                bgcolor: "rgba(255, 0, 85, 0.1)",
-                color: "#FF0055",
-                fontWeight: 500,
-                px: 1,
-              }}
-            />
-            <Chip
-              icon={<EventIcon />}
-              label={`${getTotalShows()} Live Shows`}
-              sx={{
-                bgcolor: "rgba(255, 215, 0, 0.1)",
-                color: "gold",
-                fontWeight: 500,
-                px: 1,
-              }}
-            />
-          </Box>
-        </GradientBorder>
-
-        {/* Comedian Selection Tabs */}
-        <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%", overflowX: "auto" }}>
-          <Tabs
-            value={selectedComedian}
-            onChange={handleComedianChange}
-            variant="scrollable"
-            scrollButtons="auto"
-            sx={{
-              "& .MuiTab-root": {
-                textTransform: "none",
-                fontWeight: 600,
-                fontSize: "1rem",
-                p: 2,
-                minWidth: 0,
-                mr: 2,
-              },
-              "& .Mui-selected": {
-                color: "#FF0055 !important",
-              },
-              "& .MuiTabs-indicator": {
-                backgroundColor: "#FF0055",
-                height: 3,
-              },
-            }}
-          >
-            {getComediansByEarliestSeen().map((comedian, index) => (
-              <Tab
-                key={comedian.name}
-                label={comedian.name}
-                icon={
+          {comedians.map((comedian) => (
+            <Tab
+              key={comedian.name}
+              label={
+                <Stack direction="row" alignItems="center" gap={1.25}>
                   <Avatar
                     src={comedian.image}
                     alt={comedian.name}
-                    sx={{
-                      width: 32,
-                      height: 32,
-                      mb: 0.5,
-                    }}
+                    sx={{ width: 28, height: 28, border: `1px solid ${theme.zr.lines.muted}` }}
                   />
-                }
-                sx={{
-                  flexDirection: "column",
-                  alignItems: "center",
-                  minHeight: 72,
-                }}
-              />
-            ))}
-          </Tabs>
-        </Box>
+                  <span>{comedian.name}</span>
+                </Stack>
+              }
+              sx={{ alignItems: "center", minHeight: 56 }}
+            />
+          ))}
+        </Tabs>
 
-        {/* Comedian Details */}
-        <Box>
-          {getComediansByEarliestSeen().map((comedian, index) => (
-            <Box
-              key={comedian.name}
-              sx={{
-                display: selectedComedian === index ? "block" : "none",
-                animation: "fadeIn 0.5s",
-                "@keyframes fadeIn": {
-                  "0%": { opacity: 0 },
-                  "100%": { opacity: 1 },
-                },
-              }}
+        {comedians.map((comedian, index) => (
+          <Box key={comedian.name} sx={{ display: selectedComedian === index ? "block" : "none" }}>
+            <Stack
+              direction={{ xs: "column", md: "row" }}
+              gap={{ xs: 3, md: 5 }}
+              sx={{ mb: 5 }}
+              alignItems={{ md: "flex-start" }}
             >
-              {/* Comedian Header */}
               <Box
                 sx={{
-                  display: "flex",
-                  flexDirection: { xs: "column", md: "row" },
-                  alignItems: { xs: "center", md: "flex-start" },
-                  gap: 4,
-                  mb: 4,
+                  width: { xs: "100%", sm: 300 },
+                  height: 400,
+                  flexShrink: 0,
+                  overflow: "hidden",
+                  border: `1px solid ${theme.zr.lines.muted}`,
                 }}
               >
-                {/* Comedian Image */}
-                <Box
-                  sx={{
-                    width: { xs: "100%", sm: 300 },
-                    height: 400,
-                    flexShrink: 0,
-                    position: "relative",
-                    borderRadius: 3,
-                    overflow: "hidden",
-                    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)",
-                  }}
+                <ButtonBase
+                  onClick={() => openImage(comedian.image)}
+                  sx={{ width: "100%", height: "100%", display: "block" }}
                 >
-                  <ButtonBase
+                  <Box
+                    component="img"
+                    src={comedian.image}
+                    alt={comedian.name}
                     sx={{
                       width: "100%",
                       height: "100%",
-                      display: "block",
+                      objectFit: "cover",
+                      filter: "saturate(0.85)",
                     }}
-                    onClick={() => openImage(comedian.image)}
-                  >
-                    <img
-                      src={comedian.image}
-                      alt={comedian.name}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                      }}
-                    />
-                  </ButtonBase>
-                </Box>
-
-                {/* Comedian Bio */}
-                <Box sx={{ flex: 1, flexGrow: 1, width: "100%" }}>
-                  <Typography variant="h4" gutterBottom fontWeight="700">
-                    {comedian.name}
-                  </Typography>
-
-                  {/* Show statistics */}
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexWrap: "wrap",
-                      gap: 2,
-                      mt: 3,
-                    }}
-                  >
-                    <Chip
-                      label={`${comedian.shows.length} ${comedian.shows.length === 1 ? "Show" : "Shows"} Attended`}
-                      sx={{
-                        bgcolor: "rgba(255, 0, 85, 0.1)",
-                        color: "#FF0055",
-                        fontWeight: 500,
-                      }}
-                    />
-
-                    {comedian.shows.length > 0 && (
-                      <Chip
-                        label={`Last Seen: ${formatDate(
-                          comedian.shows.reduce(
-                            (latest, show) => (!latest || show.date > latest ? show.date : latest),
-                            ""
-                          )
-                        )}`}
-                        sx={{
-                          bgcolor: "rgba(255, 215, 0, 0.1)",
-                          color: "gold",
-                          fontWeight: 500,
-                        }}
-                      />
-                    )}
-                  </Box>
-                </Box>
+                  />
+                </ButtonBase>
               </Box>
 
-              {/* Shows */}
-              <Box sx={{ mt: 6 }}>
-                <Typography
-                  variant="h5"
-                  gutterBottom
-                  fontWeight="700"
-                  sx={{
-                    pb: 1,
-                    borderBottom: "2px solid rgba(255, 0, 85, 0.3)",
-                  }}
-                >
-                  Show History
+              <Stack gap={2} sx={{ flex: 1, minWidth: 0 }}>
+                <Overline>Comedian</Overline>
+                <Typography variant="h3" component="h2">
+                  {comedian.name}
                 </Typography>
-
-                <Stack spacing={3} sx={{ mt: 3 }}>
-                  {comedian.shows.map((show, idx) => (
-                    <Card
-                      key={idx}
-                      sx={{
-                        p: 3,
-                        borderRadius: 2,
-                        boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
-                        background: "rgba(255, 255, 255, 0.05)",
-                        backdropFilter: "blur(10px)",
-                        border: "1px solid rgba(255, 255, 255, 0.1)",
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: { xs: "column", sm: "row" },
-                          justifyContent: "space-between",
-                          alignItems: { xs: "flex-start", sm: "center" },
-                          mb: 2,
-                        }}
-                      >
-                        <Typography variant="h6" fontWeight="600">
-                          {show.tourName ? `${show.tourName}` : comedian.name}
-                        </Typography>
-                      </Box>
-
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexWrap: "wrap",
-                          gap: 2,
-                          mb: 2,
-                        }}
-                      >
-                        <Chip
-                          label={formatDate(show.date)}
-                          size="small"
-                          sx={{
-                            bgcolor: "rgba(255, 0, 85, 0.1)",
-                            color: "#FF0055",
-                          }}
-                        />
-                        <Chip
-                          label={`${show.venue}, ${show.city}`}
-                          size="small"
-                          sx={{
-                            bgcolor: "rgba(255, 215, 0, 0.1)",
-                            color: "gold",
-                          }}
-                        />
-                      </Box>
-
-                      {show.notes && (
-                        <Typography variant="body2" color="text.secondary">
-                          {show.notes}
-                        </Typography>
+                <Stack direction="row" gap={1} flexWrap="wrap" sx={{ mt: 1 }}>
+                  <LabelChip>
+                    {comedian.shows.length} {comedian.shows.length === 1 ? "Show" : "Shows"}
+                  </LabelChip>
+                  {comedian.shows.length > 0 && (
+                    <LabelChip>
+                      Last seen ·{" "}
+                      {formatDate(
+                        comedian.shows.reduce(
+                          (latest, show) => (!latest || show.date > latest ? show.date : latest),
+                          ""
+                        )
                       )}
+                    </LabelChip>
+                  )}
+                </Stack>
+              </Stack>
+            </Stack>
 
+            <Stack gap={2}>
+              <Overline index="01">Show History</Overline>
+              <Stack gap={2}>
+                {comedian.shows.map((show, idx) => (
+                  <ArtifactCard key={idx} padding="loose" hoverable={false}>
+                    <Stack
+                      direction={{ xs: "column", sm: "row" }}
+                      alignItems={{ sm: "flex-start" }}
+                      justifyContent="space-between"
+                      gap={2}
+                    >
+                      <Stack gap={1.5} sx={{ flex: 1 }}>
+                        <Typography variant="h6" component="h3">
+                          {show.tourName ? show.tourName : comedian.name}
+                        </Typography>
+                        <Stack direction="row" gap={0.75} flexWrap="wrap">
+                          <LabelChip size="sm">{formatDate(show.date)}</LabelChip>
+                          <LabelChip size="sm">
+                            {show.venue}, {show.city}
+                          </LabelChip>
+                        </Stack>
+                        {show.notes && (
+                          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                            {show.notes}
+                          </Typography>
+                        )}
+                      </Stack>
                       {show.ticketImage && (
                         <ButtonBase
                           onClick={() => openImage(show.ticketImage!)}
                           sx={{
-                            mt: 2,
-                            display: "block",
-                            textAlign: "left",
-                            borderRadius: 1,
+                            width: { xs: "100%", sm: 220 },
+                            height: 120,
+                            border: `1px solid ${theme.zr.lines.muted}`,
                             overflow: "hidden",
-                            width: { xs: "100%", sm: 200 },
-                            height: 100,
+                            display: "block",
+                            flexShrink: 0,
                           }}
                         >
-                          <img
+                          <Box
+                            component="img"
                             src={show.ticketImage}
                             alt="Ticket"
-                            style={{
+                            sx={{
                               width: "100%",
                               height: "100%",
                               objectFit: "cover",
+                              filter: "saturate(0.85)",
                             }}
                           />
                         </ButtonBase>
                       )}
-                    </Card>
-                  ))}
-                </Stack>
+                    </Stack>
+                  </ArtifactCard>
+                ))}
+              </Stack>
+            </Stack>
+          </Box>
+        ))}
 
-                {/* Back to Linktree */}
-                <NextLink href="/" passHref>
-                  <Button sx={{ mt: 2, color: "#FF0055", textTransform: "none" }}>
-                    Back to Linktree
-                  </Button>
-                </NextLink>
-              </Box>
-            </Box>
-          ))}
+        <Box sx={{ mt: 6 }}>
+          <Typography
+            component={NextLink}
+            href="/"
+            variant="overline"
+            sx={{
+              color: "text.secondary",
+              textDecorationColor: "var(--zr-section-accent)",
+              "&:hover": { color: "text.primary" },
+            }}
+          >
+            ← Back to index
+          </Typography>
         </Box>
-      </Stack>
+      </SectionFrame>
 
-      {/* Image Dialog */}
-      <Dialog open={openImageDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
+      <MakersMarkFooter />
+
+      <Dialog
+        open={openImageDialog}
+        onClose={handleCloseDialog}
+        maxWidth="md"
+        fullWidth
+        PaperProps={{
+          sx: {
+            backgroundColor: "rgba(15, 15, 13, 0.96)",
+            border: `1px solid ${theme.zr.lines.muted}`,
+            borderRadius: 1,
+          },
+        }}
+      >
         <DialogContent sx={{ p: 0, position: "relative" }}>
           <IconButton
             onClick={handleCloseDialog}
@@ -369,20 +251,19 @@ export default function Comedy() {
               position: "absolute",
               top: 8,
               right: 8,
-              color: "white",
-              bgcolor: "rgba(0, 0, 0, 0.5)",
-              "&:hover": {
-                bgcolor: "rgba(0, 0, 0, 0.7)",
-              },
+              color: "text.primary",
+              backgroundColor: "rgba(0, 0, 0, 0.4)",
+              "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.6)" },
               zIndex: 1,
             }}
           >
             <CloseIcon />
           </IconButton>
-          <img
+          <Box
+            component="img"
             src={dialogImage}
             alt="Enlarged view"
-            style={{
+            sx={{
               width: "100%",
               display: "block",
               maxHeight: "80vh",
@@ -391,6 +272,6 @@ export default function Comedy() {
           />
         </DialogContent>
       </Dialog>
-    </Container>
+    </Box>
   );
 }

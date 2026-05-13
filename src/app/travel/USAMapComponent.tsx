@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import USAMap from "react-usa-map";
-import { Box, Typography, Tooltip, Paper, Chip, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { LabelChip } from "@/components/primitives";
 
 // Types for state customization
 interface MapCustomizations {
@@ -15,8 +16,8 @@ interface USAMapProps {
   visitedStates: string[];
 }
 
-// Constants for colors
-const ELECTRIC_BLUE = "#0072FF";
+// Default colors — read from the redesign tokens via the theme rather than hardcoded.
+// The visited fill is set per render from theme.zr.accent.moss (Hobbies family).
 
 // Map full state names to abbreviations
 const stateAbbreviations: Record<string, string> = {
@@ -89,29 +90,27 @@ export const USAMapComponent: React.FC<USAMapProps> = ({ visitedStates }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // Direct customization approach following the example
+  const visitedFill = theme.zr.accent.moss;
+  const defaultFill = theme.zr.ink[800];
+
+  // Build the per-state fill config consumed by react-usa-map.
   const statesCustomConfig = () => {
     const config: Record<string, { fill: string }> = {};
 
-    // Add each visited state to the config with the electric blue color
     visitedStates.forEach((state) => {
       const stateAbbr = stateAbbreviations[state];
       if (stateAbbr) {
-        config[stateAbbr] = {
-          fill: ELECTRIC_BLUE, // Electric blue to match the site's gradient
-        };
+        config[stateAbbr] = { fill: visitedFill };
       }
     });
 
-    // Initialize all states with default color
     Object.keys(stateAbbreviations).forEach((state) => {
       const abbr = stateAbbreviations[state];
       if (!config[abbr]) {
-        config[abbr] = { fill: "#2A2A2A" }; // Default non-visited state color (dark gray)
+        config[abbr] = { fill: defaultFill };
       }
     });
 
-    console.log("States config:", config);
     return config;
   };
 
@@ -128,14 +127,13 @@ export const USAMapComponent: React.FC<USAMapProps> = ({ visitedStates }) => {
     setShowTooltip(false);
   };
 
-  const mapHandler = (event: React.MouseEvent): void => {
-    // This method is required by the package but we don't need to do anything here
-  };
+  // react-usa-map requires an onClick handler; we don't use clicks.
+  const mapHandler = (): void => {};
 
   return (
     <Box sx={{ position: "relative", mt: 2, mb: 4 }}>
-      <Typography variant="h6" gutterBottom sx={{ textAlign: "center", mb: 2 }}>
-        U.S. States Visited: {visitedStates.length}/50 + Washington DC
+      <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", mb: 2 }}>
+        States visited: {visitedStates.length} of 50 + Washington DC
       </Typography>
 
       <Box
@@ -148,12 +146,12 @@ export const USAMapComponent: React.FC<USAMapProps> = ({ visitedStates }) => {
             maxHeight: isMobile ? "300px" : "500px",
           },
           "& path": {
-            transition: "fill 0.3s ease",
-            stroke: "#333",
-            strokeWidth: "0.5px",
+            transition: "fill 0.18s cubic-bezier(0.2, 0, 0, 1)",
+            stroke: theme.zr.lines.muted,
+            strokeWidth: "0.6px",
           },
           "& path:hover": {
-            opacity: 0.8,
+            opacity: 0.85,
             cursor: "pointer",
           },
         }}
@@ -173,9 +171,15 @@ export const USAMapComponent: React.FC<USAMapProps> = ({ visitedStates }) => {
             position: "fixed",
             top: tooltipPosition.y + 10,
             left: tooltipPosition.x + 10,
-            bgcolor: "rgba(0, 0, 0, 0.8)",
-            color: "white",
-            p: 1,
+            backgroundColor: theme.zr.ink[850],
+            border: `1px solid ${theme.zr.lines.muted}`,
+            color: theme.zr.bone[100],
+            fontFamily: `var(${theme.zr.cssVars.fontMono})`,
+            fontSize: "0.7rem",
+            letterSpacing: "0.05em",
+            textTransform: "uppercase",
+            px: 1.25,
+            py: 0.75,
             borderRadius: 1,
             zIndex: 1000,
             pointerEvents: "none",
@@ -185,19 +189,19 @@ export const USAMapComponent: React.FC<USAMapProps> = ({ visitedStates }) => {
         </Box>
       )}
 
-      <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: 1, mt: 3 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          gap: 0.75,
+          mt: 4,
+        }}
+      >
         {visitedStates.sort().map((state, index) => (
-          <Chip
-            key={index}
-            label={state}
-            size="small"
-            sx={{
-              bgcolor: "rgba(0, 114, 255, 0.1)",
-              color: ELECTRIC_BLUE,
-              fontWeight: 500,
-              m: 0.5,
-            }}
-          />
+          <LabelChip key={index} size="sm">
+            {state}
+          </LabelChip>
         ))}
       </Box>
     </Box>
