@@ -2,10 +2,16 @@
 
 import React, { ReactNode } from "react";
 import { Box, SxProps, Theme } from "@mui/material";
+import { alpha, useTheme } from "@mui/material/styles";
 
 interface GradientBorderProps {
   children: ReactNode;
-  gradientColors: string[];
+  /**
+   * Retained for backward compatibility — the redesign ignores the
+   * gradient colors and renders the new artifact border instead. The
+   * prop is still accepted so the existing 11 call sites compile.
+   */
+  gradientColors?: string[];
   borderWidth?: number;
   borderRadius?: number;
   sx?: SxProps<Theme>;
@@ -13,41 +19,49 @@ interface GradientBorderProps {
 }
 
 /**
- * A component that creates a gradient border around its children
- * Uses a nested box approach to ensure border-radius works correctly
+ * @deprecated Use `ArtifactCard` from `@/components/primitives` instead.
+ *
+ * This is a transition shim. The previous neon gradient-border component
+ * has been replaced in-place with the warm editorial card surface so the
+ * site doesn't visually regress while the per-page migrations land in
+ * Phase 4. The `gradientColors` prop is accepted but ignored.
+ *
+ * Will be removed in Phase 7.
  */
 export default function GradientBorder({
   children,
-  gradientColors = ["#FF00FF", "#00FFFF"],
-  borderWidth = 0.25,
-  borderRadius = 3,
+  borderWidth: _borderWidth,
+  borderRadius = 1,
   sx = {},
   contentSx = {},
 }: GradientBorderProps) {
-  const [color1, color2] = gradientColors;
+  const theme = useTheme();
+  // Touch the unused prop so TS doesn't warn and so we can deprecate cleanly
+  void _borderWidth;
 
   return (
     <Box
       sx={{
         position: "relative",
-        padding: borderWidth,
-        borderRadius: borderRadius + borderWidth / 8,
-        background: `linear-gradient(45deg, ${color1}, ${color2})`,
+        backgroundColor: alpha(theme.zr.bone[100], 0.045),
+        border: `1px solid ${theme.zr.lines.muted}`,
+        borderRadius,
+        overflow: "hidden",
+        "&::before": {
+          content: '""',
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: 2,
+          height: "100%",
+          backgroundColor: `var(--zr-section-accent, ${theme.zr.accent.brass})`,
+          opacity: 0.65,
+          pointerEvents: "none",
+        },
         ...sx,
       }}
     >
-      <Box
-        sx={{
-          position: "relative",
-          borderRadius: borderRadius,
-          backgroundColor: (theme) => theme.palette.background.default,
-          overflow: "hidden",
-          height: "100%",
-          ...contentSx,
-        }}
-      >
-        {children}
-      </Box>
+      <Box sx={{ position: "relative", height: "100%", ...contentSx }}>{children}</Box>
     </Box>
   );
 }
