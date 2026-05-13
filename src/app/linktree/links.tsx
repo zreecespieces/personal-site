@@ -121,9 +121,6 @@ export const linkCategories: LinkCategory[] = [
   },
 ];
 
-// Keeping the old links array for backward compatibility if needed
-export const links: LinkItemProps[] = [...professionalLinks, ...educationLinks, ...hobbyLinks];
-
 export const contactInfo = [
   {
     icon: <InstagramIcon />,

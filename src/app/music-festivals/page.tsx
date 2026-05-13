@@ -16,10 +16,8 @@ import {
   DialogContent,
   IconButton,
   Paper,
-  Divider,
   Tabs,
   Tab,
-  useTheme,
 } from "@mui/material";
 import { festivals, Festival } from "./festivals";
 import NextLink from "next/link";
@@ -37,7 +35,9 @@ export default function MusicFestivals() {
   const [selectedYear, setSelectedYear] = useState<string>("all");
 
   // Get unique years from festivals and sort in descending order
-  const years = Array.from(new Set(festivals.map((festival) => festival.year))).sort((a, b) => parseInt(b) - parseInt(a));
+  const years = Array.from(new Set(festivals.map((festival) => festival.year))).sort(
+    (a, b) => parseInt(b) - parseInt(a)
+  );
 
   // Group festivals by year
   const festivalsByYear: { [key: string]: Festival[] } = {};
@@ -67,7 +67,11 @@ export default function MusicFestivals() {
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Stack spacing={6}>
         {/* Title Section */}
-        <GradientBorder gradientColors={["#FF7B00", "#FFD000"]} sx={{ width: "100%" }} contentSx={{ p: 4, textAlign: "center" }}>
+        <GradientBorder
+          gradientColors={["#FF7B00", "#FFD000"]}
+          sx={{ width: "100%" }}
+          contentSx={{ p: 4, textAlign: "center" }}
+        >
           <Typography
             variant="h3"
             component="h1"
@@ -78,7 +82,8 @@ export default function MusicFestivals() {
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               letterSpacing: "0.02em",
-            }}>
+            }}
+          >
             Music Festivals
           </Typography>
 
@@ -107,7 +112,9 @@ export default function MusicFestivals() {
         </GradientBorder>
 
         {/* Year Tabs */}
-        <Box sx={{ width: "100%", bgcolor: "background.paper", borderRadius: 2, overflow: "hidden" }}>
+        <Box
+          sx={{ width: "100%", bgcolor: "background.paper", borderRadius: 2, overflow: "hidden" }}
+        >
           <Tabs
             value={selectedYear}
             onChange={handleYearChange}
@@ -123,7 +130,8 @@ export default function MusicFestivals() {
                 color: "#FF7B00",
                 fontWeight: 600,
               },
-            }}>
+            }}
+          >
             <Tab
               key="all"
               label="All"
@@ -141,85 +149,90 @@ export default function MusicFestivals() {
         {/* Festival Cards by Year or All */}
         <Box sx={{ flexGrow: 1 }}>
           <Box sx={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: 3 }}>
-            {(selectedYear === "all" ? allFestivalsSorted : festivalsByYear[selectedYear])?.map((festival, index) => (
-              <Box
-                key={`${festival.name}-${festival.year}-${index}`}
-                sx={{
-                  gridColumn: {
-                    xs: "span 12",
-                    sm: "span 6",
-                    md: "span 4",
-                  },
-                }}>
-                <Card
+            {(selectedYear === "all" ? allFestivalsSorted : festivalsByYear[selectedYear])?.map(
+              (festival, index) => (
+                <Box
+                  key={`${festival.name}-${festival.year}-${index}`}
                   sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    borderRadius: 2,
-                    overflow: "hidden",
-                    bgcolor: "rgba(30, 30, 30, 0.7)",
-                    backdropFilter: "blur(10px)",
-                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                    "&:hover": {
-                      transform: "translateY(-5px)",
-                      boxShadow: "0 15px 30px rgba(0, 0, 0, 0.4)",
+                    gridColumn: {
+                      xs: "span 12",
+                      sm: "span 6",
+                      md: "span 4",
                     },
-                  }}>
-                  <ButtonBase
-                    onClick={() => openFestivalDetails(festival)}
-                    sx={{ display: "block", width: "100%", textAlign: "left", flexGrow: 1 }}>
-                    <Box sx={{ position: "relative", paddingTop: "56.25%", overflow: "hidden" }}>
-                      <CardMedia
-                        component="img"
-                        image={festival.image}
-                        alt={`${festival.name} ${festival.year}`}
-                        sx={{
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                        }}
-                      />
-                    </Box>
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography variant="h6" fontWeight="600" gutterBottom>
-                        {festival.name}
-                      </Typography>
-
-                      <Stack direction="row" spacing={1} mt={1}>
-                        <Chip
-                          icon={<LocationOnIcon sx={{ fontSize: "0.8rem" }} />}
-                          label={festival.location}
-                          size="small"
+                  }}
+                >
+                  <Card
+                    sx={{
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      borderRadius: 2,
+                      overflow: "hidden",
+                      bgcolor: "rgba(30, 30, 30, 0.7)",
+                      backdropFilter: "blur(10px)",
+                      transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                      "&:hover": {
+                        transform: "translateY(-5px)",
+                        boxShadow: "0 15px 30px rgba(0, 0, 0, 0.4)",
+                      },
+                    }}
+                  >
+                    <ButtonBase
+                      onClick={() => openFestivalDetails(festival)}
+                      sx={{ display: "block", width: "100%", textAlign: "left", flexGrow: 1 }}
+                    >
+                      <Box sx={{ position: "relative", paddingTop: "56.25%", overflow: "hidden" }}>
+                        <CardMedia
+                          component="img"
+                          image={festival.image}
+                          alt={`${festival.name} ${festival.year}`}
                           sx={{
-                            bgcolor: "rgba(255, 123, 0, 0.1)",
-                            color: "#FF7B00",
-                            fontSize: "0.75rem",
-                            height: 24,
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
                           }}
                         />
-                        {selectedYear === "all" && (
+                      </Box>
+                      <CardContent sx={{ flexGrow: 1 }}>
+                        <Typography variant="h6" fontWeight="600" gutterBottom>
+                          {festival.name}
+                        </Typography>
+
+                        <Stack direction="row" spacing={1} mt={1}>
                           <Chip
-                            icon={<CalendarTodayIcon sx={{ fontSize: "0.8rem" }} />}
-                            label={festival.year}
+                            icon={<LocationOnIcon sx={{ fontSize: "0.8rem" }} />}
+                            label={festival.location}
                             size="small"
                             sx={{
-                              bgcolor: "rgba(255, 208, 0, 0.1)",
-                              color: "#FFD000",
+                              bgcolor: "rgba(255, 123, 0, 0.1)",
+                              color: "#FF7B00",
                               fontSize: "0.75rem",
                               height: 24,
                             }}
                           />
-                        )}
-                      </Stack>
-                    </CardContent>
-                  </ButtonBase>
-                </Card>
-              </Box>
-            ))}
+                          {selectedYear === "all" && (
+                            <Chip
+                              icon={<CalendarTodayIcon sx={{ fontSize: "0.8rem" }} />}
+                              label={festival.year}
+                              size="small"
+                              sx={{
+                                bgcolor: "rgba(255, 208, 0, 0.1)",
+                                color: "#FFD000",
+                                fontSize: "0.75rem",
+                                height: 24,
+                              }}
+                            />
+                          )}
+                        </Stack>
+                      </CardContent>
+                    </ButtonBase>
+                  </Card>
+                </Box>
+              )
+            )}
           </Box>
         </Box>
 
@@ -239,7 +252,8 @@ export default function MusicFestivals() {
               "&:hover": {
                 bgcolor: "rgba(187, 134, 252, 0.1)",
               },
-            }}>
+            }}
+          >
             Back to LinkTree
           </Typography>
         </Box>
@@ -258,7 +272,8 @@ export default function MusicFestivals() {
             borderRadius: 2,
             overflow: "hidden",
           },
-        }}>
+        }}
+      >
         {selectedFestival && (
           <DialogContent sx={{ p: 0, position: "relative" }}>
             <IconButton
@@ -271,7 +286,8 @@ export default function MusicFestivals() {
                 bgcolor: "rgba(0, 0, 0, 0.4)",
                 "&:hover": { bgcolor: "rgba(0, 0, 0, 0.6)" },
                 zIndex: 1,
-              }}>
+              }}
+            >
               <CloseIcon />
             </IconButton>
 
@@ -298,7 +314,8 @@ export default function MusicFestivals() {
                 p: 3,
                 borderRadius: 0,
                 color: "white",
-              }}>
+              }}
+            >
               <Typography variant="h4" fontWeight="700" gutterBottom>
                 {selectedFestival.name}{" "}
                 <Typography component="span" variant="h5" color="primary">
@@ -335,7 +352,8 @@ export default function MusicFestivals() {
                       "&:hover": {
                         bgcolor: "rgba(255, 123, 0, 0.2)",
                       },
-                    }}>
+                    }}
+                  >
                     <Typography variant="button" sx={{ mr: 1, fontWeight: 500 }}>
                       Visit Official Site
                     </Typography>

@@ -1,29 +1,33 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react';
-import { 
-  Box, 
-  Container, 
-  Stack, 
-  Typography, 
-  Card, 
-  Rating, 
-  Chip, 
-  Tabs, 
+import React, { useState } from "react";
+import {
+  Box,
+  Container,
+  Stack,
+  Typography,
+  Card,
+  Chip,
+  Tabs,
   Tab,
-  Divider,
   ButtonBase,
   Dialog,
   DialogContent,
-  IconButton
+  IconButton,
 } from "@mui/material";
-import { countries, calculateDaysSpent, getTotalCountriesVisited, getTotalDaysSpent, getTotalStatesVisited } from "./countries";
+import {
+  countries,
+  calculateDaysSpent,
+  getTotalCountriesVisited,
+  getTotalDaysSpent,
+  getTotalStatesVisited,
+} from "./countries";
 import NextLink from "next/link";
-import CloseIcon from '@mui/icons-material/Close';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import PublicIcon from '@mui/icons-material/Public';
-import FlightIcon from '@mui/icons-material/Flight';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import CloseIcon from "@mui/icons-material/Close";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import PublicIcon from "@mui/icons-material/Public";
+import FlightIcon from "@mui/icons-material/Flight";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import GradientBorder from "@/components/GradientBorder";
 import USAMapComponent from "./USAMapComponent";
 
@@ -32,7 +36,7 @@ const formatDate = (dateString: string) => {
   // Add a time component to ensure correct date in all timezones
   const dateTimeString = `${dateString}T12:00:00`;
   const date = new Date(dateTimeString);
-  return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  return date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 };
 
 // Calculate days between two dates
@@ -41,14 +45,14 @@ const calculateDuration = (startDate: string, endDate: string) => {
   const end = new Date(endDate);
   const diffTime = Math.abs(end.getTime() - start.getTime());
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  if (isNaN(diffDays)) return '';
-  return diffDays === 1 ? '1 day' : `${diffDays} days`;
+  if (isNaN(diffDays)) return "";
+  return diffDays === 1 ? "1 day" : `${diffDays} days`;
 };
 
 export default function Travel() {
   const [selectedCountry, setSelectedCountry] = useState<number>(0);
   const [openImageDialog, setOpenImageDialog] = useState(false);
-  const [dialogImage, setDialogImage] = useState('');
+  const [dialogImage, setDialogImage] = useState("");
 
   const handleCountryChange = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedCountry(newValue);
@@ -67,97 +71,97 @@ export default function Travel() {
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Stack spacing={6}>
         {/* Title */}
-        <GradientBorder 
-          gradientColors={["#0072FF", "#92EFFD"]} 
-          sx={{ width: '100%' }}
-          contentSx={{ p: 4, textAlign: 'center' }}
+        <GradientBorder
+          gradientColors={["#0072FF", "#92EFFD"]}
+          sx={{ width: "100%" }}
+          contentSx={{ p: 4, textAlign: "center" }}
         >
-          <Typography 
-            variant="h3" 
-            component="h1" 
-            fontWeight="700" 
+          <Typography
+            variant="h3"
+            component="h1"
+            fontWeight="700"
             gutterBottom
             sx={{
-              background: 'linear-gradient(to right, #0072FF, #92EFFD)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              letterSpacing: '0.02em',
+              background: "linear-gradient(to right, #0072FF, #92EFFD)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              letterSpacing: "0.02em",
             }}
           >
             Travel
           </Typography>
-          
-          <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 2, my: 2 }}>
-            <Chip 
-              icon={<FlightIcon />} 
-              label={`${getTotalStatesVisited()} States Visited`} 
-              sx={{ 
-                bgcolor: 'rgba(146, 239, 253, 0.1)', 
-                color: '#92EFFD',
+
+          <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: 2, my: 2 }}>
+            <Chip
+              icon={<FlightIcon />}
+              label={`${getTotalStatesVisited()} States Visited`}
+              sx={{
+                bgcolor: "rgba(146, 239, 253, 0.1)",
+                color: "#92EFFD",
                 fontWeight: 500,
                 px: 1,
-                width: "12rem"
-              }} 
+                width: "12rem",
+              }}
             />
-            <Chip 
-              icon={<PublicIcon />} 
-              label={`${getTotalCountriesVisited()} Countries Visited`} 
-              sx={{ 
-                bgcolor: 'rgba(0, 114, 255, 0.1)', 
-                color: '#0072FF',
+            <Chip
+              icon={<PublicIcon />}
+              label={`${getTotalCountriesVisited()} Countries Visited`}
+              sx={{
+                bgcolor: "rgba(0, 114, 255, 0.1)",
+                color: "#0072FF",
                 fontWeight: 500,
                 px: 1,
-                width: "12rem"
-              }} 
+                width: "12rem",
+              }}
             />
-            <Chip 
-              icon={<AccessTimeIcon />} 
-              label={`${getTotalDaysSpent()} Days Abroad`} 
-              sx={{ 
-                bgcolor: 'rgba(146, 239, 253, 0.1)', 
-                color: '#92EFFD',
+            <Chip
+              icon={<AccessTimeIcon />}
+              label={`${getTotalDaysSpent()} Days Abroad`}
+              sx={{
+                bgcolor: "rgba(146, 239, 253, 0.1)",
+                color: "#92EFFD",
                 fontWeight: 500,
                 px: 1,
-                width: "12rem"
-              }} 
+                width: "12rem",
+              }}
             />
           </Box>
         </GradientBorder>
 
         {/* Country Selection Tabs */}
-        <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%', overflowX: 'auto' }}>
-          <Tabs 
-            value={selectedCountry} 
-            onChange={handleCountryChange} 
+        <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%", overflowX: "auto" }}>
+          <Tabs
+            value={selectedCountry}
+            onChange={handleCountryChange}
             variant="scrollable"
             scrollButtons="auto"
             sx={{
-              '& .MuiTab-root': {
-                textTransform: 'none',
+              "& .MuiTab-root": {
+                textTransform: "none",
                 fontWeight: 600,
-                fontSize: '1rem',
+                fontSize: "1rem",
                 p: 2,
                 minWidth: 0,
                 mr: 2,
               },
-              '& .Mui-selected': {
-                color: '#0072FF !important',
+              "& .Mui-selected": {
+                color: "#0072FF !important",
               },
-              '& .MuiTabs-indicator': {
-                backgroundColor: '#0072FF',
+              "& .MuiTabs-indicator": {
+                backgroundColor: "#0072FF",
                 height: 3,
               },
             }}
           >
             {countries.map((country, index) => (
-              <Tab 
-                key={country.name} 
+              <Tab
+                key={country.name}
                 label={
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     <span>{country.flag}</span>
                     <span>{country.name}</span>
                   </Box>
-                } 
+                }
               />
             ))}
           </Tabs>
@@ -166,57 +170,63 @@ export default function Travel() {
         {/* Country Details */}
         <Box>
           {countries.map((country, index) => (
-            <Box 
+            <Box
               key={country.name}
-              sx={{ 
-                display: selectedCountry === index ? 'block' : 'none',
-                animation: 'fadeIn 0.5s',
-                '@keyframes fadeIn': {
-                  '0%': { opacity: 0 },
-                  '100%': { opacity: 1 }
-                }
+              sx={{
+                display: selectedCountry === index ? "block" : "none",
+                animation: "fadeIn 0.5s",
+                "@keyframes fadeIn": {
+                  "0%": { opacity: 0 },
+                  "100%": { opacity: 1 },
+                },
               }}
             >
               {/* Country Header with Cover Image */}
-              <Box sx={{ 
-                position: 'relative',
-                mb: 4,
-                height: { xs: 200, sm: 300, md: 400 },
-                borderRadius: 3,
-                overflow: 'hidden',
-                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
-              }}>
-                <Box 
+              <Box
+                sx={{
+                  position: "relative",
+                  mb: 4,
+                  height: { xs: 200, sm: 300, md: 400 },
+                  borderRadius: 3,
+                  overflow: "hidden",
+                  boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)",
+                }}
+              >
+                <Box
                   component="img"
                   src={country.coverImage}
                   alt={country.name}
-                  sx={{ 
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
                   }}
                   onClick={() => openImage(country.coverImage)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 />
-                
+
                 {/* Overlay with country name */}
-                <Box sx={{ 
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  p: 3,
-                  background: 'linear-gradient(transparent, rgba(0,0,0,0.8))',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-end',
-                }}>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    p: 3,
+                    background: "linear-gradient(transparent, rgba(0,0,0,0.8))",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-end",
+                  }}
+                >
                   <Box>
                     <Typography variant="h4" fontWeight="700" color="white">
                       {country.name} {country.flag}
                     </Typography>
                     <Typography variant="body1" color="rgba(255, 255, 255, 0.8)">
-                      {country.isHomeCountry ? "I live here! Born and raised in Kansas." : `${country.visits.length} ${country.visits.length === 1 ? 'visit' : 'visits'} · ${calculateDaysSpent(country.visits)} total days`}
+                      {country.isHomeCountry
+                        ? "I live here! Born and raised in Kansas."
+                        : `${country.visits.length} ${country.visits.length === 1 ? "visit" : "visits"} · ${calculateDaysSpent(country.visits)} total days`}
                     </Typography>
                   </Box>
                 </Box>
@@ -225,7 +235,7 @@ export default function Travel() {
               {/* Country Description */}
               {country.description && (
                 <Box sx={{ mb: 4 }}>
-                  <Typography variant="body1" sx={{ fontSize: '1.1rem', lineHeight: 1.7 }}>
+                  <Typography variant="body1" sx={{ fontSize: "1.1rem", lineHeight: 1.7 }}>
                     {country.description}
                   </Typography>
                 </Box>
@@ -233,19 +243,19 @@ export default function Travel() {
 
               {/* Visits History */}
               <Box sx={{ mb: 4 }}>
-                <Typography 
-                  variant="h5" 
-                  component="h2" 
-                  sx={{ 
+                <Typography
+                  variant="h5"
+                  component="h2"
+                  sx={{
                     mb: 2,
-                    display: 'flex',
-                    alignItems: 'center',
+                    display: "flex",
+                    alignItems: "center",
                     gap: 1,
-                    '&::after': {
+                    "&::after": {
                       content: '""',
-                      height: '1px',
+                      height: "1px",
                       flexGrow: 1,
-                      bgcolor: 'divider',
+                      bgcolor: "divider",
                       ml: 2,
                     },
                   }}
@@ -253,16 +263,23 @@ export default function Travel() {
                   <FlightIcon color="primary" />
                   Visit History
                 </Typography>
-                
+
                 <Stack spacing={2}>
                   {country.visits.map((visit, vIndex) => (
-                    <Card key={`${visit.startDate}-${vIndex}`} sx={{ 
-                      p: 2,
-                      bgcolor: 'rgba(30, 30, 30, 0.7)',
-                      backdropFilter: 'blur(10px)',
-                      borderRadius: 2,
-                    }}>
-                      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="space-between">
+                    <Card
+                      key={`${visit.startDate}-${vIndex}`}
+                      sx={{
+                        p: 2,
+                        bgcolor: "rgba(30, 30, 30, 0.7)",
+                        backdropFilter: "blur(10px)",
+                        borderRadius: 2,
+                      }}
+                    >
+                      <Stack
+                        direction={{ xs: "column", sm: "row" }}
+                        spacing={2}
+                        justifyContent="space-between"
+                      >
                         <Box>
                           <Typography variant="subtitle1" fontWeight="600">
                             {formatDate(visit.startDate)} - {formatDate(visit.endDate)}
@@ -271,14 +288,17 @@ export default function Travel() {
                             {calculateDuration(visit.startDate, visit.endDate)}
                           </Typography>
                         </Box>
-                        <Chip 
+                        <Chip
                           label={visit.purpose}
                           size="small"
-                          sx={{ 
-                            bgcolor: vIndex % 2 === 0 ? 'rgba(0, 114, 255, 0.1)' : 'rgba(255, 215, 0, 0.1)', 
-                            color: vIndex % 2 === 0 ? '#0072FF' : '#FFD700',
+                          sx={{
+                            bgcolor:
+                              vIndex % 2 === 0
+                                ? "rgba(0, 114, 255, 0.1)"
+                                : "rgba(255, 215, 0, 0.1)",
+                            color: vIndex % 2 === 0 ? "#0072FF" : "#FFD700",
                             fontWeight: 500,
-                            height: 'auto',
+                            height: "auto",
                             py: 0.5,
                           }}
                         />
@@ -290,94 +310,101 @@ export default function Travel() {
 
               {/* Favorite Spots */}
               <Box>
-                <Typography 
-                  variant="h5" 
-                  component="h2" 
-                  sx={{ 
+                <Typography
+                  variant="h5"
+                  component="h2"
+                  sx={{
                     mb: 3,
-                    display: 'flex',
-                    alignItems: 'center',
+                    display: "flex",
+                    alignItems: "center",
                     gap: 1,
-                    '&::after': {
+                    "&::after": {
                       content: '""',
-                      height: '1px',
+                      height: "1px",
                       flexGrow: 1,
-                      bgcolor: 'divider',
+                      bgcolor: "divider",
                       ml: 2,
                     },
                   }}
                 >
-                  <FavoriteIcon sx={{ color: '#e91e63' }} />
+                  <FavoriteIcon sx={{ color: "#e91e63" }} />
                   Favorite Places
                 </Typography>
-                
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', mx: -2 }}>
+
+                <Box sx={{ display: "flex", flexWrap: "wrap", mx: -2 }}>
                   {country.favoriteSpots.map((spot, sIndex) => (
-                    <Box key={`${spot.name}-${sIndex}`} sx={{ width: { xs: '100%', md: '50%' }, p: 2 }}>
-                      <Card sx={{ 
-                        display: 'flex', 
-                        flexDirection: 'column',
-                        height: '100%',
-                        bgcolor: 'rgba(30, 30, 30, 0.7)',
-                        backdropFilter: 'blur(10px)',
-                        borderRadius: 3,
-                        overflow: 'hidden',
-                        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                        position: 'relative',
-                        '&:hover': {
-                          transform: 'translateY(-5px)',
-                          boxShadow: '0 15px 30px rgba(0, 0, 0, 0.4)',
-                        },
-                        '&::before': {
-                          content: '""',
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                          right: 0,
-                          height: '4px',
-                          background: `linear-gradient(90deg, ${sIndex % 2 === 0 ? '#0072FF, #92EFFD' : '#FFD700, #FFA500'})`,
-                        },
-                      }}>
+                    <Box
+                      key={`${spot.name}-${sIndex}`}
+                      sx={{ width: { xs: "100%", md: "50%" }, p: 2 }}
+                    >
+                      <Card
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          height: "100%",
+                          bgcolor: "rgba(30, 30, 30, 0.7)",
+                          backdropFilter: "blur(10px)",
+                          borderRadius: 3,
+                          overflow: "hidden",
+                          transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                          position: "relative",
+                          "&:hover": {
+                            transform: "translateY(-5px)",
+                            boxShadow: "0 15px 30px rgba(0, 0, 0, 0.4)",
+                          },
+                          "&::before": {
+                            content: '""',
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            height: "4px",
+                            background: `linear-gradient(90deg, ${sIndex % 2 === 0 ? "#0072FF, #92EFFD" : "#FFD700, #FFA500"})`,
+                          },
+                        }}
+                      >
                         {/* Spot Image */}
                         {spot.image && (
-                          <ButtonBase 
-                            sx={{ 
-                              width: '100%',
+                          <ButtonBase
+                            sx={{
+                              width: "100%",
                               height: 200,
-                              display: 'block',
+                              display: "block",
                             }}
-                            onClick={() => openImage(spot.image || '')}
+                            onClick={() => openImage(spot.image || "")}
                           >
-                            <Box 
-                              sx={{ 
-                                width: '100%',
-                                height: '100%',
-                                position: 'relative',
-                                overflow: 'hidden',
-                                bgcolor: 'black',
+                            <Box
+                              sx={{
+                                width: "100%",
+                                height: "100%",
+                                position: "relative",
+                                overflow: "hidden",
+                                bgcolor: "black",
                               }}
                             >
-                              <img 
-                                src={spot.image} 
-                                alt={spot.name} 
-                                style={{ 
-                                  height: '100%', 
-                                  width: '100%', 
-                                  objectFit: 'cover',
-                                  transition: 'transform 0.5s ease'
-                                }} 
+                              <img
+                                src={spot.image}
+                                alt={spot.name}
+                                style={{
+                                  height: "100%",
+                                  width: "100%",
+                                  objectFit: "cover",
+                                  transition: "transform 0.5s ease",
+                                }}
                               />
                             </Box>
                           </ButtonBase>
                         )}
-                        
+
                         {/* Spot Details */}
-                        <Box sx={{ 
-                          display: 'flex', 
-                          flexDirection: 'column', 
-                          flexGrow: 1,
-                          p: 3,
-                        }}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            flexGrow: 1,
+                            p: 3,
+                          }}
+                        >
                           <Typography variant="h6" fontWeight="600" gutterBottom>
                             {spot.name}
                           </Typography>
@@ -397,23 +424,23 @@ export default function Travel() {
             </Box>
           ))}
         </Box>
-        
+
         {/* Back to LinkTree Button */}
-        <Box sx={{ display: 'flex', justifyContent: 'left', mt: 2 }}>
-          <Typography 
-            component={NextLink} 
-            href="/linktree" 
-            variant="body1" 
-            sx={{ 
-              textDecoration: "none", 
+        <Box sx={{ display: "flex", justifyContent: "left", mt: 2 }}>
+          <Typography
+            component={NextLink}
+            href="/linktree"
+            variant="body1"
+            sx={{
+              textDecoration: "none",
               color: "#0072FF",
               py: 1,
               px: 3,
               borderRadius: 2,
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                bgcolor: 'rgba(187, 134, 252, 0.1)',
-              }
+              transition: "all 0.3s ease",
+              "&:hover": {
+                bgcolor: "rgba(187, 134, 252, 0.1)",
+              },
             }}
           >
             Back to LinkTree
@@ -428,26 +455,26 @@ export default function Travel() {
         maxWidth="lg"
         PaperProps={{
           sx: {
-            bgcolor: 'rgba(18, 18, 18, 0.95)',
+            bgcolor: "rgba(18, 18, 18, 0.95)",
             borderRadius: 2,
-            boxShadow: '0 10px 40px rgba(0, 0, 0, 0.5)',
-            overflow: 'hidden',
-          }
+            boxShadow: "0 10px 40px rgba(0, 0, 0, 0.5)",
+            overflow: "hidden",
+          },
         }}
       >
         <IconButton
           aria-label="close"
           onClick={handleCloseDialog}
           sx={{
-            position: 'absolute',
+            position: "absolute",
             right: 8,
             top: 8,
-            color: 'white',
+            color: "white",
             zIndex: 1,
-            bgcolor: 'rgba(0, 0, 0, 0.5)',
-            '&:hover': {
-              bgcolor: 'rgba(0, 0, 0, 0.7)',
-            }
+            bgcolor: "rgba(0, 0, 0, 0.5)",
+            "&:hover": {
+              bgcolor: "rgba(0, 0, 0, 0.7)",
+            },
           }}
         >
           <CloseIcon />
@@ -456,12 +483,12 @@ export default function Travel() {
           <img
             src={dialogImage}
             alt="Enlarged view"
-            style={{ 
-              width: '100%', 
-              height: 'auto', 
-              display: 'block',
-              maxHeight: '80vh',
-              objectFit: 'contain'
+            style={{
+              width: "100%",
+              height: "auto",
+              display: "block",
+              maxHeight: "80vh",
+              objectFit: "contain",
             }}
           />
         </DialogContent>
