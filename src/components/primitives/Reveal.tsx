@@ -12,8 +12,10 @@ export interface RevealProps {
   direction?: "up" | "none";
   /** Distance (px) the element travels when `direction="up"`. */
   distance?: number;
-  /** Threshold for IntersectionObserver. */
+  /** Threshold for IntersectionObserver. 0 fires the moment any pixel enters. */
   threshold?: number;
+  /** Pixels of margin around the root box. Negative shrinks the viewport. */
+  rootMargin?: string;
   /** When true, the element animates every time it enters the viewport instead of just once. */
   repeat?: boolean;
   /** Forwarded sx. */
@@ -26,13 +28,19 @@ export interface RevealProps {
  * we don't add a runtime animation dep. Respects `prefers-reduced-motion`
  * via the global theme overrides (transition-duration collapses to
  * ~0ms).
+ *
+ * Safety: as a backstop against any scenario where the observer never
+ * fires (tall elements that already extend below the viewport on mount,
+ * stale observer state during HMR, etc.) we also force-reveal after the
+ * configured delay so content can never be permanently hidden.
  */
 export function Reveal({
   children,
   delay = 0,
   direction = "up",
   distance = 14,
-  threshold = 0.12,
+  threshold = 0,
+  rootMargin = "0px 0px -10% 0px",
   repeat = false,
   sx,
 }: RevealProps) {
@@ -50,23 +58,31 @@ export function Reveal({
       return;
     }
 
+    // Belt-and-suspenders safety net: if the observer hasn't fired
+    // within a reasonable window, reveal anyway. Beats invisible content.
+    const safetyTimer = window.setTimeout(() => setVisible(true), 800 + delay);
+
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             setVisible(true);
+            window.clearTimeout(safetyTimer);
             if (!repeat) observer.unobserve(entry.target);
           } else if (repeat) {
             setVisible(false);
           }
         }
       },
-      { threshold }
+      { threshold, rootMargin }
     );
 
     observer.observe(node);
-    return () => observer.disconnect();
-  }, [repeat, threshold]);
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(safetyTimer);
+    };
+  }, [repeat, threshold, rootMargin, delay]);
 
   const offset = direction === "up" ? `translate3d(0, ${distance}px, 0)` : "none";
 
