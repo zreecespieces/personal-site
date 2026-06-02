@@ -92,53 +92,22 @@ export default function AboutPage() {
 
             {/* Body essay column */}
             <Stack gap={5} sx={{ maxWidth: theme.zr.layout.proseMaxWidth }}>
-              <Chapter overline="Origin · 01" title="A childhood spent making things">
+              <Chapter overline="Bio · 01" title="Engineer, educator, and builder">
                 <p>
-                  I have been building software since early childhood — figuring out HTML in
-                  borrowed browsers and chasing whatever scripting language put a working artifact
-                  in front of me. The throughline from then to now is unchanged: I like systems that
-                  turn into things you can use.
-                </p>
-              </Chapter>
-
-              <Chapter overline="Teaching · 02" title="20,000 students in 145 countries">
-                <p>
-                  In 2020 I created a best-selling Udemy course on React and Material UI
-                  development. It has since reached more than 20,000 students across 145 countries.
-                  I keep coming back to teaching as a discipline — both because it forces me to know
-                  my craft and because clarity itself is a deliverable.
-                </p>
-              </Chapter>
-
-              <Chapter overline="Work · 03" title="From defense to commercial to federal to edtech">
-                <p>
-                  Through the early 2020s I worked across an unusual range of stacks and domains —
-                  cyber security defense, commercial real estate, federal agencies, and software
-                  consultancies. Each context taught a different lesson about what production really
-                  means.
+                  In 2020 I created a best-selling Udemy course on React and MUI development which
+                  has now taught over 20,000 students in 145 countries. Since then I have worked
+                  with companies ranging from cyber security defense contractors and multi-billion
+                  dollar commercial real estate brokers to federal government agencies and software
+                  consultancies.
                 </p>
                 <p>
-                  In January 2026 I joined Flint, an edtech startup, as a Product Engineer. We are
-                  building a next-generation AI-powered LMS/SIS partnered with hundreds of schools
-                  to automate work for teachers and deliver personalized learning to individual
-                  students.
-                </p>
-              </Chapter>
-
-              <Chapter overline="Practice · 04" title="Judo, Brazilian Jiu-Jitsu, and the body">
-                <p>
-                  The physical practice runs in parallel and is not decoration. Judo and BJJ are how
-                  I check that my thinking still lives in a body — a counterweight to a job that
-                  otherwise rewards living in your head.
-                </p>
-              </Chapter>
-
-              <Chapter overline="Philosophy · 05" title="Computation, cognition, and reality">
-                <p>
-                  I write and read about computation, cognition, and reality — long-running threads
-                  that show up in the blog (Aberrant Quiddity), in side experiments, and in how I
-                  think about the work at Flint. Learning, intelligence, and human capability are
-                  the same question approached from different angles.
+                  In January 2026 I joined Flint, an edtech startup, as a Product Engineer building
+                  a next generation AI-powered LMS/SIS platform partnered with hundreds of schools
+                  across the world to automate tasks for teachers and deliver personalized learning
+                  to individual students. Learning will always be at the heart of what I do - from
+                  teaching myself to code as a kid, to teaching people all over the world about
+                  coding, and now building tools that will redefine education for students
+                  everywhere.
                 </p>
               </Chapter>
 
