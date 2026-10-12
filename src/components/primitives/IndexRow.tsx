@@ -6,6 +6,7 @@ import { alpha, useTheme } from "@mui/material/styles";
 import NextLink from "next/link";
 
 export interface IndexRowProps {
+  density?: "compact" | "regular";
   /** Numeric position (will be padded to two digits) or string label. Optional. */
   index?: number | string;
   /** Short mono category label (e.g. SYSTEMS BUILT). Optional. */
@@ -38,6 +39,7 @@ export interface IndexRowProps {
  * lifts slightly, and shifts the end-glyph 2px right.
  */
 export function IndexRow({
+  density = "regular",
   index,
   category,
   title,
@@ -78,8 +80,9 @@ export function IndexRow({
         gridTemplateColumns: hasIndex ? "auto minmax(0, 1fr) auto" : "minmax(0, 1fr) auto",
         gap: { xs: 2, md: 3 },
         alignItems: "start",
-        py: 2,
-        px: 0,
+        py: density === "compact" ? 1.5 : 2,
+        minHeight: 48,
+        px: density === "compact" ? 2 : 0,
         width: "100%",
         textAlign: "left",
         textDecoration: "none",
@@ -88,16 +91,16 @@ export function IndexRow({
         borderTop: `1px solid ${theme.zr.lines.muted}`,
         background: "transparent",
         font: "inherit",
-        transition: `background-color ${theme.zr.duration.fast}ms ${theme.zr.easing}, padding-left ${theme.zr.duration.fast}ms ${theme.zr.easing}`,
+        transition: `background-color ${theme.zr.duration.fast}ms ${theme.zr.easing}`,
         ...(interactive
           ? {
-              "&:hover": {
+              "&:hover, &:focus-visible": {
                 backgroundColor: alpha(theme.zr.bone[100], 0.035),
               },
               "&:hover .zr-index": {
                 color: accentVar,
               },
-              "&:hover .zr-end-glyph": {
+              "&:hover .zr-end-glyph, &:focus-visible .zr-end-glyph": {
                 transform: "translateX(3px)",
                 color: accentVar,
               },
@@ -143,7 +146,7 @@ export function IndexRow({
         )}
         <Typography
           className="zr-title"
-          variant="h5"
+          variant={density === "compact" ? "body1" : "h5"}
           component="span"
           sx={{
             color: theme.zr.bone[200],

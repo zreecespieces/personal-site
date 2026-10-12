@@ -4,9 +4,10 @@ import { notFound } from "next/navigation";
 import { Box, Stack, Typography } from "@mui/material";
 import NextLink from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { Overline, SectionFrame } from "@/components/primitives";
+import { MetaLine, Overline, SectionFrame } from "@/components/primitives";
 import { getPostBySlug, getAllSlugs } from "@/lib/blog";
 import { formatCalendarDate } from "@/lib/dates";
+import { layout } from "@/theme/tokens";
 
 const getReadingTime = (content: string) => {
   const averageWordsPerMinute = 225;
@@ -200,9 +201,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const readingMinutes = getReadingTime(post.content);
 
   return (
-    <Box component="main" id="main-content">
-      <SectionFrame section="professional" spacing="loose" signature={false}>
-        <Box component="article" aria-labelledby="article-title" sx={{ maxWidth: 800, mx: "auto" }}>
+    <Box component="main" id="main-content" tabIndex={-1}>
+      <SectionFrame section="professional" spacing="regular" sx={{ pb: 0 }}>
+        <Box
+          component="article"
+          aria-labelledby="article-title"
+          sx={{ maxWidth: layout.proseMaxWidth, mx: "auto" }}
+        >
           <Stack
             component="header"
             gap={2.5}
@@ -223,7 +228,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 textUnderlineOffset: "0.25em",
               }}
             >
-              All writing / Aberrant Quiddity
+              All writing
             </Typography>
             <Typography
               id="article-title"
@@ -240,23 +245,21 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             >
               {post.description}
             </Typography>
-            <Stack direction="row" gap={2} flexWrap="wrap" sx={{ color: "text.secondary" }}>
-              <Typography variant="body2">Zachary Reece</Typography>
-              <Typography component="time" dateTime={post.date} variant="body2">
-                {formatCalendarDate(post.date)}
-              </Typography>
-              <Typography variant="body2">About {readingMinutes} min read</Typography>
-            </Stack>
+            <MetaLine
+              items={[
+                <time key="date" dateTime={post.date}>
+                  {formatCalendarDate(post.date)}
+                </time>,
+                `${readingMinutes} min read`,
+              ]}
+            />
           </Stack>
 
           <Box
             sx={{
-              maxWidth: 720,
-              mx: "auto",
               overflowWrap: "anywhere",
               "& > :first-child": { mt: 0 },
               "& > :last-child": { mb: 0 },
-              "& > p:first-of-type": { fontSize: { xs: "1.12rem", md: "1.22rem" } },
             }}
           >
             <MDXRemote source={post.content} components={mdxComponents} />
@@ -292,11 +295,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </Typography>
               <Typography
                 component={NextLink}
-                href="/"
+                href="/#index"
                 variant="body2"
                 sx={{ color: "text.secondary", textUnderlineOffset: "0.25em" }}
               >
-                Site index
+                Explore more
               </Typography>
             </Stack>
           </Box>

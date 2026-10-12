@@ -4,6 +4,7 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { Overline } from "@/components/primitives";
+import { siteIdentity } from "@/app/_data/site";
 
 export default function Hero() {
   return (
@@ -24,7 +25,7 @@ export default function Hero() {
           alignItems: "center",
         }}
       >
-        <Overline sx={{ gridArea: "label" }}>Product engineer / Educator</Overline>
+        <Overline sx={{ gridArea: "label" }}>Software Engineer</Overline>
         <Typography
           component="h1"
           variant="h1"
@@ -38,9 +39,6 @@ export default function Hero() {
           Zachary
           <br />
           Reece
-          <Box component="span" sx={{ color: "primary.main" }}>
-            .
-          </Box>
         </Typography>
         <Box sx={{ gridArea: "intro" }}>
           <Typography
@@ -53,20 +51,19 @@ export default function Hero() {
               maxWidth: "26ch",
             }}
           >
-            I build software for how people learn.
+            Reimagining education.
           </Typography>
           <Typography sx={{ mt: 2, maxWidth: "45ch", color: "text.secondary", lineHeight: 1.75 }}>
             Currently at{" "}
             <Box component="a" href="https://flintk12.com" sx={{ color: "text.primary" }}>
               Flint
             </Box>
-            , building tools for teachers and students. This is a home for my work, my thinking, and
-            the things I do away from a screen.
+            , building tools for teachers and students.
           </Typography>
         </Box>
         <Stack direction="row" gap={2} flexWrap="wrap" sx={{ gridArea: "actions" }}>
-          <Button component={Link} href="#selected-work" variant="contained">
-            Explore my work{" "}
+          <Button component={Link} href="#index" variant="contained">
+            Take a look around{" "}
             <Box component="span" aria-hidden="true" sx={{ ml: 2 }}>
               &#8599;
             </Box>
@@ -119,7 +116,7 @@ export default function Hero() {
                 fill
                 priority
                 sizes="(max-width: 600px) 38vw, (max-width: 900px) 300px, 400px"
-                style={{ objectFit: "cover", filter: "saturate(0.7)", transform: "scale(1.01)" }}
+                style={{ objectFit: "cover", transform: "scale(1.01)" }}
               />
             </Box>
           </Box>
@@ -135,36 +132,13 @@ export default function Hero() {
             }}
           >
             <Typography variant="caption" sx={{ color: "text.secondary" }}>
-              Denver, Colorado
+              {siteIdentity.location}
             </Typography>
             <Typography variant="caption" sx={{ color: "text.secondary" }}>
               Always learning.
             </Typography>
           </Box>
         </Box>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          gap: 2,
-          mt: { xs: 4, md: 7 },
-          pt: 2.5,
-          borderTop: "1px solid var(--zr-line-muted)",
-        }}
-      >
-        <Typography variant="caption" sx={{ color: "text.secondary" }}>
-          Engineering, education, and a life in practice.
-        </Typography>
-        <Typography
-          component={Link}
-          href="/blog"
-          variant="caption"
-          sx={{ textDecoration: "none", color: "text.primary" }}
-        >
-          Notes from the work <span aria-hidden="true">&#8599;</span>
-        </Typography>
       </Box>
     </Box>
   );

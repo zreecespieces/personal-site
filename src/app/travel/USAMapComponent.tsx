@@ -81,8 +81,7 @@ export function USAMapComponent({ visitedStates }: USAMapProps) {
   return (
     <Box sx={{ mt: 2 }}>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        {sortedStates.length - Number(hasDC)} of 50 states{hasDC ? ", plus Washington DC" : ""}.{" "}
-        Visited places are shaded green and listed below.
+        Visited states are shaded green and listed below.
       </Typography>
 
       <Box

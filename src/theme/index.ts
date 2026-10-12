@@ -231,7 +231,7 @@ export const zacharyTheme = createTheme({
       color: bone[300],
       letterSpacing: "0.055em",
       lineHeight: 1.45,
-      fontSize: "0.75rem",
+      fontSize: "0.78rem",
     },
     overline: {
       fontFamily: monoStack,
@@ -305,7 +305,7 @@ export const zacharyTheme = createTheme({
           backgroundRepeat: "repeat",
           mixBlendMode: "overlay",
         },
-        "#main-content": { scrollMarginTop: 24, outline: "none", minHeight: "55vh" },
+        "#main-content": { scrollMarginTop: 24, outline: "none", flex: 1, minWidth: 0 },
         ".skip-link": {
           position: "fixed",
           top: 8,
@@ -388,6 +388,19 @@ export const zacharyTheme = createTheme({
       },
     },
 
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: ink[850],
+          border: `1px solid ${lines.strong}`,
+          borderRadius: 4,
+          boxShadow: "0 18px 58px rgba(0, 0, 0, 0.30)",
+          margin: 20,
+          width: "calc(100% - 40px)",
+        },
+      },
+    },
+
     MuiCard: {
       styleOverrides: {
         root: {
@@ -398,21 +411,6 @@ export const zacharyTheme = createTheme({
           borderRadius: 4,
           boxShadow: "none",
           transition: `transform ${duration.fast}ms ${easing}, border-color ${duration.fast}ms ${easing}, background-color ${duration.fast}ms ${easing}`,
-          "&::before": {
-            content: '""',
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: 2,
-            height: "100%",
-            background: `linear-gradient(180deg, ${accent.brass}, ${alpha(accent.ember, 0.4)})`,
-            opacity: 0.65,
-          },
-          "&:hover": {
-            transform: "translateY(-2px)",
-            borderColor: alpha(accent.brassLight, 0.5),
-            backgroundColor: alpha(bone[100], 0.065),
-          },
         },
       },
     },
@@ -456,10 +454,8 @@ export const zacharyTheme = createTheme({
           borderRadius: 2,
           padding: "9px 14px",
           minHeight: 44,
-          transition: `transform ${duration.micro}ms ${easing}, border-color ${duration.micro}ms ${easing}, background-color ${duration.micro}ms ${easing}, color ${duration.micro}ms ${easing}`,
-          "&:hover": {
-            transform: "translateY(-1px)",
-          },
+          transition: `border-color ${duration.micro}ms ${easing}, background-color ${duration.micro}ms ${easing}, color ${duration.micro}ms ${easing}`,
+          "&[aria-disabled='true']": { opacity: 0.6, cursor: "default" },
         },
         contained: {
           color: ink[950],
@@ -589,11 +585,12 @@ export const zacharyTheme = createTheme({
         root: {
           color: alpha(bone[100], 0.82),
           borderRadius: 2,
+          minWidth: 44,
+          minHeight: 44,
           transition: `background-color ${duration.micro}ms ${easing}, color ${duration.micro}ms ${easing}, transform ${duration.micro}ms ${easing}`,
           "&:hover": {
             color: bone[100],
             backgroundColor: alpha(bone[100], 0.07),
-            transform: "translateY(-1px)",
           },
         },
       },
@@ -675,6 +672,7 @@ export const zacharyTheme = createTheme({
         },
         input: {
           color: bone[100],
+          "& option": { backgroundColor: ink[850], color: bone[100] },
         },
       },
     },

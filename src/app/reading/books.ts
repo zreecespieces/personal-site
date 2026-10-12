@@ -30,6 +30,30 @@ export const currentlyReading: CurrentlyReading[] = [
 
 export const completedBooks: Book[] = [
   {
+    title: "The Staff Engineer's Path",
+    author: "Tanya Reilly",
+    coverImage: "https://m.media-amazon.com/images/I/813cTBVF1hL._SL1500_.jpg",
+    url: "https://www.goodreads.com/book/show/61058107-the-staff-engineer-s-path",
+  },
+  {
+    title: "Brain Food",
+    author: "Lisa Mosconi",
+    coverImage: "https://m.media-amazon.com/images/I/71+LV+yctWL._SL1500_.jpg",
+    url: "https://www.goodreads.com/book/show/35457267-brain-food",
+  },
+  {
+    title: "The Body Keeps the Score",
+    author: "Bessel van der Kolk",
+    coverImage: "https://m.media-amazon.com/images/I/71Ha3OShqSL._SL1500_.jpg",
+    url: "https://www.goodreads.com/book/show/18693771-the-body-keeps-the-score",
+  },
+  {
+    title: "Software Engineering at Google",
+    author: "Titus Winters, Tom Manshreck & Hyrum Wright",
+    coverImage: "https://m.media-amazon.com/images/I/81bSa9px6qL._SL1500_.jpg",
+    url: "https://www.goodreads.com/book/show/48816586-software-engineering-at-google",
+  },
+  {
     title: "An Enquiry Concerning Human Understanding",
     author: "David Hume",
     coverImage: "https://m.media-amazon.com/images/I/71jxu+3sxvL._UF1000,1000_QL80_.jpg",

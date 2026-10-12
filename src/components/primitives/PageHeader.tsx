@@ -13,7 +13,7 @@ export interface PageHeaderProps {
   index?: string | number;
   /** The large editorial title — usually one or two words. */
   title: React.ReactNode;
-  /** Optional manifesto / kicker paragraph below the title. */
+  /** Optional introduction; omit copy that only restates the title. */
   subtitle?: React.ReactNode;
   /** Accent color override (defaults to the active --zr-section-accent / brass). */
   accent?: string;
@@ -25,7 +25,7 @@ export interface PageHeaderProps {
   withRule?: boolean;
   /** Whether to render the crosshair registration mark. */
   withMark?: boolean;
-  /** Optional right-side meta content (tags, date, glyph). */
+  /** Optional metadata below the introduction (dates, quantities, context). */
   meta?: React.ReactNode;
   sx?: React.ComponentProps<typeof Box>["sx"];
 }
@@ -58,7 +58,7 @@ export function PageHeader({
   accent,
   size = "lg",
   component = "h1",
-  withRule = true,
+  withRule = false,
   withMark = false,
   meta,
   sx,
@@ -70,7 +70,7 @@ export function PageHeader({
 
   return (
     <Box sx={{ width: "100%", ...sx }}>
-      {(overline || index !== undefined || withMark || meta) && (
+      {(overline || index !== undefined || withMark) && (
         <Stack
           direction={{ xs: "column", sm: "row" }}
           alignItems={{ xs: "flex-start", sm: "center" }}
@@ -86,20 +86,6 @@ export function PageHeader({
               </Overline>
             )}
           </Stack>
-          {meta && (
-            <Box
-              sx={{
-                color: theme.zr.bone[300],
-                display: "inline-flex",
-                flexWrap: "wrap",
-                maxWidth: "100%",
-                gap: 1,
-                "& > .MuiStack-root": { flexWrap: "wrap" },
-              }}
-            >
-              {meta}
-            </Box>
-          )}
         </Stack>
       )}
 
@@ -124,14 +110,15 @@ export function PageHeader({
           variant="subtitle1"
           component="p"
           sx={{
-            mt: 3,
+            mt: 2,
             maxWidth: theme.zr.layout.proseMaxWidth,
-            color: theme.zr.bone[200],
+            color: "text.secondary",
           }}
         >
           {subtitle}
         </Typography>
       )}
+      {meta && <Box sx={{ mt: 2.5 }}>{meta}</Box>}
     </Box>
   );
 }

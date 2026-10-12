@@ -94,11 +94,10 @@ export function LabelChip({
         transition: `background-color ${theme.zr.duration.micro}ms ${theme.zr.easing}, border-color ${theme.zr.duration.micro}ms ${theme.zr.easing}, color ${theme.zr.duration.micro}ms ${theme.zr.easing}, transform ${theme.zr.duration.micro}ms ${theme.zr.easing}`,
         ...(interactive
           ? {
-              "&:hover": {
+              "&:hover, &:focus-visible": {
                 color: theme.zr.bone[100],
                 backgroundColor: alpha(theme.zr.bone[100], 0.07),
                 borderColor: accent ?? theme.zr.accent.brassLight,
-                transform: "translateY(-1px)",
               },
             }
           : {}),

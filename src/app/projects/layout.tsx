@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
 const title = "Projects | Zachary Reece";
-const description = "Software I've built: web applications, AI tools, and personal experiments.";
+const description =
+  "Software and tools I've built. Browse the projects and read how each one works.";
 
 export const metadata: Metadata = {
   title,

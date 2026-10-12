@@ -99,9 +99,6 @@ export function PortraitFrame({
           priority
           style={{
             objectFit: "cover",
-            // Subtle desaturation to sit inside the warm palette without
-            // looking like a sticker pasted over the design.
-            filter: "saturate(0.92) contrast(1.02)",
           }}
         />
       </Box>

@@ -24,14 +24,14 @@ export interface FavoriteSpot {
   image?: string;
 }
 
-// Helper function to calculate total days spent
-export const calculateDaysSpent = (visits: Visit[]): number => {
+// Completed visits only by default; an explicit as-of date also includes ongoing visits.
+export const calculateDaysSpent = (visits: Visit[], asOfDate?: string): number => {
   return visits.reduce((total, visit) => {
-    // Open-ended residence is not a completed trip and has no fixed duration.
-    if (visit.isOngoing || !visit.endDate) return total;
+    const endDate = visit.isOngoing ? asOfDate : visit.endDate;
+    if (!endDate) return total;
     const startDate = new Date(visit.startDate);
-    const endDate = new Date(visit.endDate);
-    const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
+    const difference = new Date(endDate).getTime() - startDate.getTime();
+    const diffTime = visit.isOngoing ? Math.max(0, difference) : Math.abs(difference);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return total + diffDays;
   }, 0);
@@ -59,7 +59,7 @@ export const calculateDaysSpent = (visits: Visit[]): number => {
 // Czechia - Second week of March 2024
 //  - Prague, Prague Castle, Charles Bridge, Old Town Square, Kutna Hora
 // United States - My home country
-// - States Visited: [Kansas, Colorado, Ohio, Missouri, Oklahoma, Arkansas, Louisiana, Florida, Texas, New York, Illinois, California, Washington, Washington DC, Virginia, Maryland, Pennsylvania, Nevada, Utah, Michigan, Indiana, Tennessee, Georgia]
+// - States Visited: [Kansas, Colorado, Ohio, Missouri, Oklahoma, Arkansas, Louisiana, Florida, Texas, New York, Illinois, California, Washington, Washington DC, Virginia, Maryland, Pennsylvania, Nevada, Utah, Michigan, Indiana, Tennessee, Georgia, Kentucky, Arizona, Minnesota]
 
 export const countries: Country[] = [
   {
@@ -111,6 +111,8 @@ export const countries: Country[] = [
       "Tennessee",
       "Georgia",
       "Kentucky",
+      "Arizona",
+      "Minnesota",
     ],
     isHomeCountry: true,
   },

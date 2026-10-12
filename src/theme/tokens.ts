@@ -86,6 +86,7 @@ export const pageToSection: Record<string, SectionKey> = {
   reading: "education",
 
   // Hobbies family — moss
+  hobbies: "hobbies",
   hikes: "hobbies",
   travel: "hobbies",
   comedy: "hobbies",
@@ -132,6 +133,8 @@ export const layout = {
   proseMaxWidth: 720, // 680–760 range
   gutterDesktop: 32,
   gutterMobile: 20,
+  pageGap: { mobile: 32, desktop: 40 },
+  sectionGap: { mobile: 40, desktop: 56 },
   gridStep: 72, // construction grid pitch (matches body::before)
 } as const;
 

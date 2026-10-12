@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    // Only image fields in the archive data, not outbound links or MDX content.
+    // Only image fields in content data, not outbound links or MDX content.
     // Add new source hosts/paths here when adding content. Queries are allowed
     // because several archived image endpoints require transformation parameters.
     remotePatterns: [
@@ -11,6 +11,27 @@ const nextConfig = {
       ["cdn.britannica.com", "/**"],
       ["cdn.kastatic.org", "/genfiles/topic-icons/icons/**"],
       ["coloradobirdingtrail.com", "/wp-content/uploads/**"],
+      ["comedyworks.com", "/rails/active_storage/blobs/redirect/*/TJ_Miller_Sq.jpg"],
+      [
+        "comedyworks.com",
+        "/rails/active_storage/blobs/redirect/*/BryanCallen-comedian-denver-1.jpg",
+      ],
+      [
+        "comedyworks.com",
+        "/rails/active_storage/blobs/redirect/*/JamesMcCann-comedian-denver-1.jpg",
+      ],
+      [
+        "comedyworks.com",
+        "/rails/active_storage/blobs/redirect/*/Jeremiah-Watkins-comedian-denver-1.jpg",
+      ],
+      [
+        "comedyworks.com",
+        "/rails/active_storage/blobs/redirect/*/Timmy-No-Breaks-comedian-denver-1.jpg",
+      ],
+      [
+        "comedyworks.com",
+        "/rails/active_storage/blobs/redirect/*/AriShaffir-comedian-denver-1_14_.jpg",
+      ],
       ["i.scdn.co", "/image/**"],
       ["i.ticketweb.com", "/i/**"],
       ["i.ytimg.com", "/vi/**"],
@@ -21,10 +42,14 @@ const nextConfig = {
       ["images.musement.com", "/cover/**"],
       ["images.penguinrandomhouse.com", "/cover/**"],
       ["images.squarespace-cdn.com", "/content/v1/587aec812994ca23948fd074/**"],
+      ["img-c.udemycdn.com", "/course/480x270/2534378_1ac2_2.jpg"],
+      ["img-c.udemycdn.com", "/course/480x270/3480632_eb33_3.jpg"],
+      ["img-c.udemycdn.com", "/course/480x270/5716276_dbcc_3.jpg"],
       ["komi-production-assets.s3-accelerate.amazonaws.com", "/photos/**"],
       ["m.media-amazon.com", "/images/I/**"],
       ["media.newyorker.com", "/photos/**"],
       ["peakvisor.com", "/img/news/**"],
+      ["raw.githubusercontent.com", "/zreecespieces/kokoro-pi/main/docs/banner.png"],
       ["resizing.flixster.com", "/**"],
       ["s1.ticketm.net", "/dam/a/**"],
       ["seated.imgix.net", "/82178804-4012-459d-9ad8-eee9b643160a/**"],

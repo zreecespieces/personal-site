@@ -11,8 +11,12 @@ export type GlyphName =
   | "drawer"
   | "bracket"
   | "knot"
+  | "belt"
   | "hex"
   | "spiral"
+  | "music"
+  | "microphone"
+  | "palette"
   | "cap";
 
 export interface GlyphProps {
@@ -129,6 +133,15 @@ function renderGlyph(name: GlyphName, common: CommonSvgProps) {
           <path d="M7 8 C 7 4, 17 4, 17 8 C 17 12, 7 12, 7 16 C 7 20, 17 20, 17 16" {...common} />
         </>
       );
+    case "belt":
+      // A waist band, central knot, and two hanging ends — BJJ / judo belt.
+      return (
+        <>
+          <path d="M9 8H3v4h6 M15 8h6v4h-6" {...common} />
+          <path d="m10 7 5 2-1 5-5-2Z" {...common} />
+          <path d="m10 13-4 6 3 2 4-7 M14 13l4 6-3 2-3-7" {...common} />
+        </>
+      );
     case "hex":
       // Honeycomb / hexagon — tattoo motif tie-in
       return (
@@ -155,6 +168,33 @@ function renderGlyph(name: GlyphName, common: CommonSvgProps) {
           {/* Tassel hanging from the right corner */}
           <path d="M 21.5 9.5 L 21.5 17" {...common} opacity={0.9} />
           <circle cx="21.5" cy="17.6" r="0.9" fill={common.stroke as string} />
+        </>
+      );
+    case "music":
+      return (
+        <>
+          <path d="M9 17V5l11-2v12 M9 8l11-2" {...common} />
+          <ellipse cx="6" cy="18" rx="3" ry="2.5" {...common} />
+          <ellipse cx="17" cy="16" rx="3" ry="2.5" {...common} />
+        </>
+      );
+    case "microphone":
+      return (
+        <>
+          <rect x="9" y="3" width="6" height="12" rx="3" {...common} />
+          <path d="M6 11v1a6 6 0 0 0 12 0v-1 M12 18v3 M8 21h8" {...common} />
+        </>
+      );
+    case "palette":
+      return (
+        <>
+          <path
+            d="M12 3a9 9 0 1 0 0 18h1a2 2 0 0 0 1.5-3.3 1.5 1.5 0 0 1 1.2-2.5H18a3 3 0 0 0 3-3 9 9 0 0 0-9-9Z"
+            {...common}
+          />
+          <circle cx="7" cy="10" r="1" {...common} />
+          <circle cx="11" cy="7" r="1" {...common} />
+          <circle cx="16" cy="8" r="1" {...common} />
         </>
       );
   }

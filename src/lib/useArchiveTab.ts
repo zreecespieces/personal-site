@@ -15,10 +15,11 @@ function subscribe(notify: () => void) {
   };
 }
 
-export function useArchiveTab(parameter: string, values: readonly string[]) {
+export function useArchiveTab(parameter: string, values: readonly string[], defaultValue?: string) {
   const search = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const requested = new URLSearchParams(search).get(parameter);
-  const selected = requested !== null && values.includes(requested) ? requested : (values[0] ?? "");
+  const fallback = defaultValue && values.includes(defaultValue) ? defaultValue : (values[0] ?? "");
+  const selected = requested !== null && values.includes(requested) ? requested : fallback;
 
   function select(value: string) {
     if (!values.includes(value)) return;

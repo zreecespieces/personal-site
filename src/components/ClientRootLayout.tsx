@@ -4,6 +4,7 @@ import React from "react";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import Box from "@mui/material/Box";
 import { Analytics } from "@vercel/analytics/next";
 import { zacharyTheme } from "@/theme";
 import { NewsletterDialog } from "./NewsletterDialog";
@@ -20,15 +21,13 @@ export function ClientRootLayout({ children }: { children: React.ReactNode }) {
           MuiCssBaseline overrides for the full layer composition.
         */}
         <CssBaseline />
-        <SiteHeader />
-        {children}
-        <MakersMarkFooter />
-
-        {/* Newsletter Signup Dialog */}
-        <NewsletterDialog />
-
-        {/* Vercel Analytics — page views + SPA navigation tracking */}
-        <Analytics />
+        <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100svh" }}>
+          <SiteHeader />
+          {children}
+          <MakersMarkFooter />
+          <NewsletterDialog />
+          <Analytics />
+        </Box>
       </ThemeProvider>
     </AppRouterCacheProvider>
   );

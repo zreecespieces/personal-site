@@ -69,25 +69,20 @@ export function ArtifactCard({
   const shouldHover = hoverable ?? interactive;
   const accentVar = accent ?? `var(--zr-section-accent, ${theme.zr.accent.brass})`;
 
-  const Component: React.ElementType = href ? (href.startsWith("/") ? NextLink : "a") : "div";
+  const Component: React.ElementType = href
+    ? href.startsWith("/")
+      ? NextLink
+      : "a"
+    : onClick
+      ? "button"
+      : "div";
 
   return (
     <Box
       component={Component}
       href={href}
       onClick={onClick}
-      role={onClick && !href ? "button" : undefined}
-      tabIndex={onClick && !href ? 0 : undefined}
-      onKeyDown={
-        onClick && !href
-          ? (event: React.KeyboardEvent) => {
-              if (event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                onClick();
-              }
-            }
-          : undefined
-      }
+      type={onClick && !href ? "button" : undefined}
       target={target}
       rel={rel}
       aria-label={ariaLabel}
@@ -98,6 +93,7 @@ export function ArtifactCard({
         textAlign: "left",
         textDecoration: "none",
         color: "inherit",
+        font: "inherit",
         cursor: interactive ? "pointer" : "default",
         backgroundColor: alpha(theme.zr.bone[100], 0.045),
         border: `1px solid ${theme.zr.lines.muted}`,
@@ -123,12 +119,11 @@ export function ArtifactCard({
           : {}),
         ...(shouldHover
           ? {
-              "&:hover": {
-                transform: "translateY(-2px)",
+              "&:hover, &:focus-visible": {
                 backgroundColor: alpha(theme.zr.bone[100], 0.07),
                 borderColor: accentVar,
               },
-              "&:hover::before": {
+              "&:hover::before, &:focus-visible::before": {
                 opacity: 1,
               },
             }

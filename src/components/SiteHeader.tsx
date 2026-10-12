@@ -3,16 +3,12 @@
 import { Box, Container, Typography } from "@mui/material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-const LINKS = [
-  ["Projects", "/projects"],
-  ["Writing", "/blog"],
-  ["About", "/about"],
-  ["Index", "/#index"],
-] as const;
+import { primaryNavigation, siteIdentity } from "@/app/_data/site";
+import { pageToSection } from "@/theme/tokens";
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const section = pageToSection[pathname.split("/")[1]];
 
   return (
     <Box component="header">
@@ -36,7 +32,7 @@ export function SiteHeader() {
           <Box
             component={Link}
             href="/"
-            aria-label="Zachary Reece, home"
+            aria-label={`${siteIdentity.name}, home`}
             sx={{
               display: "inline-flex",
               alignItems: "center",
@@ -68,7 +64,7 @@ export function SiteHeader() {
                 letterSpacing: "-0.03em",
               }}
             >
-              Zachary Reece
+              {siteIdentity.name}
             </Typography>
           </Box>
           <Box
@@ -76,15 +72,15 @@ export function SiteHeader() {
             aria-label="Main navigation"
             sx={{ display: "flex", flexWrap: "wrap", gap: { xs: 2.5, sm: 4 } }}
           >
-            {LINKS.map(([label, href]) => {
-              const active =
-                !href.includes("#") && (pathname === href || pathname.startsWith(`${href}/`));
+            {primaryNavigation.map(({ label, href }) => {
+              const currentPage = pathname === href || pathname.startsWith(`${href}/`);
+              const active = currentPage || (href === "/hobbies" && section === "hobbies");
               return (
                 <Box
                   key={href}
                   component={Link}
                   href={href}
-                  aria-current={active ? "page" : undefined}
+                  aria-current={active ? (currentPage ? "page" : "location") : undefined}
                   sx={{
                     display: "inline-flex",
                     alignItems: "center",
@@ -103,7 +99,8 @@ export function SiteHeader() {
                       bgcolor: "primary.main",
                       transform: active ? "scaleX(1)" : "scaleX(0)",
                       transformOrigin: "left",
-                      transition: "transform 180ms ease",
+                      transition: (theme) =>
+                        `transform ${theme.zr.duration.fast}ms ${theme.zr.easing}`,
                     },
                     "&:hover::after, &:focus-visible::after": { transform: "scaleX(1)" },
                   }}

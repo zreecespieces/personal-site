@@ -31,6 +31,7 @@ This is the running task tracker. Update statuses inline as work proceeds. Keep 
 A baseline of what exists today so we know what we're replacing. Every item below is sourced from the codebase exploration; references include `file_path:line_number` for navigation.
 
 ### 0.1 Framework & Tooling
+
 - **Next.js 15.0.7** App Router · **React 19** · **TypeScript** (`tsconfig.json` `target: es5` — flag for modernization)
 - **MUI v6/v7-beta** (`@mui/material@next`, `@mui/icons-material@next`, `@mui/material-nextjs@next`)
 - **Emotion** runtime, no `styled-components`, no Tailwind (one stray className in `src/app/comedy/layout.tsx:20` — silent no-op)
@@ -41,55 +42,61 @@ A baseline of what exists today so we know what we're replacing. Every item belo
 - **No animation libs** — only CSS transitions + two inline `@keyframes fadeIn`
 
 ### 0.2 Theming Surface (the high-leverage targets)
-| File | Role | Impact |
-|---|---|---|
-| `src/components/ClientRootLayout.tsx:10-44` | The **only** global MUI theme (palette · typography · body gradient · `CssBaseline`) | Rewriting this propagates everywhere |
-| `src/components/GradientBorder.tsx` | The ubiquitous gradient-border wrapper, used in **11 pages** | Replacing it cascades across all pages |
-| `src/app/blog/theme.ts` | A blog-local lime/teal token set diverging from the rest of the site (already drifting toward the redesign direction) | Fold into the new system |
-| `src/app/layout.tsx:13` | Hard-codes `<html style={{ backgroundColor: "#121212" }}>` | Replace with new warm ink token |
-| `src/components/NewsletterDialog.tsx` | Two blurred gradient orbs + gradient title | Restyle with new palette |
+
+| File                                        | Role                                                                                                                  | Impact                                 |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| `src/components/ClientRootLayout.tsx:10-44` | The **only** global MUI theme (palette · typography · body gradient · `CssBaseline`)                                  | Rewriting this propagates everywhere   |
+| `src/components/GradientBorder.tsx`         | The ubiquitous gradient-border wrapper, used in **11 pages**                                                          | Replacing it cascades across all pages |
+| `src/app/blog/theme.ts`                     | A blog-local lime/teal token set diverging from the rest of the site (already drifting toward the redesign direction) | Fold into the new system               |
+| `src/app/layout.tsx:13`                     | Hard-codes `<html style={{ backgroundColor: "#121212" }}>`                                                            | Replace with new warm ink token        |
+| `src/components/NewsletterDialog.tsx`       | Two blurred gradient orbs + gradient title                                                                            | Restyle with new palette               |
 
 ### 0.3 Route Inventory
-| Route | Page | Layout | Notes |
-|---|---|---|---|
-| `/` | `src/app/page.tsx` | root | 6-line re-export of `/linktree` |
-| `/linktree` | `src/app/linktree/page.tsx` (276 LOC) | local | **Canonical home**: hero + portrait + tagline pill + bio + accordion nav + contact icons all inlined |
-| `/blog` | `src/app/blog/page.tsx` | local | MDX list, uses divergent lime/teal palette |
-| `/blog/[slug]` | `src/app/blog/[slug]/page.tsx` | — | Custom MDX component overrides + Avenir Next body |
-| `/projects` | `src/app/projects/page.tsx` | local | Tabs, only 1 project; clever XOR-mask outline button |
-| `/travel` | `src/app/travel/page.tsx` | local | Tabs, USA map, country detail dialogs |
-| `/hikes` | `src/app/hikes/page.tsx` | local | Grouped by location, difficulty chips |
-| `/reading` | `src/app/reading/page.tsx` | local | Currently-reading + completed |
-| `/study` | `src/app/study/page.tsx` | local | Khan Academy courses + streak |
-| `/art` | `src/app/art/page.tsx` | — | Masonry gallery (1 piece) |
-| `/comedy` | `src/app/comedy/page.tsx` | local | Tabs of comedians + show history |
-| `/music-festivals` | `src/app/music-festivals/page.tsx` | — | Year-grouped festival cards |
-| `/api/subscribe` | route handler | — | Firestore POST |
-| `/instant-perler-pattern/*` | rewrite | — | Proxy to external app |
+
+| Route                       | Page                                  | Layout | Notes                                                                                                |
+| --------------------------- | ------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------- |
+| `/`                         | `src/app/page.tsx`                    | root   | 6-line re-export of `/linktree`                                                                      |
+| `/linktree`                 | `src/app/linktree/page.tsx` (276 LOC) | local  | **Canonical home**: hero + portrait + tagline pill + bio + accordion nav + contact icons all inlined |
+| `/blog`                     | `src/app/blog/page.tsx`               | local  | MDX list, uses divergent lime/teal palette                                                           |
+| `/blog/[slug]`              | `src/app/blog/[slug]/page.tsx`        | —      | Custom MDX component overrides + Avenir Next body                                                    |
+| `/projects`                 | `src/app/projects/page.tsx`           | local  | Tabs, only 1 project; clever XOR-mask outline button                                                 |
+| `/travel`                   | `src/app/travel/page.tsx`             | local  | Tabs, USA map, country detail dialogs                                                                |
+| `/hikes`                    | `src/app/hikes/page.tsx`              | local  | Grouped by location, difficulty chips                                                                |
+| `/reading`                  | `src/app/reading/page.tsx`            | local  | Currently-reading + completed                                                                        |
+| `/study`                    | `src/app/study/page.tsx`              | local  | Khan Academy courses + streak                                                                        |
+| `/art`                      | `src/app/art/page.tsx`                | —      | Masonry gallery (1 piece)                                                                            |
+| `/comedy`                   | `src/app/comedy/page.tsx`             | local  | Tabs of comedians + show history                                                                     |
+| `/music-festivals`          | `src/app/music-festivals/page.tsx`    | —      | Year-grouped festival cards                                                                          |
+| `/api/subscribe`            | route handler                         | —      | Firestore POST                                                                                       |
+| `/instant-perler-pattern/*` | rewrite                               | —      | Proxy to external app                                                                                |
 
 ### 0.4 Content / Data Layer
+
 All content is hard-coded TS constants per route (no CMS). The **section taxonomy** lives in **one file**:
+
 - `src/app/linktree/links.tsx` — `professionalLinks`, `educationLinks`, `hobbyLinks`, `linkCategories`, `contactInfo`. The labels `Professional` / `Education` / `Hobbies` appear **only here** (6 occurrences, lines 27/52/86/108/113/118).
 
 Other data files (unchanged for design refactor unless content reorg requires touching them):
 `projects/projects.ts` · `travel/countries.ts` · `hikes/hikes.ts` · `study/courses.ts` · `reading/books.ts` · `comedy/comedians.ts` · `music-festivals/festivals.ts` · `art/pics.ts` · `content/blog/*.mdx`.
 
 ### 0.5 Per-Page Palette Inventory (everything below will be replaced/retokenized)
-| Page | Current 2-color identity |
-|---|---|
-| Linktree / Home | `#00FFFF` / `#FF00FF` (cyan/magenta) |
-| Projects | `#00FFFF` / `#FF00FF` |
-| Art | `#00FFFF` / `#FF00FF` |
-| Travel | `#0072FF` / `#92EFFD` |
-| Hikes | `#66ff00` / `#228B22` |
-| Reading | `#8B4513` / `#F5DEB3` (sepia — closest to new direction) |
-| Study | `#6200EA` / `#03DAC6` |
-| Comedy | `#FF0055` / `gold` |
-| Music Festivals | `#FF7B00` / `#FFD000` |
-| Blog | `#A3E635` / `#14B8A6` |
-| Theme primary/secondary | `#BB86FC` / `#03DAC6` (Material You) |
+
+| Page                    | Current 2-color identity                                 |
+| ----------------------- | -------------------------------------------------------- |
+| Linktree / Home         | `#00FFFF` / `#FF00FF` (cyan/magenta)                     |
+| Projects                | `#00FFFF` / `#FF00FF`                                    |
+| Art                     | `#00FFFF` / `#FF00FF`                                    |
+| Travel                  | `#0072FF` / `#92EFFD`                                    |
+| Hikes                   | `#66ff00` / `#228B22`                                    |
+| Reading                 | `#8B4513` / `#F5DEB3` (sepia — closest to new direction) |
+| Study                   | `#6200EA` / `#03DAC6`                                    |
+| Comedy                  | `#FF0055` / `gold`                                       |
+| Music Festivals         | `#FF7B00` / `#FFD000`                                    |
+| Blog                    | `#A3E635` / `#14B8A6`                                    |
+| Theme primary/secondary | `#BB86FC` / `#03DAC6` (Material You)                     |
 
 ### 0.6 Recurring Inline Patterns to Eliminate
+
 1. **Gradient text headers** — `WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'` on every page title
 2. **GradientBorder** wrapper around every titled section / card
 3. **Decorative blurred orbs** — `filter: blur(60-90px)` (3× in linktree, 2× in NewsletterDialog)
@@ -99,6 +106,7 @@ Other data files (unchanged for design refactor unless content reorg requires to
 7. **Avatar gradient ring** — `linktree/page.tsx:87-114`
 
 ### 0.7 Architectural Observations & Implications
+
 - **No component library** — every page inlines its own sx blocks (hero, cards, chips, dialogs, tabs). The refactor is a good moment to extract a small set of reusable primitives (`PageHeader`, `IndexRow`, `LabelChip`, `ArtifactCard`, `SectionFrame`, etc.) rather than just re-skinning inline styles.
 - **Root page is a re-export** — `src/app/page.tsx` just renders `<LinkTree />`. Either inline the home, or keep `/linktree` as a canonical alias.
 - **No global font loading** — `next/font` is used only in `projects/layout.tsx:2` (inconsistent). The redesign requires three fonts (Space Grotesk + IBM Plex Sans + IBM Plex Mono) loaded properly.
@@ -113,6 +121,7 @@ Other data files (unchanged for design refactor unless content reorg requires to
 ## 1. Refactor Strategy
 
 ### 1.1 Guiding Principles (compressed from the design doc)
+
 - **Material over effects** — replace gradients/glows with warm ink, paper grain, fine line work
 - **Typography is the identity** — Space Grotesk / IBM Plex Sans / IBM Plex Mono
 - **Geometry means something** — nodes, edges, crosshairs, axis lines, not decorative blobs
@@ -121,6 +130,7 @@ Other data files (unchanged for design refactor unless content reorg requires to
 - **Motion is mechanical** — 120–180ms interactions, fade + small translate, no bounce, respect `prefers-reduced-motion`
 
 ### 1.2 Architectural Decisions — RESOLVED
+
 All decisions below have been locked in. See §4 Decisions Log for full discussion notes and rationale.
 
 - [x] **Theme file location** — Split into three files: `src/theme/tokens.ts` (raw constants), `src/theme/fonts.ts` (`next/font` setup), `src/theme/index.ts` (the `createTheme()` call)
@@ -144,19 +154,19 @@ All decisions below have been locked in. See §4 Decisions Log for full discussi
 
 Zachary's geometric arm sleeve carries four motif families that map cleanly onto the design doc's principles. These will be **recreated in SVG/CSS** for v1 (no photo session needed); a Phase 7+ revisit may swap selected layers for photograph-derived textures if authenticity feels lacking.
 
-| Tattoo motif | Design doc concept fulfilled | Planned site usage |
-|---|---|---|
-| **Honeycomb / hexagonal** | "Geometric anchors", "minimal coordinate-grid motifs" | Alt background grid; section glyphs; accordion indicators |
-| **Abstract line work** | "Thin lines", "construction lines" | Hero diagram; section frame corner marks; portrait frame ornamentation |
-| **Sacred geometry** | "Knowledge graphs", "orbitals", "nodes and edges", "systems thinking" | Hero anchor diagram; per-section glyphs |
-| **Suminagashi / topographical** | "Topographic contours", "warm paper grain", **material over effects** | Background texture layer; section dividers; subtle parallax |
+| Tattoo motif                    | Design doc concept fulfilled                                          | Planned site usage                                                     |
+| ------------------------------- | --------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| **Honeycomb / hexagonal**       | "Geometric anchors", "minimal coordinate-grid motifs"                 | Alt background grid; section glyphs; accordion indicators              |
+| **Abstract line work**          | "Thin lines", "construction lines"                                    | Hero diagram; section frame corner marks; portrait frame ornamentation |
+| **Sacred geometry**             | "Knowledge graphs", "orbitals", "nodes and edges", "systems thinking" | Hero anchor diagram; per-section glyphs                                |
+| **Suminagashi / topographical** | "Topographic contours", "warm paper grain", **material over effects** | Background texture layer; section dividers; subtle parallax            |
 
 **Source policy for v1**: recreate patterns in code (SVG `<pattern>`, generated paths) or use permissively-licensed online SVG assets. Defer photograph-derived assets to Phase 7+.
 
 **Hero diagram exploration** — Build all five options below as switchable previews on the home so Zachary can iterate on which lands. All share: thin line work (1–1.5px stroke), bone/brass color, ~400–600px wide, sits opposite the portrait in the asymmetric hero, animatable via SVG `stroke-dasharray`.
 
 - **Option 1 — Contoured Mandala**: Circular sacred-geometry mandala (flower-of-life / metatron-style) with concentric topographic contour rings as its interior fill. Reads as "structured mind on shifting terrain." Meditative, most spiritual.
-- **Option 2 — Topographic Node Graph** *(closest to the resume graphic)*: Horizontal node-and-edge structure with topographic contour curves flowing around each node as if each node were an island summit. Strongest resume↔site visual handshake. Cartographic, systems-thinker, most "field notebook."
+- **Option 2 — Topographic Node Graph** _(closest to the resume graphic)_: Horizontal node-and-edge structure with topographic contour curves flowing around each node as if each node were an island summit. Strongest resume↔site visual handshake. Cartographic, systems-thinker, most "field notebook."
 - **Option 3 — Sacred Hex Lattice with Contour Bleed**: Honeycomb lattice where individual cells contain fragments of topographic contour lines (geological core-sample feel). Some cells empty, some recursive (nested hexes). Most "lab notebook," densest, most brutalist, tightest tattoo tie-in.
 - **Option 4 — Concentric Orbital with Topographic Shadow**: Central node + concentric orbital rings (some smooth, some warped into contour curves), with labeled satellite nodes (`LEARNING`, `SYSTEMS`, `DISCIPLINE`, `INTELLIGENCE`). Doubles as a thesis diagram and potential nav anchor. Slow >20s rotation.
 - **Option 5 — Layered Contour Sigil**: 3–4 stacked offset topographic contour ovals composing a personal sigil / maker's seal with crosshair registration and mono initials. Worth building regardless of hero pick — also functions as footer mark / favicon / OG image element.
@@ -164,23 +174,25 @@ Zachary's geometric arm sleeve carries four motif families that map cleanly onto
 All five will be prototyped in Phase 2 and made selectable in the home hero so the live site itself becomes the iteration surface.
 
 ### 1.5 Risks & Mitigations
-| Risk | Mitigation |
-|---|---|
+
+| Risk                                                                                         | Mitigation                                                                                               |
+| -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | Theme swap will instantly break inline `sx` colors on every page until each page is migrated | Tackle pages in dependency order: theme → primitives → linktree (home) → high-traffic pages → tail pages |
-| MUI v6/v7-beta API drift on component slot overrides | Verify each `components.*` override against installed version; budget time for slot-prop adjustments |
-| Custom MDX blog typography (`Avenir Next`, lime/teal) must merge with new system | Replace `blog/theme.ts` with theme-derived tokens; update `mdxComponents` to consume the theme |
-| `GradientBorder` removal cascades through 11 files at once | Create a deprecation shim that renders the new artifact frame so call sites can migrate incrementally |
-| Inconsistent indentation (2/4 space mix) across pages will make diffs noisy | Add Prettier config + format pass in Phase 0.5 cleanup |
-| Loss of visual differentiation between sections (everyone goes brass/bone) | Use restrained accent-per-section assignment + iconography for differentiation, not color |
+| MUI v6/v7-beta API drift on component slot overrides                                         | Verify each `components.*` override against installed version; budget time for slot-prop adjustments     |
+| Custom MDX blog typography (`Avenir Next`, lime/teal) must merge with new system             | Replace `blog/theme.ts` with theme-derived tokens; update `mdxComponents` to consume the theme           |
+| `GradientBorder` removal cascades through 11 files at once                                   | Create a deprecation shim that renders the new artifact frame so call sites can migrate incrementally    |
+| Inconsistent indentation (2/4 space mix) across pages will make diffs noisy                  | Add Prettier config + format pass in Phase 0.5 cleanup                                                   |
+| Loss of visual differentiation between sections (everyone goes brass/bone)                   | Use restrained accent-per-section assignment + iconography for differentiation, not color                |
 
 ---
 
 ## 2. Phased Task Roadmap
 
 ### Phase 0 — Pre-Refactor Hygiene & Plumbing ✅
+
 First commits on the redesign branch. Clean shop before stylistic work begins.
 
-- [x] Resolve all architectural decisions in §1.2 *(complete — see Decisions Log)*
+- [x] Resolve all architectural decisions in §1.2 _(complete — see Decisions Log)_
 - [x] Create the redesign git branch — `redesign/philosophical-systems-brutalism`
 - [x] **Install Vercel Analytics** — `@vercel/analytics` added; `<Analytics />` mounted in `ClientRootLayout` inside the provider tree
 - [x] Add `.prettierrc` + `.prettierignore`; one-pass format across `src/` normalized indentation, quote style, trailing commas
@@ -194,6 +206,7 @@ First commits on the redesign branch. Clean shop before stylistic work begins.
 - [x] Smoke test: `npm run lint`, `npm run format:check`, `npm run build` all green
 
 ### Phase 1 — Theme Foundation ✅
+
 Goal: stand up the new `zacharyTheme`, fonts, and global texture _without_ touching pages yet. After this phase, every page will look broken-but-warm; we fix them in subsequent phases.
 
 - [x] Create `src/theme/tokens.ts` — raw constants (`ink`, `graphite`, `stone`, `bone`, `accent`, `surfaces`, `lines`, `easing`, `duration`, `layout`)
@@ -215,9 +228,11 @@ Goal: stand up the new `zacharyTheme`, fonts, and global texture _without_ touch
 - [x] Smoke-test build — all 17 routes built cleanly; bundle grew ~1 KB per route from fonts + theme overhead; no runtime errors
 
 ### Phase 2 — Primitive Component Layer
+
 Goal: build the reusable artifact-style primitives once so pages stop inlining sx blocks. Primitives live in `src/components/primitives/`.
 
 #### Core primitives
+
 - [ ] `src/components/primitives/Overline.tsx` — mono small-caps label with `Index / 01` style
 - [ ] `src/components/primitives/PageHeader.tsx` — overline + large heading + optional subtitle/manifesto, with a thin construction-line motif. Accepts a `accent` prop driven by the section-accent map
 - [ ] `src/components/primitives/LabelChip.tsx` — mono uppercase chip with thin border, replaces every current `Chip`
@@ -230,13 +245,15 @@ Goal: build the reusable artifact-style primitives once so pages stop inlining s
 - [ ] `src/components/primitives/MakersMarkFooter.tsx` — `ZACHARY REECE — SOFTWARE / LEARNING / SYSTEMS / DISCIPLINE` + Denver, CO + line-icon socials including a resume PDF link
 - [ ] **Deprecate `GradientBorder`** — replace its implementation with the new `ArtifactCard` styling so existing 11 call sites visually update; mark file `@deprecated`; remove in Phase 7
 
-#### Tattoo-motif SVG primitives *(see §1.4)*
+#### Tattoo-motif SVG primitives _(see §1.4)_
+
 - [ ] `src/components/primitives/patterns/Honeycomb.tsx` — reusable hexagonal SVG `<pattern>` (background fill or decorative)
 - [ ] `src/components/primitives/patterns/ContourField.tsx` — generated topographic contour curves (parametric — node positions in, contours out)
 - [ ] `src/components/primitives/patterns/SacredGeometry.tsx` — flower-of-life / metatron / orbital base shapes as composable SVG
 - [ ] `src/components/primitives/patterns/Suminagashi.tsx` — flowing line texture (parametric, can be repurposed for dividers and section backgrounds)
 
-#### Hero diagram options *(see §1.4 — all five built, switchable on home)*
+#### Hero diagram options _(see §1.4 — all five built, switchable on home)_
+
 - [ ] `src/components/primitives/heroes/HeroContouredMandala.tsx` — Option 1
 - [ ] `src/components/primitives/heroes/HeroTopographicNodeGraph.tsx` — Option 2 (resume handshake)
 - [ ] `src/components/primitives/heroes/HeroSacredHexLattice.tsx` — Option 3
@@ -246,12 +263,15 @@ Goal: build the reusable artifact-style primitives once so pages stop inlining s
 - [ ] Hero variant switcher: home accepts a `?hero=1|2|3|4|5` query param (and/or a small unobtrusive toggle visible only on hover or in dev) so Zachary can A/B/C/D/E them on the live site without rebuilds
 
 #### Dev preview
+
 - [ ] Add a preview page (`src/app/_preview/page.tsx`, dev-only — gate by `NODE_ENV !== 'production'` or basic auth) rendering every primitive, every pattern, and all five hero options on one scroll for visual QA
 
 ### Phase 3 — Home Refactor + `/about` Route
+
 Goal: turn the 276-line inline `/linktree` hero into an editorial composition built from primitives, **promote it to `/`**, and extract the longer narrative into `/about`.
 
 #### Home (`src/app/page.tsx`)
+
 - [ ] Move the home implementation from `src/app/linktree/page.tsx` into `src/app/page.tsx` (decomposed into components — see below)
 - [ ] **Delete `src/app/linktree/` entirely** (route, layout, `page.tsx`, `linkItem.tsx`); move `links.tsx` to `src/app/_data/links.ts` (or similar) so it remains importable by the home and `/about`
 - [ ] Decompose the home into components in `src/app/_components/home/`:
@@ -270,17 +290,20 @@ Goal: turn the 276-line inline `/linktree` hero into an editorial composition bu
 - [ ] Rebuild contact row using line-icon `IconButton`s with brass hover, no glow
 
 #### `/about` route
+
 - [ ] Create `src/app/about/page.tsx` and `src/app/about/layout.tsx`
-- [ ] Migrate the longer narrative copy from the current homepage bio (Udemy / 20K students / 145 countries / Cloudwell / Flint / judo / philosophy) into `/about`
+- [ ] Migrate the longer narrative copy from the current homepage bio (Udemy / 22,500+ students / 150 countries / over 3,000 reviews / Cloudwell / Flint / judo / philosophy) into `/about`
 - [ ] Use essay-with-side-annotations layout: main column for narrative, side rail for mono annotations (dates, places, key facts)
 - [ ] Add the subtle resume PDF link/mention on this page
 - [ ] Add `/about` to the home navigation/index section as an `IndexRow` entry under `Professional`
 
 #### QA
+
 - [ ] Verify mobile layout maintains artifact feel (mono labels, rules, hierarchy intact)
 - [ ] Confirm `/linktree` returns a clean 404 (or add a permanent redirect to `/` if any inbound links exist)
 
 ### Phase 4 — Per-Page Migration
+
 Goal: bring every other route into the new system. Each page follows the same recipe: replace `GradientBorder` → `SectionFrame` + `PageHeader`; replace inline cards → `ArtifactCard`; replace `Chip` → `LabelChip`; drop per-page palette; respect typography scale; apply the section's assigned accent (Professional/brass, Education/bone, Hobbies/moss).
 
 Tackle in this order (highest visual leverage first):
@@ -299,6 +322,7 @@ Tackle in this order (highest visual leverage first):
 - [ ] `src/components/NewsletterDialog.tsx` — remove gradient orbs and gradient title; restyle as a thin-line modal artifact; restyle Snackbar feedback
 
 ### Phase 5 — Copy & Content Refresh
+
 Goal: refresh language to match the new visual identity. **No taxonomy/IA changes** (per resolved decision — categories remain `Professional` / `Education` / `Hobbies` with existing items).
 
 - [ ] Rewrite homepage thesis copy per the design doc recommendation (one tight paragraph; longer narrative now lives on `/about`)
@@ -309,6 +333,7 @@ Goal: refresh language to match the new visual identity. **No taxonomy/IA change
 - [ ] Update `og-image.jpg` to reflect new design (separate asset task — can use the `LayeredContourSigil` hero option rendered to PNG)
 
 ### Phase 6 — Motion & Diagrammatic Elements
+
 Goal: add restrained mechanical motion + meaningful geometric anchors.
 
 - [ ] Decide motion library: pure CSS (preferred — keeps bundle small and matches "restrained" ethos) vs. `framer-motion` (only if Phase 6 reveals true need)
@@ -320,20 +345,22 @@ Goal: add restrained mechanical motion + meaningful geometric anchors.
 - [ ] Optional: very slow background parallax for grid/diagram (>20s cycle)
 
 ### Phase 7 — Refinement & Acceptance ✅
+
 Goal: tune until the site passes the "authored not templated" smell test.
 
-- [ ] Walk every page on desktop/tablet/mobile; capture screenshots *(manual QA — pending live review)*
-- [ ] Side-by-side comparison with the new resume — does the site feel like the same person designed both? *(manual review)*
-- [ ] Desaturate any accent that still feels trendy by 10–20% *(iterative — defer to live review)*
+- [ ] Walk every page on desktop/tablet/mobile; capture screenshots _(manual QA — pending live review)_
+- [ ] Side-by-side comparison with the new resume — does the site feel like the same person designed both? _(manual review)_
+- [ ] Desaturate any accent that still feels trendy by 10–20% _(iterative — defer to live review)_
 - [x] Hunt for any remaining `WebkitBackgroundClip: 'text'` / `filter: blur` / glow `boxShadow` — **zero** remaining in component code. The four surviving `linear-gradient` uses are the design-doc-sanctioned thin construction-line rules (brass→transparent dividers in `PageHeader`, `Hero`, blog post header; ink fade on the travel cover image overlay).
 - [x] Global brass `*:focus-visible` outline shipped in Phase 1; semantic headings (`h1`–`h6`) consistent; portrait carries an `alt`.
-- [x] Hero portrait is loaded via `next/image` with `priority`; fonts use `display: swap`. *(Further image-priority work on travel/hikes covers can land in a follow-up.)*
+- [x] Hero portrait is loaded via `next/image` with `priority`; fonts use `display: swap`. _(Further image-priority work on travel/hikes covers can land in a follow-up.)_
 - [x] Removed deprecated `src/components/GradientBorder.tsx`
 - [x] Removed deprecated `src/app/blog/theme.ts`
 - [x] No per-page palette constants linger in data files (none found on inspection)
 - [x] Rewrote `README.md` to describe the project, structure, dev workflow, and design references
 
 ### Phase 8 — Stretch / Future
+
 Things called out by the design doc or surfaced in planning but not required for v1 of the redesign.
 
 - [ ] **Tattoo-derived photographic textures** — photo session capturing the honeycomb / line work / sacred geometry / suminagashi sections of the arm sleeve; process into `public/textures/*.png` (or `.webp`); swap into the `--zr-bg-texture` CSS variable to replace pure-CSS noise
@@ -348,6 +375,7 @@ Things called out by the design doc or surfaced in planning but not required for
 ## 3. Acceptance Criteria (from design doc, restated here for at-a-glance check)
 
 The redesign is **successful** when the site feels:
+
 - [ ] Authored rather than templated
 - [ ] Editorial rather than SaaS
 - [ ] Warm rather than neon
@@ -358,6 +386,7 @@ The redesign is **successful** when the site feels:
 - [ ] Clearly representative of Zachary Reece specifically
 
 The redesign **fails** if it still feels like:
+
 - [ ] AI startup template
 - [ ] Generic dark developer portfolio
 - [ ] Blue/purple gradient website
@@ -372,9 +401,11 @@ The redesign **fails** if it still feels like:
 > Append dated notes here as work proceeds. Capture key decisions, deviations from the design doc, and any discoveries that affect the plan.
 
 ### 2026-05-13 — Initial roadmap drafted
+
 Roadmap drafted from `docs/personal_website_design_doc.md` and full codebase exploration. No code changes yet.
 
 ### 2026-05-13 — Phases 2–7 complete (single sprint)
+
 Continued execution through the rest of the roadmap in one continuous pass per the user's "continue with all phases without asking again" direction.
 
 **Phase 2 — Primitives:** 24 files added under `src/components/primitives/` (Overline, Crosshair, Glyphs, LabelChip, SectionFrame, PageHeader, ArtifactCard, IndexRow, ArchiveAccordion, PortraitFrame, MakersMarkFooter) plus `patterns/` (Honeycomb, ContourField, SacredGeometry, Suminagashi) plus `heroes/` (all five hero options + HeroDiagram selector + HeroVariantSwitcher + resolveHeroVariant). `GradientBorder` was turned into a deprecation shim during this phase. Dev preview page added at `/preview`.
@@ -394,9 +425,11 @@ Continued execution through the rest of the roadmap in one continuous pass per t
 **Remaining manual work:** desktop/tablet/mobile walkthrough, side-by-side resume comparison, live-site iteration on which hero variant to canonize. These are deliberately left for human review — captured as pending items in Phase 7.
 
 ### 2026-05-13 — Phase 1 complete
+
 Single commit: `phase 1: install zachary theme foundation` (978 / 40 lines added/removed across 5 files).
 
 Structure landed:
+
 - `src/theme/tokens.ts` (199 LOC) — raw constants + section/page accent maps + CSS variable name registry
 - `src/theme/fonts.ts` (44 LOC) — three `next/font/google` declarations + combined `fontVariables` className
 - `src/theme/index.ts` (~600 LOC) — full MUI theme with 23 component overrides, module-augmented `theme.zr` namespace
@@ -404,12 +437,14 @@ Structure landed:
 The site now boots against the warm ink palette + brass/ember vignettes + bone construction grid + stipple texture layer. The Inter / Material-You / blue-purple cluster is fully evicted from the global theme. Inline `sx` styling on the existing pages still references the old neon palette — those pages will look "broken-but-warm" (gradient borders fighting brass typography) until Phases 3–4 migrate them. This is the expected state.
 
 Findings:
+
 - MUI v6/v7-beta's `createTheme` works fine with module augmentation; `theme.zr` is typed properly across all consumers.
 - The `shadows` array required a cast (`as unknown as ReturnType<typeof createTheme>["shadows"]`) because MUI types it as a 25-element tuple — annoying but harmless.
 - Used `display: "swap"` on all three font loads to avoid FOIT; combined with the system-font fallback stacks in the theme, SSR renders are flicker-free.
 - Bundle impact is small (~1 KB per route) thanks to `next/font` self-hosting (no Google CDN runtime fetches) and `enableCssLayer` in `AppRouterCacheProvider`.
 
 ### 2026-05-13 — Phase 0 complete
+
 Redesign branch `redesign/philosophical-systems-brutalism` created off `main`. Phase 0 landed in five commits:
 
 1. `add design doc and redesign roadmap` — docs only
@@ -419,20 +454,22 @@ Redesign branch `redesign/philosophical-systems-brutalism` created off `main`. P
 5. `format codebase with prettier` — mechanical normalization (26 files, ~1300 insertions / 1000 deletions, all whitespace/quote/comma)
 
 Findings during execution:
+
 - `.env` was already correctly gitignored — the exploration report incorrectly flagged it as tracked. No credential rotation needed.
 - `.DS_Store` files also correctly gitignored — none in the repo.
-- `useTheme` in `art/page.tsx` is *actually* used (line 33); only `Divider` was dead there.
+- `useTheme` in `art/page.tsx` is _actually_ used (line 33); only `Divider` was dead there.
 - ESLint 9 + `eslint-config-next@15` works via legacy `.eslintrc.json` (Next.js handles the compat layer internally — no FlatCompat needed).
 - Build size and route output unchanged after Phase 0 — purely additive/cleanup work.
 
 ### 2026-05-13 — Architectural decisions resolved
+
 Working through the 10 open questions from §1.2 plus two additions (Vercel Analytics, tattoo motif integration). Outcomes:
 
 - **Theme file layout** — Confirmed three-file split: `tokens.ts` + `fonts.ts` + `index.ts` under `src/theme/`. Keeps the large theme spec maintainable and isolates raw constants from MUI wiring.
 - **Primitives directory** — `src/components/primitives/` (chose `primitives` over `ui` for clarity that these are the foundational building blocks of the visual system, not generic UI components).
 - **Texture strategy** — Pure CSS noise/stipple for v1. The global background is implemented via CSS custom properties (`--zr-bg-base`, `--zr-bg-vignette`, `--zr-bg-grid`, `--zr-bg-texture`) so texture layers can be swapped without touching component code. This sets up a clean path for the tattoo-texture integration in Phase 8.
 - **Section taxonomy** — Decision: **keep the current `Professional` / `Education` / `Hobbies` taxonomy as-is**. The design doc's proposed rename (`Systems Built`, `Field Notes`, `Learning / Transmission`, `Disciplines`, `Research Threads`) is rejected for v1. The blog stays under Professional as `Aberrant Quiddity`. Phase 5 contracts substantially as a result — it becomes a pure copy/content refresh rather than an IA reorganization.
-- **`/about` route** — Added. The long bio narrative (Udemy 20K students, Cloudwell, Flint, judo/BJJ, philosophy) moves off the homepage into `/about` with an essay-with-side-annotations layout. The homepage retains only the short thesis paragraph. `/about` is linked from the home `Professional` index as an `IndexRow`.
+- **`/about` route** — Added. The long bio narrative (three Udemy courses reaching 22,500+ students across 150 countries with over 3,000 reviews, Cloudwell, Flint, judo/BJJ, philosophy) moves off the homepage into `/about` with an essay-with-side-annotations layout. The homepage retains only the short thesis paragraph. `/about` is linked from the home `Professional` index as an `IndexRow`.
 - **`/research` route** — **Not** adding for now. Aspirational content. Logged to Phase 8 stretch as deferred.
 - **Home route** — Inline the home into `src/app/page.tsx`; **delete `src/app/linktree/` entirely**. The shared link data (`links.tsx`) relocates to `src/app/_data/links.ts` so the home and `/about` can both consume it.
 - **Resume linkage** — Resume PDF surfaces in two places only: (a) a subtle mention/link on `/about`, (b) a small line-icon in the footer (`MakersMarkFooter`) alongside Instagram/LinkedIn/Email. **Not** featured in the hero. Keeps the hero focused on identity, not artifact distribution.
@@ -451,4 +488,4 @@ Working through the 10 open questions from §1.2 plus two additions (Vercel Anal
   3. Sacred Hex Lattice with Contour Bleed — honeycomb cells filled with contour fragments
   4. Concentric Orbital with Topographic Shadow — rotating system with labeled satellites; some orbits warped to contours
   5. Layered Contour Sigil — personal sigil / maker's seal (also reusable as footer mark, favicon, OG image)
-  Final selection deferred until visual prototypes can be compared on the live site. Phase 2 adds all five under `src/components/primitives/heroes/`.
+     Final selection deferred until visual prototypes can be compared on the live site. Phase 2 adds all five under `src/components/primitives/heroes/`.

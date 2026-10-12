@@ -1,12 +1,12 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import { Overline, IndexRow } from "@/components/primitives";
+import { IndexRow } from "@/components/primitives";
 import { linkCategories } from "@/app/_data/links";
 
 export default function IndexSections() {
   return (
-    <Box id="index" tabIndex={-1} sx={{ pt: { xs: 6, md: 9 }, scrollMarginTop: 32 }}>
+    <Box id="index" tabIndex={-1} sx={{ pt: { xs: 5, md: 7 }, scrollMarginTop: 32 }}>
       <Box
         sx={{
           borderTop: "1px solid var(--zr-line-strong)",
@@ -19,14 +19,8 @@ export default function IndexSections() {
           gap: 2,
         }}
       >
-        <Box>
-          <Overline>The full index</Overline>
-          <Typography component="h2" variant="h3" sx={{ mt: 1.5 }}>
-            Follow a thread.
-          </Typography>
-        </Box>
-        <Typography variant="body2" sx={{ maxWidth: "36ch", color: "text.secondary" }}>
-          Work, study, and everything else. A few different ways to get to know me.
+        <Typography component="h2" variant="h4">
+          Explore
         </Typography>
       </Box>
       <Box
@@ -41,6 +35,7 @@ export default function IndexSections() {
             key={category.section}
             component="section"
             aria-labelledby={`index-${category.section}`}
+            sx={(theme) => ({ "--zr-section-accent": theme.zr.sectionAccent[category.section] })}
           >
             <Typography component="h3" variant="h6" id={`index-${category.section}`} sx={{ mb: 2 }}>
               {category.title}
@@ -49,13 +44,13 @@ export default function IndexSections() {
               <IndexRow
                 key={link.url}
                 title={link.title}
-                description={link.description}
+                density="compact"
                 href={link.url}
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noreferrer" : undefined}
                 endGlyph={
                   <Box component="span" aria-hidden="true">
-                    {link.external ? "↗" : "→"}
+                    →
                   </Box>
                 }
               />

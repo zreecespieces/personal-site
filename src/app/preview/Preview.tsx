@@ -1,7 +1,9 @@
 "use client";
 
-import React from "react";
-import { Box, Stack, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import { ArchiveSelector } from "@/components/ArchiveSelector";
+import { DialogFrame } from "@/components/DialogFrame";
 import {
   ArchiveAccordion,
   ArtifactCard,
@@ -14,9 +16,11 @@ import {
   Honeycomb,
   IndexRow,
   LabelChip,
+  MetaLine,
   Overline,
   PageHeader,
   PortraitFrame,
+  RecordList,
   SacredGeometry,
   SectionFrame,
   Suminagashi,
@@ -27,6 +31,8 @@ import {
  * Development-only showcase at /preview for primitive and hero visual QA.
  */
 export default function Preview() {
+  const [example, setExample] = useState("first");
+  const [dialogOpen, setDialogOpen] = useState(false);
   return (
     <Box component="main" id="main-content" tabIndex={-1} sx={{ minHeight: "100vh", pb: 12 }}>
       <SectionFrame spacing="loose">
@@ -38,6 +44,52 @@ export default function Preview() {
           withRule
           withMark
         />
+      </SectionFrame>
+
+      <SectionFrame section="professional">
+        <PageHeader
+          component="h2"
+          title="Shared content patterns"
+          size="md"
+          subtitle="Specimen content, not personal records."
+        />
+        <Stack gap={4} sx={{ mt: 4 }}>
+          <MetaLine items={["Example date", "Example quantity", "Example context"]} />
+          <ArchiveSelector
+            id="specimen"
+            label="Example records"
+            value={example}
+            onChange={setExample}
+            options={[
+              { value: "first", label: "First collection" },
+              { value: "second", label: "Second collection" },
+            ]}
+          />
+          <RecordList>
+            <Box component="li">
+              <Typography variant="h5" component="h3">
+                {example === "first" ? "First example record" : "Second example record"}
+              </Typography>
+              <Typography variant="body2">One place for the record's description.</Typography>
+            </Box>
+          </RecordList>
+          <Button
+            variant="outlined"
+            onClick={() => setDialogOpen(true)}
+            sx={{ alignSelf: "start" }}
+          >
+            Open example dialog
+          </Button>
+        </Stack>
+        <DialogFrame
+          open={dialogOpen}
+          onClose={() => setDialogOpen(false)}
+          title="Example dialog"
+          description="The same title, surface, and close control used by image viewing and newsletter signup."
+          closeLabel="Close example dialog"
+        >
+          <Typography variant="body2">Example dialog content.</Typography>
+        </DialogFrame>
       </SectionFrame>
 
       <SectionFrame spacing="regular" section="professional">
@@ -65,7 +117,7 @@ export default function Preview() {
       </SectionFrame>
 
       <SectionFrame spacing="regular">
-        <PageHeader overline="Cards" index="04" title="Artifact Cards" size="md" />
+        <PageHeader component="h2" overline="Cards" index="04" title="Artifact Cards" size="md" />
         <Stack direction={{ xs: "column", md: "row" }} gap={2} sx={{ mt: 4 }}>
           <ArtifactCard href="#" sx={{ maxWidth: 320 }}>
             <Typography variant="h5">Project title</Typography>
@@ -89,7 +141,7 @@ export default function Preview() {
       </SectionFrame>
 
       <SectionFrame spacing="regular">
-        <PageHeader overline="Chips" index="05" title="Label Chips" size="md" />
+        <PageHeader component="h2" overline="Chips" index="05" title="Label Chips" size="md" />
         <Stack direction="row" gap={1} flexWrap="wrap" sx={{ mt: 4 }}>
           <LabelChip>Software Engineer</LabelChip>
           <LabelChip>Product Builder</LabelChip>
@@ -102,7 +154,13 @@ export default function Preview() {
       </SectionFrame>
 
       <SectionFrame spacing="regular">
-        <PageHeader overline="Index Rows" index="06" title="Editorial Index" size="md" />
+        <PageHeader
+          component="h2"
+          overline="Index Rows"
+          index="06"
+          title="Editorial Index"
+          size="md"
+        />
         <Box sx={{ mt: 4 }}>
           <IndexRow
             index={1}
@@ -132,7 +190,13 @@ export default function Preview() {
       </SectionFrame>
 
       <SectionFrame spacing="regular">
-        <PageHeader overline="Accordions" index="07" title="Archive Accordions" size="md" />
+        <PageHeader
+          component="h2"
+          overline="Accordions"
+          index="07"
+          title="Archive Accordions"
+          size="md"
+        />
         <Box sx={{ mt: 4 }}>
           <ArchiveAccordion
             label="Professional"
@@ -180,7 +244,13 @@ export default function Preview() {
       </SectionFrame>
 
       <SectionFrame spacing="regular">
-        <PageHeader overline="Identity" index="08" title="Portrait Frame" size="md" />
+        <PageHeader
+          component="h2"
+          overline="Identity"
+          index="08"
+          title="Portrait Frame"
+          size="md"
+        />
         <Stack direction={{ xs: "column", md: "row" }} alignItems="center" gap={6} sx={{ mt: 4 }}>
           <PortraitFrame src="/profile-picture.jpg" alt="Zachary Reece" size={220} />
           <Stack gap={2}>
@@ -207,7 +277,13 @@ export default function Preview() {
       </SectionFrame>
 
       <SectionFrame spacing="regular">
-        <PageHeader overline="Patterns" index="09" title="Tattoo Motif Primitives" size="md" />
+        <PageHeader
+          component="h2"
+          overline="Patterns"
+          index="09"
+          title="Tattoo Motif Primitives"
+          size="md"
+        />
         <Stack direction={{ xs: "column", md: "row" }} gap={3} sx={{ mt: 4 }} flexWrap="wrap">
           <Box
             sx={{
@@ -263,6 +339,7 @@ export default function Preview() {
       <SectionFrame spacing="loose">
         <PageHeader
           overline="Heroes"
+          component="h2"
           index="10"
           title="Hero Diagram Options"
           subtitle="Hero studies for visual comparison. The home page uses a fixed composition."

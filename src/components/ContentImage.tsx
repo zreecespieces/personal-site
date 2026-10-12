@@ -35,6 +35,7 @@ export function ContentImage({
   return (
     <Box
       component="span"
+      data-content-image=""
       sx={[
         {
           position: "relative",

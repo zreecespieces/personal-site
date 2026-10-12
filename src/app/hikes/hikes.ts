@@ -8,7 +8,139 @@ export interface Hike {
   description?: string;
   images: string[]; // URLs to images
   time?: [number, number]; // [hours, minutes]
+  trailUrl?: string;
+  imageCredit?: string;
+  activity?: {
+    movingTime: [number, number, number]; // [hours, minutes, seconds]
+    totalTime: [number, number, number];
+    averagePace: [number, number]; // [minutes, seconds] per mile
+    estimatedCalories: number;
+    rating?: number; // Zach's rating, not the trail's aggregate rating.
+  };
 }
+
+export const formatActivityTime = ([hours, minutes, seconds]: [number, number, number]) =>
+  `${hours}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+// Use the same public image transformation as the verified AllTrails trail pages.
+const trailPhoto = (key: string) =>
+  `https://images.alltrails.com/${btoa(
+    JSON.stringify({
+      bucket: "assets.alltrails.com",
+      key,
+      edits: { toFormat: "webp", resize: { width: 1200, height: 800, fit: "inside" } },
+    })
+  )}`;
+
+// Transcribed from IMG_0025–IMG_0030. Measurements are recorded activities,
+// not AllTrails route estimates. Difficulty (except the recorded Decalibron
+// rating), canonical links, and illustrative photos come from the trail pages.
+export const allTrails2026Hikes: Hike[] = [
+  {
+    name: "Davis Ponds Trail",
+    location: "Pine, Colorado",
+    date: "2026-05-17",
+    distance: 2.63,
+    elevation: 243,
+    difficulty: "Easy",
+    trailUrl: "https://www.alltrails.com/trail/us/colorado/davis-ponds-trail",
+    images: [trailPhoto("uploads/photo/image/49969058/51fc12786d256751436452e513758471.jpg")],
+    imageCredit: "Trail photo via AllTrails",
+    activity: {
+      movingTime: [1, 0, 48],
+      totalTime: [1, 16, 54],
+      averagePace: [23, 8],
+      estimatedCalories: 527,
+    },
+  },
+  {
+    name: "Chavez and Beaver Brook Loop",
+    location: "Golden, Colorado",
+    date: "2026-06-29",
+    distance: 5.24,
+    elevation: 1112,
+    difficulty: "Moderate",
+    trailUrl: "https://www.alltrails.com/trail/us/colorado/chavez-and-beaver-brook-loop",
+    images: [trailPhoto("uploads/photo/image/48120408/bc40d2732228f382c56cc94ef198a930.jpg")],
+    imageCredit: "Trail photo via AllTrails",
+    activity: {
+      movingTime: [2, 9, 27],
+      totalTime: [2, 30, 42],
+      averagePace: [24, 41],
+      estimatedCalories: 1123,
+    },
+  },
+  {
+    name: "Brother's Lookout via Sisters and Ponderosa Loop",
+    location: "Evergreen, Colorado",
+    date: "2026-07-07",
+    distance: 2.34,
+    elevation: 413,
+    difficulty: "Moderate",
+    trailUrl: "https://www.alltrails.com/trail/us/colorado/brothers-lookout-and-three-sisters-loop",
+    images: [trailPhoto("uploads/photo/image/102304391/72764c7ef8ff06340f3be32fbe353f10.jpg")],
+    imageCredit: "Trail photo via AllTrails",
+    activity: {
+      movingTime: [1, 3, 14],
+      totalTime: [1, 8, 56],
+      averagePace: [26, 59],
+      estimatedCalories: 548,
+    },
+  },
+  {
+    name: "Gem Lake Trail and Lumpy Ridge Loop",
+    location: "Estes Park, Colorado",
+    date: "2026-08-15",
+    distance: 4.91,
+    elevation: 1762,
+    difficulty: "Moderate",
+    trailUrl: "https://www.alltrails.com/trail/us/colorado/gem-lake-trail-and-lumpy-ridge-loop--2",
+    images: [trailPhoto("uploads/photo/image/40410987/f75ebc213c4a8ec7625fdafffdb0fabc.jpg")],
+    imageCredit: "Trail photo via AllTrails",
+    activity: {
+      movingTime: [3, 0, 23],
+      totalTime: [6, 5, 54],
+      averagePace: [36, 46],
+      estimatedCalories: 1564,
+    },
+  },
+  {
+    name: "The Decalibron: Mounts Democrat, Cameron, Lincoln, and Bross Trail",
+    location: "Alma, Colorado",
+    date: "2026-09-12",
+    distance: 7.51,
+    elevation: 3376,
+    difficulty: "Hard",
+    trailUrl:
+      "https://www.alltrails.com/trail/us/colorado/the-decalibron-mounts-democrat-cameron-lincoln-and-bross-trail",
+    images: [trailPhoto("uploads/photo/image/28145282/bab464bc57813d7a2729cbb5cb2c5464.jpg")],
+    imageCredit: "Trail photo via AllTrails",
+    activity: {
+      movingTime: [4, 56, 54],
+      totalTime: [7, 5, 51],
+      averagePace: [39, 33],
+      estimatedCalories: 2575,
+      rating: 5,
+    },
+  },
+  {
+    name: "Panorama Loop",
+    location: "Desert Hot Springs, California",
+    date: "2026-09-28",
+    distance: 6.33,
+    elevation: 1171,
+    difficulty: "Moderate",
+    trailUrl: "https://www.alltrails.com/trail/us/california/panorama-loop--3",
+    images: [trailPhoto("uploads/photo/image/87637003/f096893c0416f750fbd6f91986d584c5.jpg")],
+    imageCredit: "Trail photo via AllTrails",
+    activity: {
+      movingTime: [2, 26, 13],
+      totalTime: [3, 31, 29],
+      averagePace: [23, 6],
+      estimatedCalories: 1268,
+    },
+  },
+];
 
 export interface FavoriteSpot {
   name: string;
@@ -43,6 +175,7 @@ export interface HikingStats {
 }
 
 export const hikes: Hike[] = [
+  ...allTrails2026Hikes,
   {
     name: "Cloud's Rest",
     location: "Yosemite, California",
