@@ -12,7 +12,8 @@ export type GlyphName =
   | "bracket"
   | "knot"
   | "hex"
-  | "spiral";
+  | "spiral"
+  | "cap";
 
 export interface GlyphProps {
   name: GlyphName;
@@ -142,6 +143,19 @@ function renderGlyph(name: GlyphName, common: CommonSvgProps) {
           d="M12 12 m -0.5 0 a 0.5 0.5 0 1 1 1 0 a 1.5 1.5 0 1 1 -3 0 a 3 3 0 1 1 6 0 a 5 5 0 1 1 -10 0"
           {...common}
         />
+      );
+    case "cap":
+      // Graduation mortarboard — Education family
+      return (
+        <>
+          {/* Mortarboard rhombus (top of cap in 3/4 perspective) */}
+          <path d="M 12 5 L 21.5 9.5 L 12 14 L 2.5 9.5 Z" {...common} />
+          {/* Center button on top of the board */}
+          <circle cx="12" cy="9.5" r="0.8" fill={common.stroke as string} />
+          {/* Tassel hanging from the right corner */}
+          <path d="M 21.5 9.5 L 21.5 17" {...common} opacity={0.9} />
+          <circle cx="21.5" cy="17.6" r="0.9" fill={common.stroke as string} />
+        </>
       );
   }
 }

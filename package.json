@@ -8,32 +8,42 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,md}'",
-    "format:check": "prettier --check 'src/**/*.{ts,tsx,js,jsx,json,md}'"
+    "format:check": "prettier --check 'src/**/*.{ts,tsx,js,jsx,json,md}'",
+    "typecheck": "tsc --noEmit --incremental false",
+    "test:e2e": "playwright test",
+    "test:visual": "playwright test --grep @visual"
   },
   "dependencies": {
-    "@emotion/cache": "latest",
-    "@emotion/react": "latest",
-    "@emotion/styled": "latest",
-    "@mui/icons-material": "next",
-    "@mui/material": "next",
-    "@mui/material-nextjs": "next",
+    "@emotion/cache": "11.14.0",
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.0",
+    "@mui/icons-material": "7.0.0-beta.4",
+    "@mui/material": "7.0.0-beta.4",
+    "@mui/material-nextjs": "7.0.0-beta.4",
     "@vercel/analytics": "^2.0.1",
     "firebase": "^11.4.0",
     "firebase-admin": "^13.2.0",
     "gray-matter": "^4.0.3",
-    "next": "15.0.7",
+    "next": "15.5.25",
     "next-mdx-remote": "^6.0.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "react-usa-map": "^1.5.0"
   },
   "devDependencies": {
-    "@types/node": "latest",
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "22.13.10",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "eslint": "latest",
-    "eslint-config-next": "^15.0.0",
+    "eslint": "9.22.0",
+    "eslint-config-next": "15.5.25",
     "prettier": "^3.8.3",
-    "typescript": "latest"
+    "typescript": "5.8.2"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "8.5.28"
+    }
   }
 }

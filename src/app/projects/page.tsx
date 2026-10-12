@@ -1,308 +1,261 @@
-"use client";
-
-import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  ButtonBase,
-  Dialog,
-  DialogContent,
-  Grid,
-  IconButton,
-  Stack,
-  Tab,
-  Tabs,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import NextLink from "next/link";
-import {
-  ArtifactCard,
-  LabelChip,
-  MakersMarkFooter,
-  Overline,
-  PageHeader,
-  SectionFrame,
-} from "@/components/primitives";
-import {
-  formatDate,
-  getProjectsSortedByDate,
-  getTotalProjects,
-  getTotalTechnologies,
-} from "./projects";
-import CloseIcon from "@mui/icons-material/Close";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import LaunchIcon from "@mui/icons-material/Launch";
-import GitHubIcon from "@mui/icons-material/GitHub";
+import { Overline, PageHeader, SectionFrame } from "@/components/primitives";
+import { formatDate, projects } from "./projects";
 
 export default function Projects() {
-  const sortedProjects = getProjectsSortedByDate();
-  const [selectedProject, setSelectedProject] = useState<number>(0);
-  const [openImageDialog, setOpenImageDialog] = useState(false);
-  const [dialogImage, setDialogImage] = useState<{ url: string; caption?: string }>({ url: "" });
-
-  const handleProjectChange = (_event: React.SyntheticEvent, newValue: number) => {
-    setSelectedProject(newValue);
-  };
-
-  const openImage = (imageUrl: string, caption?: string) => {
-    setDialogImage({ url: imageUrl, caption });
-    setOpenImageDialog(true);
-  };
-
-  const handleCloseDialog = () => setOpenImageDialog(false);
+  const project = projects[0];
 
   return (
-    <Box component="main">
-      <SectionFrame section="professional" spacing="loose">
-        <PageHeader
-          overline="Systems Built · Projects"
-          index="02"
-          title="Software, experiments, tools, and applied systems."
-          subtitle="A working index of things I've built — production engineering, side projects, and the occasional speculative artifact."
-          size="md"
-          meta={
-            <Stack direction="row" gap={1}>
-              <LabelChip>
-                {getTotalProjects()} {getTotalProjects() === 1 ? "Project" : "Projects"}
-              </LabelChip>
-              <LabelChip>{getTotalTechnologies()} Technologies</LabelChip>
-            </Stack>
-          }
-        />
-      </SectionFrame>
-
-      <SectionFrame section="professional" spacing="none">
-        <Tabs
-          value={selectedProject}
-          onChange={handleProjectChange}
-          variant="scrollable"
-          scrollButtons="auto"
-          aria-label="project tabs"
-          sx={{ borderBottom: "1px solid var(--zr-line-muted)", mb: 5 }}
-        >
-          {sortedProjects.map((project) => (
-            <Tab key={project.id} label={project.title} />
-          ))}
-        </Tabs>
-
-        {sortedProjects.map((project, index) => (
-          <Box key={project.id} sx={{ display: selectedProject === index ? "block" : "none" }}>
-            <Stack gap={5}>
-              <Stack gap={1.5}>
-                <Overline>{project.subtitle}</Overline>
-                <Typography variant="h3" component="h2">
-                  {project.title}
-                </Typography>
-                <Stack direction="row" alignItems="center" gap={1} sx={{ mt: 1 }}>
-                  <CalendarMonthIcon fontSize="small" sx={{ color: "var(--zr-section-accent)" }} />
-                  <Typography variant="body2" color="text.secondary">
-                    {formatDate(project.startDate)}
-                    {project.isOngoing
-                      ? " — Present"
-                      : project.endDate
-                        ? ` — ${formatDate(project.endDate)}`
-                        : ""}
-                  </Typography>
-                </Stack>
-              </Stack>
-
-              <ArtifactCard padding="loose" hoverable={false}>
-                <Typography variant="body1" sx={{ lineHeight: 1.7 }}>
-                  {project.description}
-                </Typography>
-              </ArtifactCard>
-
-              <Stack gap={2}>
-                <Overline index="01">Technologies</Overline>
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                  {project.technologies.map((tech, i) => (
-                    <LabelChip key={i}>{tech.name}</LabelChip>
-                  ))}
-                </Box>
-              </Stack>
-
-              <Stack gap={2}>
-                <Overline index="02">Key Features</Overline>
-                <Grid container spacing={2}>
-                  {project.features.map((feature, i) => (
-                    <Grid size={{ xs: 12, md: 6 }} key={i}>
-                      <ArtifactCard padding="regular" hoverable={false}>
-                        <Typography variant="h6" component="h4" sx={{ mb: 1 }}>
-                          {feature.title}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          {feature.description}
-                        </Typography>
-                      </ArtifactCard>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Stack>
-
-              {project.highlights && project.highlights.length > 0 && (
-                <Stack gap={2}>
-                  <Overline index="03">Highlights</Overline>
-                  <Stack gap={1.5}>
-                    {project.highlights.map((highlight, i) => (
-                      <Stack key={i} direction="row" alignItems="flex-start" gap={2}>
-                        <Box
-                          aria-hidden
-                          sx={{
-                            mt: 0.8,
-                            width: 8,
-                            height: 8,
-                            border: "1px solid var(--zr-section-accent)",
-                            transform: "rotate(45deg)",
-                            flexShrink: 0,
-                          }}
-                        />
-                        <Typography variant="body1">{highlight}</Typography>
-                      </Stack>
-                    ))}
-                  </Stack>
-                </Stack>
+    <Box component="main" id="main-content">
+      <SectionFrame section="professional" spacing="loose" signature={false}>
+        <Stack gap={{ xs: 5, md: 7 }}>
+          <Box component="header">
+            <PageHeader
+              overline="Projects / A tool for making things"
+              title={project.title}
+              subtitle={project.subtitle}
+              size="lg"
+              withRule={false}
+              withMark={false}
+            />
+            <Stack direction="row" gap={1.5} flexWrap="wrap" sx={{ mt: 3 }}>
+              {project.deployedUrl && (
+                <Button component="a" href={project.deployedUrl} variant="contained">
+                  Open the pattern maker
+                </Button>
               )}
-
-              {project.images.length > 0 && (
-                <Stack gap={2}>
-                  <Overline index="04">Gallery</Overline>
-                  <Grid container spacing={2}>
-                    {project.images.map((image, i) => (
-                      <Grid size={{ xs: 12, sm: 6, md: 4 }} key={i}>
-                        <ButtonBase
-                          onClick={() => openImage(image.url, image.caption)}
-                          sx={{
-                            width: "100%",
-                            overflow: "hidden",
-                            border: "1px solid var(--zr-line-muted)",
-                            borderRadius: 1,
-                            display: "block",
-                            transition: "border-color 180ms cubic-bezier(0.2, 0, 0, 1)",
-                            "&:hover": {
-                              borderColor: "var(--zr-section-accent)",
-                            },
-                            "&:hover img": {
-                              transform: "scale(1.02)",
-                            },
-                          }}
-                        >
-                          <Box
-                            component="img"
-                            src={image.url}
-                            alt={image.alt}
-                            sx={{
-                              width: "100%",
-                              height: 220,
-                              objectFit: "cover",
-                              display: "block",
-                              transition: "transform 240ms cubic-bezier(0.2, 0, 0, 1)",
-                            }}
-                          />
-                        </ButtonBase>
-                        {image.caption && (
-                          <Typography
-                            variant="caption"
-                            component="p"
-                            sx={{ mt: 1, color: "text.secondary", textAlign: "center" }}
-                          >
-                            {image.caption}
-                          </Typography>
-                        )}
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Stack>
+              {project.githubUrl && (
+                <Button component="a" href={project.githubUrl} variant="outlined">
+                  View code on GitHub
+                </Button>
               )}
-
-              <Stack direction="row" gap={2} flexWrap="wrap">
-                {project.deployedUrl && (
-                  <Button
-                    component="a"
-                    href={project.deployedUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    variant="contained"
-                    startIcon={<LaunchIcon fontSize="small" />}
-                  >
-                    View Live
-                  </Button>
-                )}
-                {project.githubUrl && (
-                  <Button
-                    component="a"
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    variant="outlined"
-                    startIcon={<GitHubIcon fontSize="small" />}
-                  >
-                    View Code
-                  </Button>
-                )}
-              </Stack>
-
-              <Box>
-                <Typography
-                  component={NextLink}
-                  href="/"
-                  variant="overline"
-                  sx={{
-                    color: "text.secondary",
-                    textDecorationColor: "var(--zr-section-accent)",
-                    "&:hover": { color: "text.primary" },
-                  }}
-                >
-                  ← Back to index
-                </Typography>
-              </Box>
             </Stack>
           </Box>
-        ))}
-      </SectionFrame>
 
-      <MakersMarkFooter />
-
-      <Dialog
-        open={openImageDialog}
-        onClose={handleCloseDialog}
-        maxWidth="lg"
-        sx={{
-          "& .MuiDialog-paper": {
-            backgroundColor: "rgba(15, 15, 13, 0.96)",
-            backgroundImage: "none",
-            border: "1px solid var(--zr-line-muted)",
-            borderRadius: 1,
-            overflow: "hidden",
-          },
-        }}
-      >
-        <DialogContent sx={{ p: 0, position: "relative" }}>
-          <IconButton
-            onClick={handleCloseDialog}
+          <Box
             sx={{
-              position: "absolute",
-              right: 8,
-              top: 8,
-              color: "text.primary",
-              backgroundColor: "rgba(0, 0, 0, 0.4)",
-              "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.6)" },
+              display: "grid",
+              gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "minmax(0, 2fr) minmax(0, 1fr)" },
+              gap: { xs: 4, md: 8 },
+              pt: 4,
+              borderTop: "1px solid var(--zr-line-muted)",
             }}
           >
-            <CloseIcon />
-          </IconButton>
+            <Stack gap={2.5} sx={{ maxWidth: "65ch" }}>
+              <Typography variant="h4" component="h2">
+                From pixels to something you can hold.
+              </Typography>
+              {project.description
+                .trim()
+                .split(/\n\s*\n/)
+                .map((paragraph) => (
+                  <Typography key={paragraph} variant="body1" sx={{ lineHeight: 1.8 }}>
+                    {paragraph.trim()}
+                  </Typography>
+                ))}
+            </Stack>
+
+            <Box component="aside" aria-label="Project details">
+              <Box
+                component="dl"
+                sx={{
+                  m: 0,
+                  "& dt": { mb: 1 },
+                  "& dd": { m: 0, mb: 3, color: "text.secondary" },
+                }}
+              >
+                <Box component="dt">
+                  <Overline>Built</Overline>
+                </Box>
+                <Typography component="dd" variant="body2">
+                  <time dateTime={project.startDate}>{formatDate(project.startDate)}</time>
+                  {project.endDate && (
+                    <>
+                      {" "}
+                      to <time dateTime={project.endDate}>{formatDate(project.endDate)}</time>
+                    </>
+                  )}
+                </Typography>
+                <Box component="dt">
+                  <Overline>Stack</Overline>
+                </Box>
+                <Typography component="dd" variant="body2" sx={{ lineHeight: 1.8 }}>
+                  {project.technologies.map((technology) => technology.name).join(" / ")}
+                </Typography>
+                <Box component="dt">
+                  <Overline>Made for</Overline>
+                </Box>
+                <Typography component="dd" variant="body2">
+                  Custom bead patterns, pixel art, and festival accessories.
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+
           <Box
-            component="img"
-            src={dialogImage.url}
-            alt="Project image"
-            sx={{ width: "100%", maxHeight: "90vh", objectFit: "contain", display: "block" }}
-          />
-          {dialogImage.caption && (
-            <Typography variant="body2" sx={{ p: 2, textAlign: "center", color: "text.secondary" }}>
-              {dialogImage.caption}
+            component="figure"
+            aria-labelledby="pattern-process-caption"
+            sx={{
+              m: 0,
+              px: { xs: 2.5, md: 5 },
+              py: { xs: 3, md: 4 },
+              border: "1px solid var(--zr-line-muted)",
+              backgroundColor: "background.paper",
+            }}
+          >
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: { xs: "1fr", sm: "repeat(3, minmax(0, 1fr))" },
+                gap: { xs: 4, sm: 3 },
+              }}
+            >
+              {["Source image", "Editable pixel grid", "Bead pattern"].map((label, stage) => (
+                <Stack key={label} gap={2} alignItems="center">
+                  <Box
+                    component="svg"
+                    viewBox="0 0 160 120"
+                    aria-hidden="true"
+                    focusable="false"
+                    sx={{ width: "100%", maxWidth: 200, color: "var(--zr-section-accent)" }}
+                  >
+                    {stage === 0 ? (
+                      <>
+                        <rect
+                          x="10"
+                          y="10"
+                          width="140"
+                          height="100"
+                          fill="none"
+                          stroke="currentColor"
+                          opacity="0.5"
+                        />
+                        <circle cx="117" cy="34" r="13" fill="currentColor" />
+                        <path
+                          d="M10 110 L60 42 L100 90 L123 62 L150 110 Z"
+                          fill="currentColor"
+                          opacity="0.6"
+                        />
+                      </>
+                    ) : (
+                      Array.from({ length: 80 }, (_, cell) => {
+                        const column = cell % 10;
+                        const row = Math.floor(cell / 10);
+                        const sun = row < 3 && column > 6 && column < 9;
+                        const mountain = row >= 2 && Math.abs(column - 3) <= row - 2;
+                        const foothill = row >= 4 && Math.abs(column - 8) <= row - 4;
+                        const filled = sun || mountain || foothill;
+                        return stage === 1 ? (
+                          <rect
+                            key={cell}
+                            x={11 + column * 14}
+                            y={5 + row * 14}
+                            width="12"
+                            height="12"
+                            fill={filled ? "currentColor" : "none"}
+                            stroke="currentColor"
+                            strokeWidth="0.5"
+                            opacity={sun ? 1 : filled ? 0.6 : 0.2}
+                          />
+                        ) : (
+                          <circle
+                            key={cell}
+                            cx={17 + column * 14}
+                            cy={11 + row * 14}
+                            r={filled ? 4.5 : 1}
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth={filled ? 3 : 1}
+                            opacity={sun ? 1 : filled ? 0.6 : 0.25}
+                          />
+                        );
+                      })
+                    )}
+                  </Box>
+                  <Typography variant="body2" sx={{ color: "text.primary" }}>
+                    {label}
+                  </Typography>
+                </Stack>
+              ))}
+            </Box>
+            <Typography
+              component="figcaption"
+              id="pattern-process-caption"
+              variant="caption"
+              sx={{
+                display: "block",
+                mt: 4,
+                maxWidth: "75ch",
+                color: "text.secondary",
+                lineHeight: 1.7,
+              }}
+            >
+              Process diagram, not a product screenshot. An image becomes an editable grid; colors
+              and dimensions can be adjusted before using the pattern to arrange beads.
             </Typography>
-          )}
-        </DialogContent>
-      </Dialog>
+          </Box>
+
+          <Box
+            component="section"
+            aria-labelledby="pattern-controls-heading"
+            sx={{
+              display: "grid",
+              gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "minmax(0, 1fr) minmax(0, 2fr)" },
+              gap: { xs: 3, md: 8 },
+            }}
+          >
+            <Box>
+              <Typography id="pattern-controls-heading" variant="h4" component="h2" sx={{ mb: 2 }}>
+                Working with the pattern
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ maxWidth: "35ch", lineHeight: 1.8 }}
+              >
+                Start with an image or draw directly on the grid. Adjust the design, then save it
+                for later.
+              </Typography>
+            </Box>
+            <Box component="dl" sx={{ m: 0 }}>
+              {project.features.map((feature) => (
+                <Box
+                  key={feature.title}
+                  sx={{ py: 2.5, borderTop: "1px solid var(--zr-line-muted)" }}
+                >
+                  <Typography component="dt" variant="h6" sx={{ mb: 0.75 }}>
+                    {feature.title}
+                  </Typography>
+                  <Typography
+                    component="dd"
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ m: 0, lineHeight: 1.8 }}
+                  >
+                    {feature.description}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+
+          <Box
+            component="nav"
+            aria-label="More from Zachary"
+            sx={{ pt: 3, borderTop: "1px solid var(--zr-line-muted)" }}
+          >
+            <Typography
+              component={NextLink}
+              href="/blog"
+              variant="body2"
+              sx={{ color: "text.primary", textUnderlineOffset: "0.25em" }}
+            >
+              Read my notes on software
+            </Typography>
+          </Box>
+        </Stack>
+      </SectionFrame>
     </Box>
   );
 }

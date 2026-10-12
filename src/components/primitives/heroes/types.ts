@@ -44,12 +44,12 @@ export const HERO_VARIANT_LABELS: Record<HeroVariant, string> = {
  */
 export function resolveHeroVariant(input?: string | string[] | null): HeroVariant {
   const raw = Array.isArray(input) ? input[0] : input;
-  if (!raw) return "node-graph"; // Default — the strongest resume handshake
+  if (!raw) return "hex-lattice"; // Default — the canonized home hero
   const n = Number(raw);
   if (!Number.isNaN(n)) {
     const byNum = ["mandala", "node-graph", "hex-lattice", "orbital", "sigil"] as const;
     if (n >= 1 && n <= byNum.length) return byNum[n - 1];
   }
   if ((HERO_VARIANTS as readonly string[]).includes(raw)) return raw as HeroVariant;
-  return "node-graph";
+  return "hex-lattice";
 }

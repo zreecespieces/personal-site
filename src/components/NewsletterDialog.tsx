@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Dialog,
   DialogActions,
@@ -12,9 +12,6 @@ import {
   Box,
   IconButton,
   Typography,
-  Link,
-  Checkbox,
-  FormControlLabel,
   CircularProgress,
   Snackbar,
   Alert,
@@ -22,14 +19,14 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import EmailIcon from "@mui/icons-material/Email";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import { storeNewsletterResponse, shouldShowNewsletterPrompt } from "@/utils/firebase";
 
 export function NewsletterDialog() {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [dontAskAgain, setDontAskAgain] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const emailInput = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
   const [snackbar, setSnackbar] = useState<{
     open: boolean;
@@ -42,40 +39,33 @@ export function NewsletterDialog() {
   });
 
   useEffect(() => {
-    // Check if we should show the dialog and set a timer
-    const shouldShow = shouldShowNewsletterPrompt();
+    const handleOpen = () => {
+      setEmailError("");
+      setSnackbar((prev) => ({ ...prev, open: false }));
+      setOpen(true);
+    };
 
-    if (shouldShow) {
-      const timer = setTimeout(() => {
-        setOpen(true);
-      }, 15000); // 15 seconds
-
-      return () => clearTimeout(timer);
-    }
+    window.addEventListener("zr:newsletter-open", handleOpen);
+    return () => window.removeEventListener("zr:newsletter-open", handleOpen);
   }, []);
 
   const handleClose = () => {
     setOpen(false);
-
-    if (dontAskAgain) {
-      storeNewsletterResponse("dont_ask");
-    } else {
-      storeNewsletterResponse("dismissed");
-    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!email) {
-      setSnackbar({
-        open: true,
-        message: "Please enter your email address",
-        severity: "error",
-      });
+    if (loading) return;
+
+    const trimmedEmail = email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      setEmailError("Please enter a valid email address, such as name@example.com.");
+      emailInput.current?.focus();
       return;
     }
 
+    setEmailError("");
     setLoading(true);
 
     try {
@@ -83,19 +73,29 @@ export function NewsletterDialog() {
       const response = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, firstName, lastName }),
+        body: JSON.stringify({
+          email: trimmedEmail,
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+        }),
       });
 
       const result = await response.json();
 
-      if (result.success) {
+      if (response.ok && result.success) {
         setSnackbar({ open: true, message: result.message, severity: "success" });
-        storeNewsletterResponse("subscribed");
+        setEmail("");
+        setFirstName("");
+        setLastName("");
         setOpen(false);
       } else {
-        setSnackbar({ open: true, message: result.message, severity: "error" });
+        setSnackbar({
+          open: true,
+          message: result.message || "Unable to subscribe. Please try again later.",
+          severity: "error",
+        });
       }
-    } catch (error) {
+    } catch {
       setSnackbar({
         open: true,
         message: "An error occurred. Please try again later.",
@@ -112,6 +112,7 @@ export function NewsletterDialog() {
         open={open}
         onClose={handleClose}
         aria-labelledby="newsletter-dialog-title"
+        aria-describedby="newsletter-dialog-description"
         maxWidth="sm"
         fullWidth
         slotProps={{
@@ -129,7 +130,7 @@ export function NewsletterDialog() {
       >
         {/* Close button */}
         <IconButton
-          aria-label="close"
+          aria-label="Close newsletter signup"
           onClick={handleClose}
           sx={{
             position: "absolute",
@@ -147,6 +148,7 @@ export function NewsletterDialog() {
           sx={{
             pb: 1,
             pt: 3,
+            pr: 6,
             display: "flex",
             alignItems: "center",
             gap: 1.5,
@@ -154,32 +156,53 @@ export function NewsletterDialog() {
         >
           <EmailIcon color="primary" fontSize="small" />
           <Typography variant="h5" component="span" sx={{ fontWeight: 500 }}>
-            Stay Connected
+            Newsletter
           </Typography>
         </DialogTitle>
 
         <DialogContent sx={{ position: "relative", zIndex: 1 }}>
-          <DialogContentText sx={{ mb: 3 }}>
-            I won't be trying to sell you stuff, it's just a way to keep up with whenever I make or
-            do something interesting. It won't be often, but when it does happen it should be cool.
+          <DialogContentText id="newsletter-dialog-description" sx={{ mb: 3 }}>
+            Occasional updates on what I'm building, writing, and learning. No sales pitches.
           </DialogContentText>
 
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            aria-busy={loading}
+            sx={{ mt: 1 }}
+          >
             <TextField
+              id="newsletter-email"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              inputRef={emailInput}
               margin="dense"
               label="Email Address"
               type="email"
               fullWidth
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setEmailError("");
+              }}
+              error={Boolean(emailError)}
+              helperText={emailError}
+              slotProps={{ formHelperText: { "aria-live": "polite" } }}
+              disabled={loading}
               sx={{ mb: 2.5 }}
             />
 
-            <Box sx={{ display: "flex", gap: 2 }}>
+            <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: 2 }}>
               <TextField
+                id="newsletter-first-name"
+                name="firstName"
+                autoComplete="given-name"
+                disabled={loading}
                 margin="dense"
-                label="First Name"
+                label="First Name (optional)"
                 type="text"
                 fullWidth
                 value={firstName}
@@ -187,8 +210,12 @@ export function NewsletterDialog() {
               />
 
               <TextField
+                id="newsletter-last-name"
+                name="lastName"
+                autoComplete="family-name"
+                disabled={loading}
                 margin="dense"
-                label="Last Name"
+                label="Last Name (optional)"
                 type="text"
                 fullWidth
                 value={lastName}
@@ -196,21 +223,9 @@ export function NewsletterDialog() {
               />
             </Box>
 
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={dontAskAgain}
-                  onChange={(e) => setDontAskAgain(e.target.checked)}
-                  color="primary"
-                />
-              }
-              label="Don't ask me again"
-              sx={{ mt: 2 }}
-            />
-
             <DialogActions sx={{ px: 0, pb: 0, pt: 2 }}>
               <Button onClick={handleClose} color="inherit">
-                Not Now
+                Cancel
               </Button>
               <Button
                 type="submit"

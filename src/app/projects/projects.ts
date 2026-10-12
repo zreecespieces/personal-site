@@ -1,4 +1,4 @@
-// Projects data structure
+import { formatCalendarDate } from "@/lib/dates";
 
 export interface Technology {
   name: string;
@@ -36,30 +36,22 @@ export interface Project {
 
 // Format date from YYYY-MM-DD to Month Year
 export const formatDate = (dateString: string) => {
-  // Add a time component to ensure correct date in all timezones
-  const dateTimeString = `${dateString}T12:00:00`;
-  const date = new Date(dateTimeString);
-  return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  return formatCalendarDate(dateString, { month: "long", year: "numeric" });
 };
 
-// Placeholder project data
+// Published projects
 export const projects: Project[] = [
   {
     id: 1,
     title: "Instant Perler Pattern",
-    subtitle: "Turn normal images into perler bead patterns",
+    subtitle: "Turn an image into a Perler bead pattern.",
     description: `
-      Instantly turn any image into a perler pattern! Perler beads are a type of bead that can be arranged in a grid and pressed with an iron to create a pattern resembling pixel art.
-    
-      I built a web application that offers a user-friendly interface for converting normal images into perler patterns with features like image upload, direct pattern editing, color replacement, and custom grid size.
-    
-      The tool is designed to be both beginner-friendly and powerful, allowing users to create custom patterns with ease.
+      Perler beads are arranged on a grid and fused with an iron to make a piece of pixel art. The finished pieces can become necklaces, bracelets, and other accessories, often traded or given away at music festivals.
 
-      This makes it really easy for people to visualize and create custom patterns.
+      I built a web application that converts images into bead patterns. You can also draw a pattern from scratch, edit it directly, replace colors, and change the grid size.
 
-      It's common to make perlers and string them into necklaces, bracelets, and other accessories. These are often traded or given away at music festivals.
-    
-      `,
+      Color normalization reduces similar colors so a pattern needs fewer bead types. PNG and JSON exports let you save the design for later use or sharing.
+    `,
     technologies: [
       { name: "React", color: "#61DAFB" },
       { name: "Next.js", color: "#000000" },
@@ -69,23 +61,19 @@ export const projects: Project[] = [
     features: [
       {
         title: "Image Upload",
-        description:
-          "Convert any image into a Perler bead pattern instantly with intelligent color mapping.",
+        description: "Upload an image to convert it into a grid of bead colors.",
       },
       {
         title: "Direct Pattern Editing",
-        description:
-          "Create and edit patterns directly without uploading an image, giving you full creative control.",
+        description: "Draw and edit directly on the grid, with or without an uploaded image.",
       },
       {
         title: "Color Replacement",
-        description:
-          "Change any color in your pattern with an intuitive replacement tool for perfect customization.",
+        description: "Replace a color in the pattern without redrawing the design.",
       },
       {
         title: "Custom Grid Size",
-        description:
-          "Customize your pattern dimensions to fit any pegboard size and shape exactly.",
+        description: "Adjust the pattern dimensions to suit your pegboard.",
       },
       {
         title: "Color Normalization",
@@ -95,6 +83,15 @@ export const projects: Project[] = [
       {
         title: "Export Options",
         description: "Save your patterns as PNG images or JSON files for later use or sharing.",
+      },
+      {
+        title: "Bead Count",
+        description: "Estimate the materials needed for your project before arranging beads.",
+      },
+      {
+        title: "Pattern Auto-Size",
+        description:
+          "Fit a design to your pegboard dimensions, with a real-time preview of the pattern.",
       },
     ],
     deployedUrl: "https://zacharyreece.dev/instant-perler-pattern",

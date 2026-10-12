@@ -1,130 +1,171 @@
 "use client";
 
-import React from "react";
-import { Box, Stack, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import {
-  HeroDiagram,
-  HeroVariantSwitcher,
-  LabelChip,
-  Overline,
-  PortraitFrame,
-  type HeroVariant,
-} from "@/components/primitives";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import Image from "next/image";
+import Link from "next/link";
+import { Overline } from "@/components/primitives";
 
-export interface HeroProps {
-  /** Active hero diagram variant. */
-  heroVariant: HeroVariant;
-  /** When true, render the dev variant switcher in the corner. */
-  showVariantSwitcher?: boolean;
-}
-
-const TAGS = ["Software Engineer", "Product Builder", "Martial Artist", "Philosopher"];
-
-/**
- * Home hero — editorial composition replacing the old centered avatar /
- * gradient name / neon-pill stack.
- *
- * Layout (desktop):
- *   ┌──────────────────────────────────────────────────────────┐
- *   │ overline · ZACHARY REECE / DENVER, CO                   │
- *   │                                                          │
- *   │ Systems for learning, intelligence, and                  │
- *   │ human capability.                                        │
- *   │                                                          │
- *   │   [portrait]    [hero diagram]                           │
- *   │                                                          │
- *   │   short manifesto paragraph                              │
- *   │   [SE] [PB] [MA] [PH]                                    │
- *   └──────────────────────────────────────────────────────────┘
- */
-export function Hero({ heroVariant, showVariantSwitcher = false }: HeroProps) {
-  const theme = useTheme();
-
+export default function Hero() {
   return (
-    <Box sx={{ position: "relative", pt: { xs: 6, md: 10 }, pb: { xs: 6, md: 8 } }}>
-      <Stack gap={4}>
-        <Overline accent={theme.zr.accent.brass}>Zachary Reece · Denver, Colorado</Overline>
-
+    <Box sx={{ py: { xs: 4, md: 8 } }}>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "minmax(0, 1fr) minmax(0, 0.7fr)",
+            md: "minmax(0, 1.35fr) minmax(0, 1fr)",
+          },
+          gridTemplateAreas: {
+            xs: '"label label" "name portrait" "intro intro" "actions actions"',
+            md: '"label portrait" "name portrait" "intro portrait" "actions portrait"',
+          },
+          columnGap: { xs: 2, sm: 4, md: 6, lg: 10 },
+          rowGap: { xs: 2.5, md: 3 },
+          alignItems: "center",
+        }}
+      >
+        <Overline sx={{ gridArea: "label" }}>Product engineer / Educator</Overline>
         <Typography
-          variant="h1"
           component="h1"
+          variant="h1"
           sx={{
-            color: theme.zr.bone[100],
-            maxWidth: "16ch",
-            // Slight optical adjustment so the editorial scale doesn't
-            // bleed past the construction frame on narrow screens.
-            fontSize: {
-              xs: "clamp(2.6rem, 11vw, 4.4rem)",
-              md: "clamp(4rem, 7.4vw, 6.6rem)",
-            },
+            gridArea: "name",
+            fontSize: { xs: "clamp(2.45rem, 12.5vw, 4.5rem)", md: "clamp(6rem, 8.3vw, 8rem)" },
+            letterSpacing: "-0.065em",
+            lineHeight: 0.93,
           }}
         >
-          Systems for learning, intelligence, and human capability.
+          Zachary
+          <br />
+          Reece
+          <Box component="span" sx={{ color: "primary.main" }}>
+            .
+          </Box>
         </Typography>
+        <Box sx={{ gridArea: "intro" }}>
+          <Typography
+            component="p"
+            sx={{
+              fontFamily: "var(--font-space-grotesk)",
+              fontSize: { xs: "1.4rem", md: "1.7rem" },
+              lineHeight: 1.35,
+              letterSpacing: "-0.03em",
+              maxWidth: "26ch",
+            }}
+          >
+            I build software for how people learn.
+          </Typography>
+          <Typography sx={{ mt: 2, maxWidth: "45ch", color: "text.secondary", lineHeight: 1.75 }}>
+            Currently at{" "}
+            <Box component="a" href="https://flintk12.com" sx={{ color: "text.primary" }}>
+              Flint
+            </Box>
+            , building tools for teachers and students. This is a home for my work, my thinking, and
+            the things I do away from a screen.
+          </Typography>
+        </Box>
+        <Stack direction="row" gap={2} flexWrap="wrap" sx={{ gridArea: "actions" }}>
+          <Button component={Link} href="#selected-work" variant="contained">
+            Explore my work{" "}
+            <Box component="span" aria-hidden="true" sx={{ ml: 2 }}>
+              &#8599;
+            </Box>
+          </Button>
+          <Button component={Link} href="/about" variant="text">
+            More about me
+          </Button>
+        </Stack>
 
         <Box
-          aria-hidden
-          sx={{
-            height: 1,
-            width: { xs: 96, md: 160 },
-            background: `linear-gradient(90deg, ${theme.zr.accent.brass}, transparent)`,
-          }}
-        />
-
-        <Box
-          sx={{
-            display: "grid",
-            gap: { xs: 5, md: 8 },
-            gridTemplateColumns: { xs: "1fr", md: "auto 1fr" },
-            alignItems: "center",
-            mt: { xs: 2, md: 4 },
-          }}
+          component="figure"
+          sx={{ gridArea: "portrait", m: 0, width: "100%", maxWidth: 460, justifySelf: "end" }}
         >
-          {/* Portrait + tags column */}
-          <Stack gap={3} alignItems={{ xs: "flex-start", md: "center" }}>
-            <PortraitFrame src="/profile-picture.jpg" alt="Zachary Reece" size={220} />
-          </Stack>
-
-          {/* Hero diagram + manifesto column */}
-          <Stack gap={4} sx={{ minWidth: 0 }}>
+          <Box sx={{ position: "relative", p: { xs: 1, sm: 3, md: 4 } }}>
+            <Box
+              component="svg"
+              viewBox="0 0 420 420"
+              aria-hidden="true"
+              sx={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                color: "primary.main",
+                pointerEvents: "none",
+              }}
+            >
+              <path
+                d="M0 38H382V420 M38 0V382H420"
+                fill="none"
+                stroke="currentColor"
+                opacity="0.4"
+              />
+              <path d="M300 0h82l38 38v84 M0 298v84l38 38h84" fill="none" stroke="currentColor" />
+              <circle cx="382" cy="38" r="7" fill="#151512" stroke="currentColor" />
+              <circle cx="38" cy="382" r="7" fill="currentColor" />
+            </Box>
             <Box
               sx={{
-                display: "flex",
-                justifyContent: { xs: "center", md: "flex-start" },
-                color: theme.zr.accent.brass,
+                position: "relative",
+                aspectRatio: "1",
+                borderRadius: "50%",
+                overflow: "hidden",
+                bgcolor: "background.paper",
               }}
             >
-              <HeroDiagram variant={heroVariant} animate />
+              <Image
+                src="/profile-picture.jpg"
+                alt="Zachary Reece, with his geometric tattoo sleeve visible"
+                fill
+                priority
+                sizes="(max-width: 600px) 38vw, (max-width: 900px) 300px, 400px"
+                style={{ objectFit: "cover", filter: "saturate(0.7)", transform: "scale(1.01)" }}
+              />
             </Box>
-
-            <Typography
-              variant="subtitle1"
-              component="p"
-              sx={{
-                color: theme.zr.bone[200],
-                maxWidth: theme.zr.layout.proseMaxWidth,
-                lineHeight: 1.65,
-              }}
-            >
-              I build software systems at the intersection of learning, intelligence, and human
-              capability. My work spans product engineering, AI tools, educational platforms,
-              technical writing, and long-running philosophical research into computation,
-              cognition, and reality.
+          </Box>
+          <Box
+            component="figcaption"
+            sx={{
+              display: { xs: "none", md: "flex" },
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: 1,
+              mt: 2,
+              px: 4,
+            }}
+          >
+            <Typography variant="caption" sx={{ color: "text.secondary" }}>
+              Denver, Colorado
             </Typography>
-
-            <Stack direction="row" gap={1} flexWrap="wrap">
-              {TAGS.map((t) => (
-                <LabelChip key={t}>{t}</LabelChip>
-              ))}
-            </Stack>
-          </Stack>
+            <Typography variant="caption" sx={{ color: "text.secondary" }}>
+              Always learning.
+            </Typography>
+          </Box>
         </Box>
-      </Stack>
-
-      {showVariantSwitcher && <HeroVariantSwitcher current={heroVariant} />}
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: 2,
+          mt: { xs: 4, md: 7 },
+          pt: 2.5,
+          borderTop: "1px solid var(--zr-line-muted)",
+        }}
+      >
+        <Typography variant="caption" sx={{ color: "text.secondary" }}>
+          Engineering, education, and a life in practice.
+        </Typography>
+        <Typography
+          component={Link}
+          href="/blog"
+          variant="caption"
+          sx={{ textDecoration: "none", color: "text.primary" }}
+        >
+          Notes from the work <span aria-hidden="true">&#8599;</span>
+        </Typography>
+      </Box>
     </Box>
   );
 }
-
-export default Hero;

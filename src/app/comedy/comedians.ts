@@ -221,9 +221,3 @@ export function getComediansByEarliestSeen(): Comedian[] {
     return aEarliestShow.localeCompare(bEarliestShow);
   });
 }
-
-export function formatDate(dateString: string): string {
-  const dateTimeString = `${dateString}T12:00:00`;
-  const date = new Date(dateTimeString);
-  return date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
-}

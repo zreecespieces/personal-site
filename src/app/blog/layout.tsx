@@ -3,6 +3,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Blog | Zachary Reece",
   description: "Thoughts on software, life, and everything in between.",
+  alternates: { canonical: "/blog" },
   openGraph: {
     title: "Blog | Zachary Reece",
     description: "Thoughts on software, life, and everything in between.",
@@ -10,10 +11,10 @@ export const metadata: Metadata = {
     siteName: "Zachary Reece",
     images: [
       {
-        url: "https://zacharyreece.dev/og-image.jpg",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Zachary Reece - Blog",
+        alt: "Zachary Reece",
       },
     ],
     locale: "en_US",
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
     title: "Blog | Zachary Reece",
     description: "Thoughts on software, life, and everything in between.",
     creator: "@zreecespieces",
-    images: ["https://zacharyreece.dev/og-image.jpg"],
+    images: ["/opengraph-image"],
   },
 };
 

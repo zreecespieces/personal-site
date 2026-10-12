@@ -3,6 +3,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
+import NextLink from "next/link";
 
 export interface LabelChipProps {
   children: React.ReactNode;
@@ -54,10 +55,10 @@ export function LabelChip({
   // Size table — kept tight so chips read as labels, not buttons.
   const dims =
     size === "sm"
-      ? { px: "8px", py: "2px", fontSize: "0.6rem", minHeight: 22 }
-      : { px: "10px", py: "3px", fontSize: "0.66rem", minHeight: 26 };
+      ? { px: "8px", py: "3px", fontSize: "0.66rem", minHeight: 24 }
+      : { px: "10px", py: "4px", fontSize: "0.7rem", minHeight: 28 };
 
-  const Component = href ? "a" : onClick ? "button" : "span";
+  const Component = href ? (href.startsWith("/") ? NextLink : "a") : onClick ? "button" : "span";
 
   return (
     <Box
@@ -65,15 +66,16 @@ export function LabelChip({
       href={href}
       onClick={onClick}
       title={title}
-      role={onClick && !href ? "button" : undefined}
-      tabIndex={interactive ? 0 : undefined}
+      type={onClick && !href ? "button" : undefined}
+      aria-pressed={onClick && !href ? selected : undefined}
       sx={{
         display: "inline-flex",
         alignItems: "center",
         gap: 0.75,
         px: dims.px,
         py: dims.py,
-        minHeight: dims.minHeight,
+        minHeight: interactive ? 44 : dims.minHeight,
+        maxWidth: "100%",
         fontFamily: `var(${theme.zr.cssVars.fontMono})`,
         fontSize: dims.fontSize,
         fontWeight: 600,
@@ -84,10 +86,11 @@ export function LabelChip({
           ? alpha(theme.zr.accent.brass, 0.12)
           : alpha(theme.zr.bone[100], 0.035),
         border: `1px solid ${borderColor}`,
-        borderRadius: 2,
+        borderRadius: "2px",
         textDecoration: "none",
         cursor: interactive ? "pointer" : "default",
-        whiteSpace: "nowrap",
+        whiteSpace: "normal",
+        overflowWrap: "anywhere",
         transition: `background-color ${theme.zr.duration.micro}ms ${theme.zr.easing}, border-color ${theme.zr.duration.micro}ms ${theme.zr.easing}, color ${theme.zr.duration.micro}ms ${theme.zr.easing}, transform ${theme.zr.duration.micro}ms ${theme.zr.easing}`,
         ...(interactive
           ? {
@@ -107,7 +110,7 @@ export function LabelChip({
           {startGlyph}
         </Box>
       )}
-      <Box component="span" sx={{ lineHeight: 1 }}>
+      <Box component="span" sx={{ lineHeight: 1.5 }}>
         {children}
       </Box>
       {endGlyph && (

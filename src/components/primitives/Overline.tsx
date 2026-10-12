@@ -27,7 +27,7 @@ export interface OverlineProps {
  */
 export function Overline({ index, children, accent, sx }: OverlineProps) {
   const theme = useTheme();
-  const color = accent ?? theme.zr.accent.brass;
+  const color = accent ?? `var(--zr-section-accent, ${theme.zr.accent.brass})`;
 
   return (
     <Box
@@ -41,15 +41,11 @@ export function Overline({ index, children, accent, sx }: OverlineProps) {
       }}
     >
       {index !== undefined && (
-        <Typography
-          component="span"
-          variant="overline"
-          sx={{ color, opacity: 0.62, lineHeight: 1 }}
-        >
+        <Typography component="span" variant="overline" sx={{ color, lineHeight: 1.5 }}>
           {typeof index === "number" ? String(index).padStart(2, "0") : index}
         </Typography>
       )}
-      <Typography component="span" variant="overline" sx={{ color, lineHeight: 1 }}>
+      <Typography component="span" variant="overline" sx={{ color, lineHeight: 1.5 }}>
         {children}
       </Typography>
     </Box>

@@ -1,5 +1,22 @@
 # Redesign Roadmap — Philosophical Systems Brutalism
 
+> **Historical roadmap:** This records the first redesign migration. The September 2026 refinement is tracked in [Editorial Refinement](./design_refinement.md). The old hero-selection instructions and incomplete checkboxes below are retained as history, not the current task list.
+
+## September 2026 Refinement
+
+- [x] Keep the warm editorial identity; lead with work and thinking.
+- [x] Replace the manifesto/lattice homepage with a composed personal cover and selected work/writing.
+- [x] Centralize navigation, footer, semantic headings, image delivery, and gallery behavior.
+- [x] Refine all public pages according to their content rather than repeating card layouts.
+- [x] Make archive filters shareable and correct dated records, map behavior, and missing content.
+- [x] Replace the timed newsletter prompt with explicit signup and inline validation.
+- [x] Refresh metadata, social artwork, sitemap, robots, and preview gating.
+- [x] Add browser, accessibility, content-integrity, and visual-regression checks; verify the production build.
+- [x] Patch high/critical dependency advisories without replacing the UI stack.
+- [ ] User visual acceptance and deployment, when requested.
+
+The rest of this document is the original migration record.
+
 > **Companion to** [`docs/personal_website_design_doc.md`](./personal_website_design_doc.md)
 > **Working title**: Philosophical Systems Brutalism
 > **Goal**: Refactor the personal site from a generic neon-gradient developer-portfolio aesthetic into a warm, editorial, geometric, brutalist personal artifact that visually aligns with the new resume.

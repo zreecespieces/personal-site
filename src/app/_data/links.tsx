@@ -59,26 +59,26 @@ const professionalLinks: LinkItem[] = [
   {
     icon: <PersonIcon />,
     title: "About",
-    description: "Longer narrative — teaching, work, philosophy, and discipline.",
+    description: "The person behind the work.",
     url: "/about",
   },
   {
     icon: <LanguageIcon />,
     title: "Projects",
-    description: "Software, experiments, tools, and applied systems.",
+    description: "Software and tools I've made.",
     url: "/projects",
   },
   {
     icon: <HistoryEduIcon />,
     title: "Aberrant Quiddity",
     subtitle: "blog",
-    description: "Long-running notebook of essays, technical reflections, and research notes.",
+    description: "Notes on software, tools, and how I work.",
     url: "/blog",
   },
   {
     icon: <GitHubIcon />,
     title: "GitHub",
-    description: "Open source, side projects, and code under construction.",
+    description: "Code, experiments, and side projects.",
     url: "https://github.com/zreecespieces",
     external: true,
   },
@@ -102,13 +102,13 @@ const educationLinks: LinkItem[] = [
   {
     icon: <LocalLibraryIcon />,
     title: "Studying",
-    description: "Khan Academy threads currently in progress.",
+    description: "A record of independent study.",
     url: "/study",
   },
   {
     icon: <MenuBookIcon />,
     title: "Reading",
-    description: "Currently reading and completed books — annotated.",
+    description: "A reading log, from philosophy to software.",
     url: "/reading",
   },
 ];
@@ -148,7 +148,7 @@ const hobbyLinks: LinkItem[] = [
   {
     icon: <PaletteIcon />,
     title: "AI Art",
-    description: "Generated visual artifacts and ongoing prompt experiments.",
+    description: "A small collection of generated artwork.",
     url: "/art",
   },
 ];

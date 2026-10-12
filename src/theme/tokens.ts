@@ -66,7 +66,7 @@ export type SectionKey = "professional" | "education" | "hobbies" | "about";
 export const sectionAccent: Record<SectionKey, string> = {
   professional: accent.brass,
   education: bone[100],
-  hobbies: accent.moss,
+  hobbies: accent.mossLight,
   about: accent.brass, // /about inherits Professional family
 };
 

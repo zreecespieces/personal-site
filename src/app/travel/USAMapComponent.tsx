@@ -1,23 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
 import USAMap from "react-usa-map";
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { LabelChip } from "@/components/primitives";
-
-// Types for state customization
-interface MapCustomizations {
-  [key: string]: {
-    fill: string;
-  };
-}
+import { Box, Typography, useTheme } from "@mui/material";
 
 interface USAMapProps {
   visitedStates: string[];
 }
-
-// Default colors — read from the redesign tokens via the theme rather than hardcoded.
-// The visited fill is set per render from theme.zr.accent.moss (Hobbies family).
 
 // Map full state names to abbreviations
 const stateAbbreviations: Record<string, string> = {
@@ -74,138 +62,68 @@ const stateAbbreviations: Record<string, string> = {
   "Washington DC": "DC",
 };
 
-// Map abbreviations to full state names (reverse lookup)
-const stateFullNames = Object.entries(stateAbbreviations).reduce(
-  (acc, [fullName, abbr]) => {
-    acc[abbr] = fullName;
-    return acc;
-  },
-  {} as Record<string, string>
-);
-
-export const USAMapComponent: React.FC<USAMapProps> = ({ visitedStates }) => {
-  const [tooltipContent, setTooltipContent] = useState<string>("");
-  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
-  const [showTooltip, setShowTooltip] = useState(false);
+export function USAMapComponent({ visitedStates }: USAMapProps) {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
   const visitedFill = theme.zr.accent.moss;
-  const defaultFill = theme.zr.ink[800];
-
-  // Build the per-state fill config consumed by react-usa-map.
-  const statesCustomConfig = () => {
-    const config: Record<string, { fill: string }> = {};
-
-    visitedStates.forEach((state) => {
-      const stateAbbr = stateAbbreviations[state];
-      if (stateAbbr) {
-        config[stateAbbr] = { fill: visitedFill };
-      }
-    });
-
-    Object.keys(stateAbbreviations).forEach((state) => {
-      const abbr = stateAbbreviations[state];
-      if (!config[abbr]) {
-        config[abbr] = { fill: defaultFill };
-      }
-    });
-
-    return config;
-  };
-
-  const handleMouseOver = (event: React.MouseEvent, stateCode: string) => {
-    const upperStateCode = stateCode.toUpperCase();
-    const stateName = stateFullNames[upperStateCode] || upperStateCode;
-    const isVisited = visitedStates.includes(stateName);
-    setTooltipContent(`${stateName} ${isVisited ? "- Visited ✓" : ""}`);
-    setTooltipPosition({ x: event.clientX, y: event.clientY });
-    setShowTooltip(true);
-  };
-
-  const handleMouseOut = () => {
-    setShowTooltip(false);
-  };
-
-  // react-usa-map requires an onClick handler; we don't use clicks.
-  const mapHandler = (): void => {};
+  const config: Record<string, { fill: string }> = {};
+  const sortedStates = [...new Set(visitedStates)].sort((a, b) => a.localeCompare(b, "en-US"));
+  const hasDC = sortedStates.includes("Washington DC");
+  sortedStates.forEach((state) => {
+    const abbreviation = stateAbbreviations[state];
+    if (abbreviation) config[abbreviation] = { fill: visitedFill };
+  });
+  // The library draws DC as a path and a circle with independent fill keys.
+  if (hasDC) {
+    config.DC1 = { fill: visitedFill };
+    config.DC2 = { fill: visitedFill };
+  }
 
   return (
-    <Box sx={{ position: "relative", mt: 2, mb: 4 }}>
-      <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", mb: 2 }}>
-        States visited: {visitedStates.length} of 50 + Washington DC
+    <Box sx={{ mt: 2 }}>
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+        {sortedStates.length - Number(hasDC)} of 50 states{hasDC ? ", plus Washington DC" : ""}.{" "}
+        Visited places are shaded green and listed below.
       </Typography>
 
       <Box
+        aria-hidden="true"
         sx={{
-          position: "relative",
           width: "100%",
+          pointerEvents: "none",
           "& svg": {
-            width: "100% !important",
-            height: "auto !important",
-            maxHeight: isMobile ? "300px" : "500px",
+            width: "100%",
+            height: "auto",
+            maxHeight: 440,
           },
           "& path": {
-            transition: "fill 0.18s cubic-bezier(0.2, 0, 0, 1)",
-            stroke: theme.zr.lines.muted,
+            stroke: theme.palette.background.default,
             strokeWidth: "0.6px",
-          },
-          "& path:hover": {
-            opacity: 0.85,
-            cursor: "pointer",
           },
         }}
       >
         <USAMap
-          customize={statesCustomConfig()}
-          onClick={mapHandler}
+          customize={config}
+          defaultFill={theme.palette.action.disabledBackground}
           title="United States Travel Map"
-          onMouseOver={handleMouseOver}
-          onMouseLeave={handleMouseOut}
         />
       </Box>
 
-      {showTooltip && (
-        <Box
-          sx={{
-            position: "fixed",
-            top: tooltipPosition.y + 10,
-            left: tooltipPosition.x + 10,
-            backgroundColor: theme.zr.ink[850],
-            border: `1px solid ${theme.zr.lines.muted}`,
-            color: theme.zr.bone[100],
-            fontFamily: `var(${theme.zr.cssVars.fontMono})`,
-            fontSize: "0.7rem",
-            letterSpacing: "0.05em",
-            textTransform: "uppercase",
-            px: 1.25,
-            py: 0.75,
-            borderRadius: 1,
-            zIndex: 1000,
-            pointerEvents: "none",
-          }}
-        >
-          {tooltipContent}
-        </Box>
-      )}
-
       <Box
+        component="ul"
+        aria-label="Visited states and district"
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          flexWrap: "wrap",
-          gap: 0.75,
-          mt: 4,
+          columns: { xs: 2, sm: 3, md: 4 },
+          pl: 2.5,
+          mt: 3,
+          "& li": { typography: "body2", py: 0.5, breakInside: "avoid" },
         }}
       >
-        {visitedStates.sort().map((state, index) => (
-          <LabelChip key={index} size="sm">
-            {state}
-          </LabelChip>
+        {sortedStates.map((state) => (
+          <li key={state}>{state}</li>
         ))}
       </Box>
     </Box>
   );
-};
+}
 
 export default USAMapComponent;

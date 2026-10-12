@@ -12,8 +12,10 @@ export interface Country {
 
 export interface Visit {
   startDate: string; // YYYY-MM-DD format
-  endDate: string; // YYYY-MM-DD format
+  endDate?: string; // YYYY-MM-DD format; omitted for ongoing visits
   purpose: string; // e.g., "Tourism", "Business", "Study", etc.
+  /** When true, the visit is still ongoing — render the end date as "Present". */
+  isOngoing?: boolean;
 }
 
 export interface FavoriteSpot {
@@ -25,6 +27,8 @@ export interface FavoriteSpot {
 // Helper function to calculate total days spent
 export const calculateDaysSpent = (visits: Visit[]): number => {
   return visits.reduce((total, visit) => {
+    // Open-ended residence is not a completed trip and has no fixed duration.
+    if (visit.isOngoing || !visit.endDate) return total;
     const startDate = new Date(visit.startDate);
     const endDate = new Date(visit.endDate);
     const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
@@ -76,8 +80,8 @@ export const countries: Country[] = [
       },
       {
         startDate: "2024-08-20",
-        endDate: new Date().toISOString().split("T")[0],
         purpose: "Moved to Denver, Colorado",
+        isOngoing: true,
       },
     ],
     favoriteSpots: [],
@@ -625,23 +629,18 @@ export const countries: Country[] = [
 // Get countries sorted by most recent visit
 export const getCountriesByRecent = (): Country[] => {
   return [...countries].sort((a, b) => {
-    const aLatestVisit =
-      a.visits.length > 0
-        ? new Date(
-            a.visits.sort(
-              (v1, v2) => new Date(v2.endDate).getTime() - new Date(v1.endDate).getTime()
-            )[0].endDate
-          )
-        : new Date(0);
-    const bLatestVisit =
-      b.visits.length > 0
-        ? new Date(
-            b.visits.sort(
-              (v1, v2) => new Date(v2.endDate).getTime() - new Date(v1.endDate).getTime()
-            )[0].endDate
-          )
-        : new Date(0);
-    return bLatestVisit.getTime() - aLatestVisit.getTime();
+    const aOngoing = a.visits.some((visit) => visit.isOngoing);
+    const bOngoing = b.visits.some((visit) => visit.isOngoing);
+    if (aOngoing !== bOngoing) return aOngoing ? -1 : 1;
+    const aLatest = a.visits.reduce((latest, visit) => {
+      const date = visit.endDate ?? visit.startDate;
+      return date > latest ? date : latest;
+    }, "");
+    const bLatest = b.visits.reduce((latest, visit) => {
+      const date = visit.endDate ?? visit.startDate;
+      return date > latest ? date : latest;
+    }, "");
+    return bLatest.localeCompare(aLatest);
   });
 };
 
@@ -661,6 +660,6 @@ export const getTotalDaysSpent = (): number => {
 
 export const getTotalStatesVisited = (): number => {
   return countries.reduce((total, country) => {
-    return total + (country.states ? country.states.length : 0);
+    return total + (country.states?.filter((state) => state !== "Washington DC").length ?? 0);
   }, 0);
 };

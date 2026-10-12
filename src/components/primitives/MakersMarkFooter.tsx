@@ -1,131 +1,97 @@
 "use client";
 
-import React from "react";
-import { Box, Container, IconButton, Stack, Tooltip, Typography } from "@mui/material";
-import { alpha, useTheme } from "@mui/material/styles";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import EmailIcon from "@mui/icons-material/Email";
-import DescriptionIcon from "@mui/icons-material/Description";
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import Link from "next/link";
 
-export interface MakersMarkFooterProps {
-  /** Optional override for the maker's-mark line. */
-  motto?: string;
-  /** Optional override for the location subtitle. */
-  location?: string;
-}
-
-const SOCIAL_LINKS = [
-  {
-    label: "Instagram",
-    href: "https://www.instagram.com/zacharydreece/",
-    icon: InstagramIcon,
-  },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/zachary-reece-b587811a8/",
-    icon: LinkedInIcon,
-  },
-  {
-    label: "Email",
-    href: "mailto:zachdreece@gmail.com",
-    icon: EmailIcon,
-  },
-  {
-    label: "Resume (PDF)",
-    href: "/resume.pdf",
-    icon: DescriptionIcon,
-    target: "_blank",
-  },
-];
-
-/**
- * The site's footer, styled as a maker's mark / inscription. Renders a
- * thin top rule, a mono motto, a quiet location line, and a single row
- * of line-icon social links — including the resume PDF per the resolved
- * decision in `docs/redesign_roadmap.md` §1.2.
- */
-export function MakersMarkFooter({
-  motto = "ZACHARY REECE — SOFTWARE / LEARNING / SYSTEMS / DISCIPLINE",
-  location = "Denver, Colorado",
-}: MakersMarkFooterProps) {
-  const theme = useTheme();
-  const year = new Date().getFullYear();
-
+export function MakersMarkFooter() {
   return (
-    <Box
-      component="footer"
-      sx={{
-        mt: { xs: 8, md: 14 },
-        borderTop: `1px solid ${theme.zr.lines.muted}`,
-        py: { xs: 5, md: 7 },
-        position: "relative",
-        // Tiny ascending construction tick on the left edge — printer's mark
-        "&::before": {
-          content: '""',
-          position: "absolute",
-          top: -1,
-          left: theme.zr.layout.gutterDesktop,
-          width: 28,
-          height: 1,
-          backgroundColor: theme.zr.accent.brass,
-        },
-      }}
-    >
-      <Container maxWidth="lg">
-        <Stack
-          direction={{ xs: "column", md: "row" }}
-          alignItems={{ xs: "flex-start", md: "center" }}
-          justifyContent="space-between"
-          gap={{ xs: 3, md: 4 }}
-        >
-          <Box>
+    <Box component="footer" sx={{ mt: { xs: 7, md: 10 }, pb: 4 }}>
+      <Container>
+        <Box sx={{ borderTop: "1px solid var(--zr-line-strong)", pt: { xs: 4, md: 5 } }}>
+          <Stack direction={{ xs: "column", md: "row" }} justifyContent="space-between" gap={4}>
+            <Box>
+              <Typography component="p" variant="h4">
+                Keep in touch.
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ mt: 1.5, color: "text.secondary", maxWidth: "40ch" }}
+              >
+                A conversation, a question, or something worth sharing.
+              </Typography>
+              <Typography
+                component="a"
+                href="mailto:zachdreece@gmail.com"
+                sx={{
+                  display: "inline-block",
+                  mt: 2,
+                  py: 1,
+                  color: "text.primary",
+                  textUnderlineOffset: "0.3em",
+                }}
+              >
+                zachdreece@gmail.com
+              </Typography>
+            </Box>
+            <Box sx={{ maxWidth: "36ch" }}>
+              <Typography variant="body2" sx={{ color: "text.secondary", mb: 1.5 }}>
+                Occasional notes on what I&apos;m building, writing, and learning.
+              </Typography>
+              <Button
+                variant="outlined"
+                onClick={() => window.dispatchEvent(new Event("zr:newsletter-open"))}
+              >
+                Subscribe to the newsletter
+              </Button>
+            </Box>
+          </Stack>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            justifyContent="space-between"
+            gap={2}
+            sx={{ mt: 5, pt: 2.5, borderTop: "1px solid var(--zr-line-muted)" }}
+          >
             <Typography
-              variant="overline"
-              sx={{
-                color: theme.zr.bone[200],
-                fontSize: "0.7rem",
-                letterSpacing: "0.18em",
-                display: "block",
-              }}
-            >
-              {motto}
-            </Typography>
-            <Typography
+              component={Link}
+              href="/"
               variant="caption"
-              sx={{
-                display: "block",
-                mt: 0.5,
-                color: alpha(theme.zr.bone[200], 0.6),
-              }}
+              sx={{ color: "text.secondary", textDecoration: "none", py: 1 }}
             >
-              {location} · © {year}
+              Zachary Reece / Denver, Colorado
             </Typography>
-          </Box>
-
-          <Stack direction="row" gap={0.5} alignItems="center">
-            {SOCIAL_LINKS.map(({ label, href, icon: Icon, target }) => (
-              <Tooltip key={label} title={label} placement="top" arrow={false}>
-                <IconButton
+            <Box
+              component="nav"
+              aria-label="Social and contact links"
+              sx={{ display: "flex", flexWrap: "wrap", gap: { xs: 2.5, sm: 3 } }}
+            >
+              {[
+                ["GitHub", "https://github.com/zreecespieces"],
+                ["Instagram", "https://www.instagram.com/zacharydreece/"],
+                ["LinkedIn", "https://www.linkedin.com/in/zachary-reece-b587811a8/"],
+                ["Resume (PDF)", "/resume.pdf"],
+              ].map(([label, href]) => (
+                <Typography
+                  key={href}
                   component="a"
                   href={href}
-                  target={target ?? (href.startsWith("http") ? "_blank" : undefined)}
-                  rel={target === "_blank" || href.startsWith("http") ? "noreferrer" : undefined}
-                  aria-label={label}
-                  size="small"
+                  target="_blank"
+                  rel="noreferrer"
+                  variant="caption"
                   sx={{
-                    color: alpha(theme.zr.bone[100], 0.7),
-                    "&:hover": {
-                      color: theme.zr.accent.brassLight,
-                    },
+                    display: "inline-flex",
+                    alignItems: "center",
+                    minHeight: 44,
+                    color: "text.secondary",
+                    textDecoration: "none",
+                    "&:hover": { color: "text.primary", textDecoration: "underline" },
                   }}
                 >
-                  <Icon fontSize="small" />
-                </IconButton>
-              </Tooltip>
-            ))}
+                  {label}
+                </Typography>
+              ))}
+            </Box>
           </Stack>
-        </Stack>
+        </Box>
       </Container>
     </Box>
   );

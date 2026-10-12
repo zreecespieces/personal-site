@@ -2,22 +2,27 @@ import React from "react";
 import { Metadata } from "next";
 import { fontVariables } from "@/theme/fonts";
 import { ink } from "@/theme/tokens";
+import { ClientRootLayout } from "../components/ClientRootLayout";
+
+const description =
+  "Software, learning & the things between. Projects, writing, and personal archives by Zachary Reece.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://zacharyreece.dev"),
   title: "Zachary Reece",
-  description: "software engineer by trade | martial artist by choice | philosopher by nature",
+  description,
+  alternates: { canonical: "/" },
   openGraph: {
     title: "Zachary Reece",
-    description: "software engineer by trade | martial artist by choice | philosopher by nature",
-    url: "https://zacharyreece.dev",
+    description,
+    url: "/",
     siteName: "Zachary Reece",
     images: [
       {
-        url: "https://zacharyreece.dev/og-image.jpg",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Zachary Reece",
+        alt: "Zachary Reece - Software, learning & the things between",
       },
     ],
     locale: "en_US",
@@ -26,16 +31,14 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Zachary Reece",
-    description: "software engineer by trade | martial artist by choice | philosopher by nature",
+    description,
     creator: "@zreecespieces",
-    images: ["https://zacharyreece.dev/og-image.jpg"],
+    images: ["/opengraph-image"],
   },
   icons: {
     icon: "/icon.svg",
   },
 };
-
-import { ClientRootLayout } from "../components/ClientRootLayout";
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (

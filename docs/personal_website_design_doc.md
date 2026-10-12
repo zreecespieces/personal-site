@@ -1,5 +1,7 @@
 # Zachary Reece Personal Website Redesign
 
+> **September 2026 update:** The identity and inspiration in this brief are retained. The current homepage, composition, motion, and component rules are documented in [Editorial Refinement](./design_refinement.md), which supersedes conflicting implementation instructions below.
+
 ## Design Direction
 
 ### Working Title
@@ -1616,4 +1618,3 @@ The redesign fails if it still feels like:
 The new personal website should feel like a handcrafted digital artifact belonging to a systems-oriented engineer exploring intelligence, structure, learning, and human potential.
 
 It should look less like a portfolio and more like an index into a mind, a body of work, and a set of disciplines under construction.
-

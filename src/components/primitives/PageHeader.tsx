@@ -19,6 +19,8 @@ export interface PageHeaderProps {
   accent?: string;
   /** Visual scale of the title. */
   size?: "sm" | "md" | "lg";
+  /** Semantic level, independent of visual scale. */
+  component?: "h1" | "h2" | "h3";
   /** Whether to render the construction-line rule under the header. */
   withRule?: boolean;
   /** Whether to render the crosshair registration mark. */
@@ -55,8 +57,9 @@ export function PageHeader({
   subtitle,
   accent,
   size = "lg",
+  component = "h1",
   withRule = true,
-  withMark = true,
+  withMark = false,
   meta,
   sx,
 }: PageHeaderProps) {
@@ -67,13 +70,13 @@ export function PageHeader({
 
   return (
     <Box sx={{ width: "100%", ...sx }}>
-      {(overline || index !== undefined || withMark) && (
+      {(overline || index !== undefined || withMark || meta) && (
         <Stack
-          direction="row"
-          alignItems="center"
+          direction={{ xs: "column", sm: "row" }}
+          alignItems={{ xs: "flex-start", sm: "center" }}
           justifyContent="space-between"
           gap={2}
-          sx={{ mb: 1.5 }}
+          sx={{ mb: 2.5, flexWrap: "wrap" }}
         >
           <Stack direction="row" alignItems="center" gap={1.5}>
             {withMark && <Crosshair size={14} color={accentValue} />}
@@ -84,32 +87,36 @@ export function PageHeader({
             )}
           </Stack>
           {meta && (
-            <Box sx={{ color: theme.zr.bone[300], display: "inline-flex", gap: 1 }}>{meta}</Box>
+            <Box
+              sx={{
+                color: theme.zr.bone[300],
+                display: "inline-flex",
+                flexWrap: "wrap",
+                maxWidth: "100%",
+                gap: 1,
+                "& > .MuiStack-root": { flexWrap: "wrap" },
+              }}
+            >
+              {meta}
+            </Box>
           )}
         </Stack>
       )}
 
       <Typography
         variant={TITLE_VARIANT[size]}
-        component="h1"
+        component={component}
         sx={{
           color: theme.zr.bone[100],
-          maxWidth: "20ch",
+          maxWidth: "24ch",
+          overflowWrap: "break-word",
         }}
       >
         {title}
       </Typography>
 
       {withRule && (
-        <Box
-          aria-hidden
-          sx={{
-            mt: 3,
-            height: 1,
-            width: { xs: 96, md: 160 },
-            background: `linear-gradient(90deg, ${accentValue}, transparent)`,
-          }}
-        />
+        <Box aria-hidden sx={{ mt: 3, height: "1px", width: 56, backgroundColor: accentValue }} />
       )}
 
       {subtitle && (

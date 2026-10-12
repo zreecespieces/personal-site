@@ -191,12 +191,11 @@ export const zacharyTheme = createTheme({
       fontSize: "1.25rem",
     },
     h6: {
-      fontFamily: monoStack,
-      fontWeight: 600,
-      textTransform: "uppercase",
-      letterSpacing: "0.095em",
-      lineHeight: 1.35,
-      fontSize: "0.76rem",
+      fontFamily: headingStack,
+      fontWeight: 500,
+      letterSpacing: "-0.02em",
+      lineHeight: 1.4,
+      fontSize: "1.1rem",
     },
     subtitle1: {
       color: alpha(bone[200], 0.82),
@@ -229,10 +228,10 @@ export const zacharyTheme = createTheme({
     },
     caption: {
       fontFamily: monoStack,
-      color: alpha(bone[200], 0.58),
+      color: bone[300],
       letterSpacing: "0.055em",
       lineHeight: 1.45,
-      fontSize: "0.72rem",
+      fontSize: "0.75rem",
     },
     overline: {
       fontFamily: monoStack,
@@ -261,19 +260,16 @@ export const zacharyTheme = createTheme({
         ":root": {
           // Background layers — swappable via these variables
           [cssVars.bgBase]: ink[950],
-          [cssVars.bgVignette]: [
-            `radial-gradient(circle at 50% 0%, ${alpha(accent.brass, 0.12)}, transparent 34rem)`,
-            `radial-gradient(circle at 88% 18%, ${alpha(accent.ember, 0.08)}, transparent 28rem)`,
-            `linear-gradient(180deg, ${ink[900]} 0%, ${ink[950]} 100%)`,
-          ].join(","),
+          [cssVars.bgVignette]: `radial-gradient(ellipse at 80% 0%, ${alpha(accent.brass, 0.055)}, transparent 55rem)`,
           [cssVars.bgGrid]: [
             `linear-gradient(${alpha(bone[100], 0.035)} 1px, transparent 1px)`,
             `linear-gradient(90deg, ${alpha(bone[100], 0.035)} 1px, transparent 1px)`,
           ].join(","),
-          [cssVars.bgTexture]: [
-            `radial-gradient(circle at 20% 30%, ${alpha(bone[100], 0.05)} 0 1px, transparent 1px)`,
-            `radial-gradient(circle at 70% 60%, ${alpha(bone[100], 0.04)} 0 1px, transparent 1px)`,
-          ].join(","),
+          // Paper-grain layer — SVG fractal-noise filter, encoded as a
+          // data URL so it ships with the bundle and tiles natively.
+          // Repointable at a real asset in Phase 8 by swapping this value.
+          [cssVars.bgTexture]:
+            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'><filter id='zrn'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch' seed='7'/><feColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.91 0 0 0 0 0.82 0 0 0 0.78 0'/></filter><rect width='100%' height='100%' filter='url(%23zrn)'/></svg>\")",
 
           // Line / surface tokens for consumption in sx blocks
           [cssVars.lineMuted]: lines.muted,
@@ -286,6 +282,8 @@ export const zacharyTheme = createTheme({
           scrollBehavior: "smooth",
         },
         body: {
+          isolation: "isolate",
+          position: "relative",
           minHeight: "100vh",
           backgroundColor: `var(${cssVars.bgBase})`,
           backgroundImage: `var(${cssVars.bgVignette})`,
@@ -294,31 +292,32 @@ export const zacharyTheme = createTheme({
           WebkitFontSmoothing: "antialiased",
           MozOsxFontSmoothing: "grayscale",
         },
-        // Construction grid — fixed, fades from center
-        "body::before": {
-          content: '""',
-          position: "fixed",
-          inset: 0,
-          zIndex: -2,
-          pointerEvents: "none",
-          opacity: 0.34,
-          backgroundImage: `var(${cssVars.bgGrid})`,
-          backgroundSize: `${layout.gridStep}px ${layout.gridStep}px`,
-          maskImage: "radial-gradient(circle at center, black, transparent 72%)",
-          WebkitMaskImage: "radial-gradient(circle at center, black, transparent 72%)",
-        },
-        // Stipple / paper-grain layer — repoints at a real asset in Phase 8
+        // A single static material layer, behind the content but above the body paint.
         "body::after": {
           content: '""',
           position: "fixed",
           inset: 0,
           zIndex: -1,
           pointerEvents: "none",
-          opacity: 0.22,
+          opacity: 0.045,
           backgroundImage: `var(${cssVars.bgTexture})`,
-          backgroundSize: "5px 5px, 7px 7px",
+          backgroundSize: "220px 220px",
+          backgroundRepeat: "repeat",
           mixBlendMode: "overlay",
         },
+        "#main-content": { scrollMarginTop: 24, outline: "none", minHeight: "55vh" },
+        ".skip-link": {
+          position: "fixed",
+          top: 8,
+          left: 16,
+          transform: "translateY(-180%)",
+          zIndex: 1500,
+          padding: "12px 20px",
+          color: ink[950],
+          backgroundColor: bone[100],
+          textDecoration: "none",
+        },
+        ".skip-link:focus": { transform: "translateY(0)" },
         "::selection": {
           backgroundColor: alpha(accent.brass, 0.35),
           color: bone[100],
@@ -336,7 +335,7 @@ export const zacharyTheme = createTheme({
         },
         // Brass keyboard focus ring everywhere; respects accessibility
         "*:focus-visible": {
-          outline: `1px solid ${accent.brassLight}`,
+          outline: `2px solid ${accent.brassLight}`,
           outlineOffset: 3,
         },
         // Reduced motion: collapse all animation/transition durations
@@ -357,8 +356,13 @@ export const zacharyTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          paddingLeft: layout.gutterDesktop,
-          paddingRight: layout.gutterDesktop,
+          paddingLeft: layout.gutterMobile,
+          paddingRight: layout.gutterMobile,
+          "@media (min-width:600px)": {
+            paddingLeft: layout.gutterDesktop,
+            paddingRight: layout.gutterDesktop,
+          },
+          "@media (min-width:1200px)": { maxWidth: layout.contentMaxWidth },
         },
       },
     },
@@ -371,7 +375,6 @@ export const zacharyTheme = createTheme({
           backgroundColor: alpha(ink[800], 0.76),
           border: `1px solid ${alpha(bone[100], 0.14)}`,
           boxShadow: "0 18px 58px rgba(0, 0, 0, 0.24)",
-          backdropFilter: "blur(8px)",
         },
         rounded: {
           borderRadius: 4,
@@ -452,6 +455,7 @@ export const zacharyTheme = createTheme({
         root: {
           borderRadius: 2,
           padding: "9px 14px",
+          minHeight: 44,
           transition: `transform ${duration.micro}ms ${easing}, border-color ${duration.micro}ms ${easing}, background-color ${duration.micro}ms ${easing}, color ${duration.micro}ms ${easing}`,
           "&:hover": {
             transform: "translateY(-1px)",

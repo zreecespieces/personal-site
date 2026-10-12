@@ -1,175 +1,125 @@
 "use client";
 
-import React from "react";
-import { Box, Button, LinearProgress, Stack, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import NextLink from "next/link";
-import {
-  ArtifactCard,
-  LabelChip,
-  MakersMarkFooter,
-  Overline,
-  PageHeader,
-  SectionFrame,
-} from "@/components/primitives";
-import { calculateCourseStats, courses, khanAcademyStreak } from "./courses";
-import LaunchIcon from "@mui/icons-material/Launch";
-
-const formatDate = (dateString: string) => {
-  const dateTimeString = `${dateString}T00:00:00`;
-  const date = new Date(dateTimeString);
-  return date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
-};
+import { Box, Link, LinearProgress, Stack, Typography } from "@mui/material";
+import { PageHeader, SectionFrame } from "@/components/primitives";
+import { ContentImage } from "@/components/ContentImage";
+import { formatCalendarDate } from "@/lib/dates";
+import { courses, khanAcademyStreak } from "./courses";
 
 export default function Study() {
-  const theme = useTheme();
-  const stats = calculateCourseStats();
-
   return (
-    <Box component="main">
-      <SectionFrame section="education" spacing="loose">
+    <Box component="main" id="main-content">
+      <SectionFrame section="education" spacing="regular">
         <PageHeader
-          overline="Learning · Studying"
-          index="02"
-          title="Threads in progress — what I'm learning right now."
-          subtitle="Long-running self-study, mostly Khan Academy, with a weekly streak as the metronome."
+          overline="Personal logs"
+          title="Study"
+          subtitle="Self-study in mathematics, from calculus prerequisites to multivariable calculus."
           size="md"
-          meta={
-            <Stack direction="row" gap={1}>
-              <LabelChip>{stats.totalCourses} Courses</LabelChip>
-              <LabelChip>{khanAcademyStreak.currentStreak} Week Streak</LabelChip>
-            </Stack>
-          }
+          meta={<Typography color="text.secondary">{courses.length} courses</Typography>}
         />
       </SectionFrame>
 
-      <SectionFrame section="education" spacing="none">
-        <Stack gap={3}>
+      <SectionFrame section="education" spacing="none" sx={{ pb: 8 }}>
+        <Box
+          sx={{
+            borderLeft: "2px solid",
+            borderColor: "primary.main",
+            pl: 2.5,
+            mb: 5,
+            maxWidth: 760,
+          }}
+        >
+          <Typography variant="body2" color="text.secondary">
+            A {khanAcademyStreak.currentStreak}-{khanAcademyStreak.unit} streak as of{" "}
+            <time dateTime={khanAcademyStreak.lastActivity}>
+              {formatCalendarDate(khanAcademyStreak.lastActivity)}
+            </time>
+            .
+          </Typography>
+        </Box>
+
+        <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
           {courses.map((course) => (
-            <ArtifactCard key={course.id} padding="loose" hoverable={false}>
-              <Stack
-                direction={{ xs: "column", md: "row" }}
-                gap={{ xs: 2, md: 4 }}
-                alignItems={{ md: "flex-start" }}
-              >
+            <Box
+              component="li"
+              key={course.id}
+              sx={{
+                borderTop: "1px solid",
+                borderColor: "divider",
+                py: 4,
+                display: "grid",
+                gap: { xs: 2, md: 5 },
+                gridTemplateColumns: { xs: "1fr", md: "minmax(0, 1fr) 220px" },
+              }}
+            >
+              <Stack direction="row" gap={{ xs: 2, sm: 3 }} alignItems="flex-start">
                 {course.imageUrl && (
-                  <Box
-                    sx={{
-                      width: { xs: 80, md: 96 },
-                      height: { xs: 80, md: 96 },
-                      flexShrink: 0,
-                      border: `1px solid ${theme.zr.lines.muted}`,
-                      backgroundColor: "rgba(15, 15, 13, 0.6)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      overflow: "hidden",
-                    }}
-                  >
-                    <Box
-                      component="img"
-                      src={course.imageUrl}
-                      alt={course.provider}
-                      sx={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "contain",
-                        p: 1,
-                        filter: "saturate(0.85)",
-                      }}
-                    />
-                  </Box>
+                  <ContentImage
+                    src={course.imageUrl}
+                    alt=""
+                    width={64}
+                    height={64}
+                    sx={{ width: { xs: 48, sm: 64 }, flexShrink: 0, objectFit: "contain" }}
+                  />
                 )}
-
-                <Stack gap={1.5} sx={{ flex: 1, minWidth: 0 }}>
-                  <Stack
-                    direction="row"
-                    alignItems="flex-start"
-                    justifyContent="space-between"
-                    gap={2}
-                    flexWrap="wrap"
-                  >
-                    <Stack gap={0.5}>
-                      <Overline>{course.provider}</Overline>
-                      <Typography variant="h5" component="h3">
-                        {course.title}
-                      </Typography>
-                    </Stack>
-                    <LabelChip>
-                      {course.category.charAt(0).toUpperCase() + course.category.slice(1)}
-                    </LabelChip>
-                  </Stack>
-
-                  <Typography variant="body2" color="text.secondary">
-                    Started {formatDate(course.startDate)}
-                    {course.endDate && ` · Completed ${formatDate(course.endDate)}`}
+                <Stack gap={1} sx={{ minWidth: 0 }}>
+                  <Typography variant="caption" color="text.secondary">
+                    {course.provider} / {course.category}
                   </Typography>
-
-                  <Stack gap={0.75} sx={{ mt: 1 }}>
-                    <Stack direction="row" justifyContent="space-between">
-                      <Overline>Mastery</Overline>
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          fontFamily: `var(${theme.zr.cssVars.fontMono})`,
-                          color: theme.zr.bone[200],
-                        }}
-                      >
-                        {course.mastery}%
-                      </Typography>
-                    </Stack>
-                    <LinearProgress
-                      variant="determinate"
-                      value={course.mastery}
-                      sx={{
-                        height: 4,
-                        borderRadius: 0,
-                        backgroundColor: theme.zr.lines.muted,
-                        "& .MuiLinearProgress-bar": {
-                          backgroundColor: theme.zr.accent.brass,
-                          borderRadius: 0,
-                        },
-                      }}
-                    />
-                  </Stack>
-
-                  {course.courseUrl && (
-                    <Box sx={{ mt: 1 }}>
-                      <Button
-                        variant="outlined"
+                  <Typography variant="h5" component="h2">
+                    {course.courseUrl ? (
+                      <Link
                         href={course.courseUrl}
                         target="_blank"
                         rel="noreferrer"
-                        endIcon={<LaunchIcon fontSize="small" />}
-                        size="small"
+                        color="inherit"
                       >
-                        View Course
-                      </Button>
-                    </Box>
+                        {course.title}
+                      </Link>
+                    ) : (
+                      course.title
+                    )}
+                  </Typography>
+                  {course.description && (
+                    <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 680 }}>
+                      {course.description}
+                    </Typography>
+                  )}
+                  <Typography variant="caption" color="text.secondary">
+                    Started{" "}
+                    <time dateTime={course.startDate}>{formatCalendarDate(course.startDate)}</time>
+                    {course.endDate && ` / Completed ${formatCalendarDate(course.endDate)}`}
+                  </Typography>
+                  {course.skills && (
+                    <Typography variant="body2">{course.skills.join(", ")}</Typography>
+                  )}
+                  {course.certificateUrl && (
+                    <Link href={course.certificateUrl} target="_blank" rel="noreferrer">
+                      View certificate
+                    </Link>
                   )}
                 </Stack>
               </Stack>
-            </ArtifactCard>
+              <Stack gap={1} sx={{ alignSelf: "start" }}>
+                <Typography variant="body2" color="text.secondary">
+                  Last noted mastery: {course.mastery}%
+                </Typography>
+                <LinearProgress
+                  variant="determinate"
+                  value={course.mastery}
+                  aria-label={`${course.title}: last noted mastery`}
+                  sx={{ height: 3 }}
+                />
+                {course.modules?.map((module) => (
+                  <Typography key={module.title} variant="caption" color="text.secondary">
+                    {module.title}: {module.mastery}% mastery
+                  </Typography>
+                ))}
+              </Stack>
+            </Box>
           ))}
-        </Stack>
-
-        <Box sx={{ mt: 6 }}>
-          <Typography
-            component={NextLink}
-            href="/"
-            variant="overline"
-            sx={{
-              color: "text.secondary",
-              textDecorationColor: "var(--zr-section-accent)",
-              "&:hover": { color: "text.primary" },
-            }}
-          >
-            ← Back to index
-          </Typography>
         </Box>
       </SectionFrame>
-
-      <MakersMarkFooter />
     </Box>
   );
 }

@@ -1,296 +1,227 @@
 "use client";
 
-import React, { useState } from "react";
-import { Box, Dialog, Grid, IconButton, Stack, Tab, Tabs, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import NextLink from "next/link";
-import {
-  ArtifactCard,
-  LabelChip,
-  MakersMarkFooter,
-  Overline,
-  PageHeader,
-  SectionFrame,
-} from "@/components/primitives";
-import { calculateHikeStats, groupHikesByLocation } from "./hikes";
-import CloseIcon from "@mui/icons-material/Close";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import { useState } from "react";
+import { Box, Button, ButtonBase, Stack, Tab, Tabs, Typography } from "@mui/material";
+import { PageHeader, SectionFrame } from "@/components/primitives";
+import { ContentImage } from "@/components/ContentImage";
+import { ImageLightbox } from "@/components/ImageLightbox";
+import { formatCalendarDate } from "@/lib/dates";
+import { useArchiveTab } from "@/lib/useArchiveTab";
+import { calculateHikeStats, groupHikesByLocation, type Hike } from "./hikes";
 
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString + "T00:00:00");
-  return date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
-};
+const locations = groupHikesByLocation();
+const locationIds = locations.map((location) => location.id);
+const stats = calculateHikeStats();
 
 export default function Hikes() {
-  const theme = useTheme();
-  const hikeStats = calculateHikeStats();
-  const locationGroups = groupHikesByLocation();
-
-  const [selectedLocationId, setSelectedLocationId] = useState(() => locationGroups[0]?.id ?? "");
-  const [imageDialogOpen, setImageDialogOpen] = useState(false);
-  const [currentImage, setCurrentImage] = useState("");
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [currentImageSet, setCurrentImageSet] = useState<string[]>([]);
-  const selectedLocationGroup =
-    locationGroups.find((location) => location.id === selectedLocationId) ?? locationGroups[0];
-
-  const handleImageOpen = (imageUrl: string, index: number, images: string[]) => {
-    setCurrentImage(imageUrl);
-    setCurrentImageIndex(index);
-    setCurrentImageSet(images);
-    setImageDialogOpen(true);
-  };
-
-  const handleImageClose = () => setImageDialogOpen(false);
-
-  const handleNextImage = () => {
-    setCurrentImageIndex((prev) => {
-      const next = (prev + 1) % currentImageSet.length;
-      setCurrentImage(currentImageSet[next]);
-      return next;
-    });
-  };
-
-  const handlePrevImage = () => {
-    setCurrentImageIndex((prev) => {
-      const next = (prev - 1 + currentImageSet.length) % currentImageSet.length;
-      setCurrentImage(currentImageSet[next]);
-      return next;
-    });
-  };
-
-  // Map difficulty levels to restrained accent colors from the theme.
-  const getDifficultyAccent = (difficulty: string) => {
-    switch (difficulty) {
-      case "Easy":
-        return theme.zr.accent.moss;
-      case "Moderate":
-        return theme.zr.accent.brass;
-      case "Hard":
-        return theme.zr.accent.ember;
-      case "Very Hard":
-        return theme.zr.accent.oxide;
-      default:
-        return theme.zr.stone[500];
-    }
-  };
+  const [locationId, setLocationId] = useArchiveTab("location", locationIds);
+  const [gallery, setGallery] = useState<{ hike: Hike; index: number } | null>(null);
 
   return (
-    <Box component="main">
-      <SectionFrame section="hobbies" spacing="loose">
+    <Box component="main" id="main-content">
+      <SectionFrame section="hobbies" spacing="regular">
         <PageHeader
-          overline="Disciplines · Hiking"
-          index="02"
-          title="Trails, summits, and the slow ascent."
-          subtitle="A running log — distance, elevation, difficulty, and the occasional view worth sharing."
+          overline="Personal logs"
+          title="Hikes"
+          subtitle="A trail log with distance, elevation gain, and time on foot."
           size="md"
           meta={
-            <Stack direction="row" gap={1} flexWrap="wrap">
-              <LabelChip>{hikeStats.totalHikes} Hikes</LabelChip>
-              <LabelChip>{hikeStats.totalDistance.toFixed(1)} Miles</LabelChip>
-              <LabelChip>{hikeStats.totalElevation.toLocaleString()} ft Gain</LabelChip>
+            <Stack direction="row" flexWrap="wrap" columnGap={3} rowGap={0.5}>
+              <Typography color="text.secondary">{stats.totalHikes} hikes</Typography>
+              <Typography color="text.secondary">{stats.totalDistance.toFixed(1)} miles</Typography>
+              <Typography color="text.secondary">
+                {stats.totalElevation.toLocaleString("en-US")} ft recorded gain
+              </Typography>
             </Stack>
           }
         />
       </SectionFrame>
-
-      <SectionFrame section="hobbies" spacing="none">
+      <SectionFrame section="hobbies" spacing="none" sx={{ pb: 8 }}>
         <Tabs
-          value={selectedLocationGroup?.id ?? false}
-          onChange={(_, newValue: string) => setSelectedLocationId(newValue)}
+          value={locationId || false}
+          onChange={(_, value: string) => setLocationId(value)}
           variant="scrollable"
           scrollButtons="auto"
-          aria-label="hike location tabs"
-          sx={{ borderBottom: `1px solid ${theme.zr.lines.muted}`, mb: 5 }}
+          aria-label="Hike locations"
+          sx={{ borderBottom: "1px solid", borderColor: "divider", mb: 4 }}
         >
-          {locationGroups.map((location) => (
-            <Tab key={location.id} value={location.id} label={location.name} />
+          {locations.map((location) => (
+            <Tab
+              key={location.id}
+              value={location.id}
+              label={location.name}
+              id={`hike-tab-${location.id}`}
+              aria-controls={`hike-panel-${location.id}`}
+            />
           ))}
         </Tabs>
-
-        {selectedLocationGroup && (
-          <Box>
-            <Stack gap={2.5} sx={{ mb: 5 }}>
-              <Overline>
-                {selectedLocationGroup.type === "domestic" ? "United States" : "International"}
-              </Overline>
-              <Typography variant="h3" component="h2">
-                {selectedLocationGroup.name}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {selectedLocationGroup.totalHikes} hikes ·{" "}
-                {selectedLocationGroup.totalDistance.toFixed(1)} miles ·{" "}
-                {selectedLocationGroup.totalElevation.toLocaleString()} ft gain
-              </Typography>
-            </Stack>
-
-            <Grid container spacing={3} sx={{ mb: 4 }}>
-              {selectedLocationGroup.hikes.map((hike, i) => (
-                <Grid key={`${selectedLocationGroup.id}-hike-${i}`} size={{ xs: 12, md: 6, lg: 4 }}>
-                  <ArtifactCard
-                    padding="none"
-                    onClick={() => handleImageOpen(hike.images[0], 0, hike.images)}
-                  >
+        {locations.map((location) => (
+          <Box
+            key={location.id}
+            role="tabpanel"
+            id={`hike-panel-${location.id}`}
+            aria-labelledby={`hike-tab-${location.id}`}
+            hidden={locationId !== location.id}
+            tabIndex={0}
+          >
+            {locationId === location.id && (
+              <>
+                <Typography variant="h4" component="h2">
+                  {location.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mt: 1, mb: 3 }}>
+                  {location.type === "domestic" ? "United States" : "International"} /{" "}
+                  {location.totalHikes} hikes / {location.totalDistance.toFixed(1)} miles /{" "}
+                  {location.totalElevation.toLocaleString("en-US")} ft recorded gain
+                </Typography>
+                <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0 }}>
+                  {location.hikes.map((hike) => (
                     <Box
+                      component="li"
+                      key={`${hike.name}-${hike.date}`}
                       sx={{
-                        height: 200,
-                        width: "100%",
-                        overflow: "hidden",
-                        borderBottom: `1px solid ${theme.zr.lines.muted}`,
-                        position: "relative",
+                        py: 3,
+                        borderTop: "1px solid",
+                        borderColor: "divider",
+                        display: "grid",
+                        gap: { xs: 2, sm: 3 },
+                        gridTemplateColumns: { xs: "1fr", sm: "160px minmax(0, 1fr)" },
                       }}
                     >
-                      <Box
-                        component="img"
-                        src={hike.images[0]}
-                        alt={hike.name}
-                        sx={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          filter: "saturate(0.85)",
-                          display: "block",
-                        }}
-                      />
-                    </Box>
-                    <Stack gap={1.5} sx={{ p: 2.5 }}>
-                      <Stack gap={0.25}>
-                        <Overline>{formatDate(hike.date)}</Overline>
-                        <Typography variant="h6" component="h3">
+                      {hike.images[0] && (
+                        <ButtonBase
+                          aria-label={`View images of ${hike.name}`}
+                          onClick={() => setGallery({ hike, index: 0 })}
+                          sx={{ width: "100%", alignSelf: "start", display: "block" }}
+                        >
+                          <ContentImage
+                            src={hike.images[0]}
+                            alt={hike.name}
+                            width={480}
+                            height={320}
+                          />
+                        </ButtonBase>
+                      )}
+                      <Box sx={{ minWidth: 0 }}>
+                        <Typography variant="caption" color="text.secondary">
+                          <time dateTime={hike.date}>{formatCalendarDate(hike.date)}</time>
+                        </Typography>
+                        <Typography variant="h6" component="h3" sx={{ mt: 0.5 }}>
                           {hike.name}
                         </Typography>
-                        <Typography variant="caption" color="text.secondary">
+                        <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
                           {hike.location}
                         </Typography>
-                      </Stack>
-                      <Stack direction="row" gap={0.75} flexWrap="wrap" sx={{ mt: 0.5 }}>
-                        <LabelChip size="sm" accent={getDifficultyAccent(hike.difficulty)}>
-                          {hike.difficulty}
-                        </LabelChip>
-                        <LabelChip size="sm">{hike.distance} mi</LabelChip>
-                        {hike.elevation && <LabelChip size="sm">{hike.elevation} ft</LabelChip>}
-                      </Stack>
-                    </Stack>
-                  </ArtifactCard>
-                </Grid>
-              ))}
-            </Grid>
+                        <Box
+                          component="dl"
+                          sx={{
+                            display: "grid",
+                            gridTemplateColumns: {
+                              xs: "repeat(2, minmax(0, 1fr))",
+                              md: "repeat(4, minmax(0, 1fr))",
+                            },
+                            gap: 2,
+                            mb: 0,
+                            "& dt": { typography: "caption", color: "text.secondary" },
+                            "& dd": { m: 0, typography: "body2" },
+                          }}
+                        >
+                          <Box>
+                            <Typography component="dt">Distance</Typography>
+                            <Typography component="dd">{hike.distance} mi</Typography>
+                          </Box>
+                          {hike.elevation !== undefined && (
+                            <Box>
+                              <Typography component="dt">Elevation gain</Typography>
+                              <Typography component="dd">
+                                {hike.elevation.toLocaleString("en-US")} ft
+                              </Typography>
+                            </Box>
+                          )}
+                          <Box>
+                            <Typography component="dt">Difficulty</Typography>
+                            <Typography component="dd">{hike.difficulty}</Typography>
+                          </Box>
+                          {hike.time && (
+                            <Box>
+                              <Typography component="dt">Duration</Typography>
+                              <Typography component="dd">
+                                {hike.time[0] > 0 ? `${hike.time[0]} hr ` : ""}
+                                {hike.time[1]} min
+                              </Typography>
+                            </Box>
+                          )}
+                        </Box>
+                        {hike.description && (
+                          <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+                            {hike.description}
+                          </Typography>
+                        )}
+                      </Box>
+                    </Box>
+                  ))}
+                </Box>
+              </>
+            )}
           </Box>
-        )}
-
-        <Box sx={{ mt: 6 }}>
-          <Typography
-            component={NextLink}
-            href="/"
-            variant="overline"
-            sx={{
-              color: "text.secondary",
-              textDecorationColor: "var(--zr-section-accent)",
-              "&:hover": { color: "text.primary" },
-            }}
-          >
-            ← Back to index
-          </Typography>
-        </Box>
+        ))}
       </SectionFrame>
-
-      <MakersMarkFooter />
-
-      <Dialog
-        open={imageDialogOpen}
-        onClose={handleImageClose}
-        maxWidth="lg"
-        sx={{
-          "& .MuiDialog-paper": {
-            backgroundColor: "rgba(15, 15, 13, 0.96)",
-            backgroundImage: "none",
-            border: `1px solid ${theme.zr.lines.muted}`,
-            borderRadius: 1,
-            overflow: "hidden",
-            width: "100%",
-            maxHeight: "90vh",
-          },
-        }}
+      <ImageLightbox
+        open={gallery !== null}
+        onClose={() => setGallery(null)}
+        image={
+          gallery
+            ? {
+                src: gallery.hike.images[gallery.index],
+                alt: gallery.hike.name,
+                title: gallery.hike.name,
+                caption: `${gallery.hike.location} / ${formatCalendarDate(gallery.hike.date)}${gallery.hike.description ? ` / ${gallery.hike.description}` : ""}`,
+              }
+            : null
+        }
       >
-        <Box sx={{ position: "relative" }}>
-          <Box
-            component="img"
-            src={currentImage}
-            alt="Hike enlarged view"
-            sx={{
-              width: "100%",
-              maxHeight: "90vh",
-              objectFit: "contain",
-              display: "block",
-            }}
-          />
-          <IconButton
-            onClick={handleImageClose}
-            sx={{
-              position: "absolute",
-              top: 8,
-              right: 8,
-              backgroundColor: "rgba(0, 0, 0, 0.4)",
-              color: "text.primary",
-              "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.6)" },
-            }}
+        {gallery && gallery.hike.images.length > 1 && (
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            gap={1}
+            flexWrap="wrap"
           >
-            <CloseIcon />
-          </IconButton>
-          {currentImageSet.length > 1 && (
-            <>
-              <IconButton
-                onClick={handlePrevImage}
-                sx={{
-                  position: "absolute",
-                  top: "50%",
-                  left: 8,
-                  transform: "translateY(-50%)",
-                  backgroundColor: "rgba(0, 0, 0, 0.4)",
-                  color: "text.primary",
-                  "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.6)" },
-                }}
-              >
-                <NavigateBeforeIcon />
-              </IconButton>
-              <IconButton
-                onClick={handleNextImage}
-                sx={{
-                  position: "absolute",
-                  top: "50%",
-                  right: 8,
-                  transform: "translateY(-50%)",
-                  backgroundColor: "rgba(0, 0, 0, 0.4)",
-                  color: "text.primary",
-                  "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.6)" },
-                }}
-              >
-                <NavigateNextIcon />
-              </IconButton>
-              <Box
-                sx={{
-                  position: "absolute",
-                  bottom: 16,
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  backgroundColor: "rgba(15, 15, 13, 0.85)",
-                  border: `1px solid ${theme.zr.lines.muted}`,
-                  color: "text.primary",
-                  fontFamily: `var(${theme.zr.cssVars.fontMono})`,
-                  fontSize: "0.7rem",
-                  letterSpacing: "0.06em",
-                  px: 1.5,
-                  py: 0.4,
-                  borderRadius: 1,
-                }}
-              >
-                {currentImageIndex + 1} / {currentImageSet.length}
-              </Box>
-            </>
-          )}
-        </Box>
-      </Dialog>
+            <Button
+              onClick={() =>
+                setGallery(
+                  (current) =>
+                    current && {
+                      ...current,
+                      index:
+                        (current.index - 1 + current.hike.images.length) %
+                        current.hike.images.length,
+                    }
+                )
+              }
+            >
+              Previous image
+            </Button>
+            <Typography variant="body2" aria-live="polite">
+              {gallery.index + 1} / {gallery.hike.images.length}
+            </Typography>
+            <Button
+              onClick={() =>
+                setGallery(
+                  (current) =>
+                    current && {
+                      ...current,
+                      index: (current.index + 1) % current.hike.images.length,
+                    }
+                )
+              }
+            >
+              Next image
+            </Button>
+          </Stack>
+        )}
+      </ImageLightbox>
     </Box>
   );
 }

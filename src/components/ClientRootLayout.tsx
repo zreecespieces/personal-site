@@ -7,6 +7,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { Analytics } from "@vercel/analytics/next";
 import { zacharyTheme } from "@/theme";
 import { NewsletterDialog } from "./NewsletterDialog";
+import { SiteHeader } from "./SiteHeader";
+import { MakersMarkFooter } from "./primitives/MakersMarkFooter";
 
 export function ClientRootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -18,7 +20,9 @@ export function ClientRootLayout({ children }: { children: React.ReactNode }) {
           MuiCssBaseline overrides for the full layer composition.
         */}
         <CssBaseline />
+        <SiteHeader />
         {children}
+        <MakersMarkFooter />
 
         {/* Newsletter Signup Dialog */}
         <NewsletterDialog />

@@ -36,7 +36,6 @@ export { PortraitFrame } from "./PortraitFrame";
 export type { PortraitFrameProps } from "./PortraitFrame";
 
 export { MakersMarkFooter } from "./MakersMarkFooter";
-export type { MakersMarkFooterProps } from "./MakersMarkFooter";
 
 export { Reveal } from "./Reveal";
 export type { RevealProps } from "./Reveal";
@@ -54,7 +53,6 @@ export type { SuminagashiProps } from "./patterns/Suminagashi";
 // Heroes — client components from ./heroes/index.tsx
 export {
   HeroDiagram,
-  HeroVariantSwitcher,
   HeroContouredMandala,
   HeroTopographicNodeGraph,
   HeroSacredHexLattice,

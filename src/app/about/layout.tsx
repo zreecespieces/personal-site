@@ -1,15 +1,29 @@
 import { Metadata } from "next";
 import React from "react";
 
+const title = "About | Zachary Reece";
+const description =
+  "A little about me: software engineering, education, martial arts, and the interests that connect them.";
+
 export const metadata: Metadata = {
-  title: "About | Zachary Reece",
-  description:
-    "Software engineer, educator, and martial artist building systems for learning and human capability.",
+  title,
+  description,
+  alternates: { canonical: "/about" },
   openGraph: {
-    title: "About | Zachary Reece",
-    description:
-      "Software engineer, educator, and martial artist building systems for learning and human capability.",
-    images: ["/og-image.jpg"],
+    title,
+    description,
+    url: "/about",
+    siteName: "Zachary Reece",
+    type: "website",
+    locale: "en_US",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Zachary Reece" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    creator: "@zreecespieces",
+    images: ["/opengraph-image"],
   },
 };
 

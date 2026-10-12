@@ -3,6 +3,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
+import NextLink from "next/link";
 
 export interface ArtifactCardProps {
   /** Card body. */
@@ -53,7 +54,7 @@ const PADDING: Record<NonNullable<ArtifactCardProps["padding"]>, PaddingValue> =
 export function ArtifactCard({
   children,
   accent,
-  withRule = true,
+  withRule = false,
   hoverable,
   padding = "regular",
   href,
@@ -68,13 +69,25 @@ export function ArtifactCard({
   const shouldHover = hoverable ?? interactive;
   const accentVar = accent ?? `var(--zr-section-accent, ${theme.zr.accent.brass})`;
 
-  const Component: React.ElementType = href ? "a" : onClick ? "button" : "div";
+  const Component: React.ElementType = href ? (href.startsWith("/") ? NextLink : "a") : "div";
 
   return (
     <Box
       component={Component}
       href={href}
       onClick={onClick}
+      role={onClick && !href ? "button" : undefined}
+      tabIndex={onClick && !href ? 0 : undefined}
+      onKeyDown={
+        onClick && !href
+          ? (event: React.KeyboardEvent) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                onClick();
+              }
+            }
+          : undefined
+      }
       target={target}
       rel={rel}
       aria-label={ariaLabel}
@@ -88,12 +101,10 @@ export function ArtifactCard({
         cursor: interactive ? "pointer" : "default",
         backgroundColor: alpha(theme.zr.bone[100], 0.045),
         border: `1px solid ${theme.zr.lines.muted}`,
-        borderRadius: 1,
+        borderRadius: 0,
         p: PADDING[padding],
         overflow: "hidden",
         transition: `transform ${theme.zr.duration.fast}ms ${theme.zr.easing}, border-color ${theme.zr.duration.fast}ms ${theme.zr.easing}, background-color ${theme.zr.duration.fast}ms ${theme.zr.easing}`,
-        // Strip default button styling
-        ...(Component === "button" ? { font: "inherit" } : {}),
         // Left rule
         ...(withRule
           ? {

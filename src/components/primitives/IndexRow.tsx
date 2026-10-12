@@ -3,10 +3,11 @@
 import React from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
+import NextLink from "next/link";
 
 export interface IndexRowProps {
-  /** Numeric position (will be padded to two digits) or string label. */
-  index: number | string;
+  /** Numeric position (will be padded to two digits) or string label. Optional. */
+  index?: number | string;
   /** Short mono category label (e.g. SYSTEMS BUILT). Optional. */
   category?: string;
   /** Primary title. */
@@ -52,25 +53,33 @@ export function IndexRow({
   const interactive = Boolean(href || onClick);
   const accentVar = accent ?? `var(--zr-section-accent, ${theme.zr.accent.brass})`;
 
-  const Component: React.ElementType = href ? "a" : onClick ? "button" : "div";
+  const Component: React.ElementType = href
+    ? href.startsWith("/")
+      ? NextLink
+      : "a"
+    : onClick
+      ? "button"
+      : "div";
 
-  const paddedIndex = typeof index === "number" ? String(index).padStart(2, "0") : index;
+  const hasIndex = index !== undefined && index !== "";
+  const paddedIndex = typeof index === "number" ? String(index).padStart(2, "0") : (index ?? "");
 
   return (
     <Box
       component={Component}
       href={href}
       onClick={onClick}
+      type={onClick && !href ? "button" : undefined}
       target={target}
       rel={rel}
       sx={{
         position: "relative",
         display: "grid",
-        gridTemplateColumns: { xs: "auto 1fr auto", md: "56px 1fr auto" },
+        gridTemplateColumns: hasIndex ? "auto minmax(0, 1fr) auto" : "minmax(0, 1fr) auto",
         gap: { xs: 2, md: 3 },
         alignItems: "start",
-        py: 2.5,
-        px: { xs: 0.5, md: 1.5 },
+        py: 2,
+        px: 0,
         width: "100%",
         textAlign: "left",
         textDecoration: "none",
@@ -102,27 +111,30 @@ export function IndexRow({
         },
       }}
     >
-      <Typography
-        className="zr-index"
-        variant="overline"
-        sx={{
-          color: theme.zr.stone[400],
-          fontSize: "0.72rem",
-          lineHeight: 1,
-          mt: 0.6,
-          transition: `color ${theme.zr.duration.fast}ms ${theme.zr.easing}`,
-        }}
-      >
-        {paddedIndex}
-      </Typography>
+      {hasIndex && (
+        <Typography
+          className="zr-index"
+          variant="overline"
+          sx={{
+            color: theme.zr.stone[400],
+            fontSize: "0.72rem",
+            lineHeight: 1,
+            mt: 0.6,
+            transition: `color ${theme.zr.duration.fast}ms ${theme.zr.easing}`,
+          }}
+        >
+          {paddedIndex}
+        </Typography>
+      )}
 
-      <Stack gap={0.75}>
+      <Stack component="span" gap={0.75} sx={{ minWidth: 0 }}>
         {category && (
           <Typography
+            component="span"
             variant="overline"
             sx={{
               color: accentVar,
-              fontSize: "0.66rem",
+              fontSize: "0.7rem",
               letterSpacing: "0.14em",
             }}
           >
@@ -143,9 +155,10 @@ export function IndexRow({
         </Typography>
         {description && (
           <Typography
+            component="span"
             variant="body2"
             sx={{
-              color: alpha(theme.zr.bone[200], 0.65),
+              color: "text.secondary",
               maxWidth: "60ch",
             }}
           >

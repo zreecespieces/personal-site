@@ -94,10 +94,10 @@ export const khanAcademyStreak: Streak = {
   currentStreak: 19, // 19 week streak
   longestStreak: 19, // 19 weeks was the longest
   unit: "week",
-  lastActivity: "2025-03-12", // Today's date
+  lastActivity: "2025-03-12", // Last recorded activity, not a live status
   streakData: [
-    // Generate last 8 weeks of activity (most recent first)
-    { date: "2025-03-12", active: true, minutesSpent: 45 }, // Today
+    // Saved activity entries (most recent first)
+    { date: "2025-03-12", active: true, minutesSpent: 45 },
     { date: "2025-03-05", active: true, minutesSpent: 60 },
     { date: "2025-02-26", active: true, minutesSpent: 75 },
     { date: "2025-02-19", active: true, minutesSpent: 90 },

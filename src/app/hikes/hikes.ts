@@ -430,7 +430,7 @@ export const groupHikesByLocation = (): LocationGroup[] => {
   hikes.forEach((hike) => {
     // Extract state or country from location
     const parts = hike.location.split(", ");
-    let locationKey = parts[parts.length - 1]; // Get the last part (state or country)
+    const locationKey = parts[parts.length - 1]; // Get the last part (state or country)
 
     // Determine if domestic or international
     const type = ["California", "Colorado", "Missouri", "Utah"].includes(locationKey)
@@ -508,7 +508,7 @@ export const calculateHikeStats = (): HikingStats => {
     const parts = hike.location.split(", ");
     const lastPart = parts[parts.length - 1];
 
-    if (["California", "Colorado", "Missouri"].includes(lastPart)) {
+    if (["California", "Colorado", "Missouri", "Utah"].includes(lastPart)) {
       states.add(lastPart);
     } else {
       countries.add(lastPart);

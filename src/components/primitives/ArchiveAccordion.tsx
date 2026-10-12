@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import { Box, Collapse, Stack, Typography } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 
@@ -45,6 +45,7 @@ export function ArchiveAccordion({
   count,
 }: ArchiveAccordionProps) {
   const theme = useTheme();
+  const id = useId();
   const accentVar = accent ?? `var(--zr-section-accent, ${theme.zr.accent.brass})`;
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const isControlled = controlledOpen !== undefined;
@@ -68,108 +69,127 @@ export function ArchiveAccordion({
         },
       }}
     >
-      <Box
-        component="button"
-        onClick={toggle}
-        aria-expanded={open}
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          width: "100%",
-          minHeight: 64,
-          px: { xs: 1, md: 1.5 },
-          py: 2,
-          gap: 2,
-          background: "transparent",
-          border: "none",
-          color: "inherit",
-          font: "inherit",
-          cursor: "pointer",
-          textAlign: "left",
-          transition: `background-color ${theme.zr.duration.fast}ms ${theme.zr.easing}`,
-          "&:hover": {
-            backgroundColor: alpha(theme.zr.bone[100], 0.035),
-          },
-        }}
-      >
-        {paddedIndex !== undefined && (
-          <Typography
-            variant="overline"
-            sx={{
-              color: theme.zr.stone[400],
-              fontSize: "0.7rem",
-              minWidth: 28,
-            }}
+      <Box component="h3" sx={{ m: 0 }}>
+        <Box
+          component="button"
+          type="button"
+          id={`${id}-trigger`}
+          aria-controls={`${id}-panel`}
+          onClick={toggle}
+          aria-expanded={open}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            width: "100%",
+            minHeight: 64,
+            px: { xs: 1, md: 1.5 },
+            py: 2,
+            gap: 2,
+            background: "transparent",
+            border: "none",
+            color: "inherit",
+            font: "inherit",
+            cursor: "pointer",
+            textAlign: "left",
+            transition: `background-color ${theme.zr.duration.fast}ms ${theme.zr.easing}`,
+            "&:hover": {
+              backgroundColor: alpha(theme.zr.bone[100], 0.035),
+            },
+          }}
+        >
+          {paddedIndex !== undefined && (
+            <Typography
+              variant="overline"
+              sx={{
+                color: theme.zr.stone[400],
+                fontSize: "0.7rem",
+                minWidth: 28,
+              }}
+            >
+              {paddedIndex}
+            </Typography>
+          )}
+          {glyph && (
+            <Box
+              component="span"
+              sx={{
+                color: accentVar,
+                display: "inline-flex",
+                alignItems: "center",
+                flexShrink: 0,
+              }}
+            >
+              {glyph}
+            </Box>
+          )}
+          <Stack
+            component="span"
+            direction="row"
+            alignItems="baseline"
+            gap={1.5}
+            sx={{ flex: 1, minWidth: 0 }}
           >
-            {paddedIndex}
-          </Typography>
-        )}
-        {glyph && (
+            <Typography
+              variant="h5"
+              component="span"
+              sx={{
+                fontFamily: `var(${theme.zr.cssVars.fontHeading})`,
+                fontWeight: 500,
+                color: theme.zr.bone[100],
+                letterSpacing: "-0.018em",
+                textTransform: "uppercase",
+                fontSize: { xs: "1.05rem", md: "1.2rem" },
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {label}
+            </Typography>
+          </Stack>
+          {paddedCount !== undefined && (
+            <Typography
+              variant="overline"
+              sx={{
+                color: theme.zr.stone[400],
+                fontSize: "0.68rem",
+                fontFamily: `var(${theme.zr.cssVars.fontMono})`,
+              }}
+            >
+              {paddedCount}
+            </Typography>
+          )}
           <Box
+            component="span"
+            aria-hidden
             sx={{
               color: accentVar,
               display: "inline-flex",
-              alignItems: "center",
-              flexShrink: 0,
+              ml: 1,
+              transition: `transform ${theme.zr.duration.medium}ms ${theme.zr.easing}`,
+              transform: open ? "rotate(45deg)" : "rotate(0deg)",
             }}
           >
-            {glyph}
-          </Box>
-        )}
-        <Stack direction="row" alignItems="baseline" gap={1.5} sx={{ flex: 1, minWidth: 0 }}>
-          <Typography
-            variant="h5"
-            component="span"
-            sx={{
-              fontFamily: `var(${theme.zr.cssVars.fontHeading})`,
-              fontWeight: 500,
-              color: theme.zr.bone[100],
-              letterSpacing: "-0.018em",
-              textTransform: "uppercase",
-              fontSize: { xs: "1.05rem", md: "1.2rem" },
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          >
-            {label}
-          </Typography>
-        </Stack>
-        {paddedCount !== undefined && (
-          <Typography
-            variant="overline"
-            sx={{
-              color: theme.zr.stone[400],
-              fontSize: "0.68rem",
-              fontFamily: `var(${theme.zr.cssVars.fontMono})`,
-            }}
-          >
-            {paddedCount}
-          </Typography>
-        )}
-        <Box
-          aria-hidden
-          sx={{
-            color: accentVar,
-            display: "inline-flex",
-            ml: 1,
-            transition: `transform ${theme.zr.duration.medium}ms ${theme.zr.easing}`,
-            transform: open ? "rotate(45deg)" : "rotate(0deg)",
-          }}
-        >
-          {/* Plus / cross glyph */}
-          <Box
-            component="svg"
-            viewBox="0 0 16 16"
-            sx={{ width: 14, height: 14 }}
-            aria-hidden="true"
-          >
-            <line x1="8" y1="2" x2="8" y2="14" stroke="currentColor" strokeWidth={1.25} />
-            <line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" strokeWidth={1.25} />
+            {/* Plus / cross glyph */}
+            <Box
+              component="svg"
+              viewBox="0 0 16 16"
+              sx={{ width: 14, height: 14 }}
+              aria-hidden="true"
+            >
+              <line x1="8" y1="2" x2="8" y2="14" stroke="currentColor" strokeWidth={1.25} />
+              <line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" strokeWidth={1.25} />
+            </Box>
           </Box>
         </Box>
       </Box>
-      <Collapse in={open} timeout={theme.zr.duration.medium}>
+      <Collapse
+        id={`${id}-panel`}
+        role="region"
+        aria-labelledby={`${id}-trigger`}
+        in={open}
+        timeout={theme.zr.duration.medium}
+      >
         <Box
           sx={{
             px: { xs: 1, md: 1.5 },

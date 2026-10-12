@@ -37,6 +37,7 @@ export function getAllPosts(): BlogPostMeta[] {
 }
 
 export function getPostBySlug(slug: string): BlogPost | null {
+  if (!getAllSlugs().includes(slug)) return null;
   const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
 
   if (!fs.existsSync(filePath)) return null;

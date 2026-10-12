@@ -1,15 +1,28 @@
 import { Metadata } from "next";
 import React from "react";
 
+const title = "Comedy Shows | Zachary Reece";
+const description = "A personal log of live comedy shows and stand-up comedians I've seen.";
+
 export const metadata: Metadata = {
-  title: "Comedy Shows | Zachary Reece",
-  description:
-    "A collection of live comedy shows and stand-up comedians I've seen in person, with ratings, notes, and recommendations.",
+  title,
+  description,
+  alternates: { canonical: "/comedy" },
   openGraph: {
-    title: "Comedy Shows | Zachary Reece",
-    description:
-      "A collection of live comedy shows and stand-up comedians I've seen in person, with ratings, notes, and recommendations.",
-    images: ["/images/og-comedy.jpg"],
+    title,
+    description,
+    url: "/comedy",
+    siteName: "Zachary Reece",
+    type: "website",
+    locale: "en_US",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Zachary Reece" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    creator: "@zreecespieces",
+    images: ["/opengraph-image"],
   },
 };
 
